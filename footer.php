@@ -4,32 +4,31 @@
  *
  * Contains the closing of the #content div and all content after.
  *
- * @link    https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
  * @package Heisenberg
  */
 ?>
 
-</div><!-- #content -->
+			</div><!-- #content -->
 
-<footer id="colophon" class="site-footer" role="contentinfo">
+			<footer id="colophon" class="site-footer" role="contentinfo">
 
-	<div class="column row">
+				<div class="column row">
 
-		<p class="text-center">
-			<svg class="icon">
-				<use xlink:href="#icon-coffee-cup"></use>
-			</svg>
-			Thanks for using Heisenberg!
-		</p>
+					<p class="text-center">
+						<svg class="icon">
+							<use xlink:href="#icon-coffee-cup"></use>
+						</svg>
+						Thanks for using Heisenberg!
+					</p>
 
-	</div>
-	<!-- .column.row -->
+				</div><!-- .column.row -->
 
-</footer><!-- #colophon -->
+			</footer><!-- #colophon -->
 
-</div> <!-- .off-canvas-content -->
-</div><!-- .off-canvas-wrapper-inner -->
+		</div> <!-- .off-canvas-content -->
+	</div><!-- .off-canvas-wrapper-inner -->
 </div><!-- .off-canvas-wrapper -->
 
 <?php wp_footer(); ?>

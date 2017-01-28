@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB checkbox field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2

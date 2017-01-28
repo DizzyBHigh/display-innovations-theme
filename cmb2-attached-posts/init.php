@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class WDS_CMB2_Attached_Posts_Field
  */
@@ -59,12 +58,12 @@ class WDS_CMB2_Attached_Posts_Field {
 	 */
 	public function render( $field, $escaped_value, $object_id, $object_type, $field_type ) {
 		self::setup_scripts();
-		$this->field         = $field;
+		$this->field = $field;
 		$this->do_type_label = false;
 
 		if ( ! is_admin() ) {
 			// Will need custom styling!
-
+			// @todo add styles for front-end
 			require_once( ABSPATH . 'wp-admin/includes/template.php' );
 			do_action( 'cmb2_attached_posts_field_add_find_posts_div' );
 		} else {
@@ -72,17 +71,16 @@ class WDS_CMB2_Attached_Posts_Field {
 			add_action( 'admin_footer', 'find_posts_div' );
 		}
 
-		$query_args  = (array) $this->field->options( 'query_args' );
+		$query_args = (array) $this->field->options( 'query_args' );
 		$query_users = $this->field->options( 'query_users' );
 
 		if ( ! $query_users ) {
 
 			// Setup our args
-			$args = wp_parse_args( $query_args,
-				array(
-					'post_type'      => 'post',
-					'posts_per_page' => 100,
-				) );
+			$args = wp_parse_args( $query_args, array(
+				'post_type'      => 'post',
+				'posts_per_page' => 100,
+			) );
 
 			if ( isset( $_POST['post'] ) ) {
 				$args['post__not_in'] = array( absint( $_POST['post'] ) );
@@ -113,19 +111,16 @@ class WDS_CMB2_Attached_Posts_Field {
 
 		} else {
 			// Setup our args
-			$args             = wp_parse_args( $query_args,
-				array(
-					'number' => 100,
-				) );
+			$args = wp_parse_args( $query_args, array(
+				'number' => 100,
+			) );
 			$post_type_labels = $field_type->_text( 'users_text', esc_html__( 'Users' ) );
 		}
 
 		$filter_boxes = '';
 		// Check 'filter' setting
 		if ( $this->field->options( 'filter_boxes' ) ) {
-			$filter_boxes = '<div class="search-wrap"><input type="text" placeholder="' . sprintf( __( 'Filter %s',
-					'cmb' ),
-					$post_type_labels ) . '" class="regular-text search" name="%s" /></div>';
+			$filter_boxes = '<div class="search-wrap"><input type="text" placeholder="' . sprintf( __( 'Filter %s', 'cmb' ), $post_type_labels ) . '" class="regular-text search" name="%s" /></div>';
 		}
 
 		// Check to see if we have any meta values saved yet
@@ -139,12 +134,11 @@ class WDS_CMB2_Attached_Posts_Field {
 		}
 
 		// Wrap our lists
-		echo '<div class="attached-posts-wrap widefat" data-fieldname="' . $field_type->_name() . '">';
+		echo '<div class="attached-posts-wrap widefat" data-fieldname="'. $field_type->_name() .'">';
 
 		// Open our retrieved, or found posts, list
 		echo '<div class="retrieved-wrap column-wrap">';
-		echo '<h4 class="attached-posts-section">' . sprintf( __( 'Available %s', 'cmb' ),
-				$post_type_labels ) . '</h4>';
+		echo '<h4 class="attached-posts-section">' . sprintf( __( 'Available %s', 'cmb' ), $post_type_labels ) . '</h4>';
 
 		// Set .has_thumbnail
 		$has_thumbnail = $this->field->options( 'show_thumbnails' ) ? ' has-thumbnails' : '';
@@ -162,7 +156,7 @@ class WDS_CMB2_Attached_Posts_Field {
 		// Close our retrieved, or found, posts
 		echo '</ul><!-- .retrieved -->';
 
-
+		// @todo make User search work.
 		if ( ! $query_users ) {
 			$findtxt = $field_type->_text( 'find_text', __( 'Search' ) );
 
@@ -170,15 +164,14 @@ class WDS_CMB2_Attached_Posts_Field {
 				'queryUsers' => $query_users,
 				'types'      => $query_users ? 'user' : (array) $args['post_type'],
 				'cmbId'      => $this->field->cmb_id,
-				'errortxt'   => esc_attr( $field_type->_text( 'error_text',
-					__( 'An error has occurred. Please reload the page and try again.' ) ) ),
+				'errortxt'   => esc_attr( $field_type->_text( 'error_text', __( 'An error has occurred. Please reload the page and try again.' ) ) ),
 				'findtxt'    => esc_attr( $field_type->_text( 'find_text', __( 'Find Posts or Pages' ) ) ),
 				'groupId'    => $this->field->group ? $this->field->group->id() : false,
 				'fieldId'    => $this->field->_id(),
 				'exclude'    => isset( $args['post__not_in'] ) ? $args['post__not_in'] : array(),
 			) );
 
-			echo '<p><button type="button" class="button cmb2-attached-posts-search-button" data-search=\'' . $js_data . '\'>' . $findtxt . ' <span title="' . esc_attr( $findtxt ) . '" class="dashicons dashicons-search"></span></button></p>';
+			echo '<p><button type="button" class="button cmb2-attached-posts-search-button" data-search=\''. $js_data .'\'>'. $findtxt .' <span title="'. esc_attr( $findtxt ) .'" class="dashicons dashicons-search"></span></button></p>';
 		}
 
 		echo '</div><!-- .retrieved-wrap -->';
@@ -191,7 +184,7 @@ class WDS_CMB2_Attached_Posts_Field {
 			printf( $filter_boxes, 'attached-search' );
 		}
 
-		echo '<ul class="attached connected', $has_thumbnail, '">';
+		echo '<ul class="attached connected', $has_thumbnail ,'">';
 
 		// If we have any ids saved already, display them
 		$ids = $this->display_attached( $attached );
@@ -218,8 +211,8 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.5
 	 *
-	 * @param  mixed $objects  Posts or users.
-	 * @param  array $attached Array of attached posts/users.
+	 * @param  mixed  $objects  Posts or users.
+	 * @param  array  $attached Array of attached posts/users.
 	 *
 	 * @return void
 	 */
@@ -230,7 +223,7 @@ class WDS_CMB2_Attached_Posts_Field {
 		foreach ( $objects as $object ) {
 
 			// Set our zebra stripes
-			$class = ++ $count % 2 == 0 ? 'even' : 'odd';
+			$class = ++$count % 2 == 0 ? 'even' : 'odd';
 
 			// Set a class if our post is in our attached meta
 			$class .= ! empty ( $attached ) && in_array( $this->get_id( $object ), $attached ) ? ' added' : '';
@@ -244,7 +237,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.5
 	 *
-	 * @param  array $attached Array of attached posts/users.
+	 * @param  array  $attached Array of attached posts/users.
 	 *
 	 * @return void
 	 */
@@ -270,7 +263,7 @@ class WDS_CMB2_Attached_Posts_Field {
 			}
 
 			// Set our zebra stripes
-			$class = ++ $count % 2 == 0 ? 'even' : 'odd';
+			$class = ++$count % 2 == 0 ? 'even' : 'odd';
 
 			$this->list_item( $object, $class, 'dashicons-minus' );
 			$ids[ $id ] = $id;
@@ -285,8 +278,8 @@ class WDS_CMB2_Attached_Posts_Field {
 	 * @since  1.2.5
 	 *
 	 * @param  mixed  $object     Post or User.
-	 * @param  string $li_class   The list item (zebra) class.
-	 * @param  string $icon_class The icon class. Either 'dashicons-plus' or 'dashicons-minus'.
+	 * @param  string  $li_class   The list item (zebra) class.
+	 * @param  string  $icon_class The icon class. Either 'dashicons-plus' or 'dashicons-minus'.
 	 *
 	 * @return void
 	 */
@@ -309,7 +302,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  mixed $object Post or User
+	 * @param  mixed  $object Post or User
 	 *
 	 * @return string         The thumbnail, if endabled/found.
 	 */
@@ -331,7 +324,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  mixed $object Post or User
+	 * @param  mixed  $object Post or User
 	 *
 	 * @return int            The object ID.
 	 */
@@ -344,7 +337,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  mixed $object Post or User
+	 * @param  mixed  $object Post or User
 	 *
 	 * @return string         The object title.
 	 */
@@ -359,7 +352,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.6
 	 *
-	 * @param  mixed $object Post or User
+	 * @param  mixed  $object Post or User
 	 *
 	 * @return string         The object label.
 	 */
@@ -369,9 +362,9 @@ class WDS_CMB2_Attached_Posts_Field {
 		}
 
 		$post_type_obj = get_post_type_object( $object->post_type );
-		$label         = isset( $post_type_obj->labels->singular_name ) ? $post_type_obj->labels->singular_name : $post_type_obj->label;
+		$label = isset( $post_type_obj->labels->singular_name ) ? $post_type_obj->labels->singular_name : $post_type_obj->label;
 
-		return ' &mdash; <span class="object-label">' . $label . '</span>';
+		return ' &mdash; <span class="object-label">'. $label .'</span>';
 	}
 
 	/**
@@ -379,7 +372,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  mixed $object Post or User
+	 * @param  mixed  $object Post or User
 	 *
 	 * @return string         The object edit link.
 	 */
@@ -394,7 +387,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  int $id Post or User ID.
+	 * @param  int   $id Post or User ID.
 	 *
 	 * @return mixed     Post or User if found.
 	 */
@@ -409,8 +402,8 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  array $args     Array of query args.
-	 * @param  array $attached Array of attached object ids.
+	 * @param  array  $args     Array of query args.
+	 * @param  array  $attached Array of attached object ids.
 	 *
 	 * @return array            Array of attached object ids.
 	 */
@@ -423,8 +416,8 @@ class WDS_CMB2_Attached_Posts_Field {
 		}
 
 		if ( ! empty( $attached ) ) {
-			$is_users                                        = $this->field->options( 'query_users' );
-			$args[ $is_users ? 'include' : 'post__in' ]      = $attached;
+			$is_users = $this->field->options( 'query_users' );
+			$args[ $is_users ? 'include' : 'post__in' ] = $attached;
 			$args[ $is_users ? 'number' : 'posts_per_page' ] = count( $attached );
 
 			$new = $this->get_objects( $args );
@@ -444,7 +437,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  array $args Array of query args.
+	 * @param  array  $args Array of query args.
 	 *
 	 * @return array        Array of results.
 	 */
@@ -464,7 +457,7 @@ class WDS_CMB2_Attached_Posts_Field {
 			// Windows
 			$content_dir = str_replace( '/', DIRECTORY_SEPARATOR, WP_CONTENT_DIR );
 			$content_url = str_replace( $content_dir, WP_CONTENT_URL, $dir );
-			$url         = str_replace( DIRECTORY_SEPARATOR, '/', $content_url );
+			$url = str_replace( DIRECTORY_SEPARATOR, '/', $content_url );
 
 		} else {
 			$url = str_replace(
@@ -487,22 +480,14 @@ class WDS_CMB2_Attached_Posts_Field {
 			'wp-backbone',
 		);
 
-		wp_enqueue_script( 'cmb2-attached-posts-field',
-			$url . 'js/attached-posts.js',
-			$requirements,
-			self::VERSION,
-			true );
+		wp_enqueue_script( 'cmb2-attached-posts-field', $url . 'js/attached-posts.js', $requirements, self::VERSION, true );
 		wp_enqueue_style( 'cmb2-attached-posts-field', $url . 'css/attached-posts-admin.css', array(), self::VERSION );
 
 		if ( ! $once ) {
-			wp_localize_script( 'cmb2-attached-posts-field',
-				'CMBAP',
-				array(
-					'edit_link_template' => str_replace( get_the_ID(),
-						'REPLACEME',
-						get_edit_post_link( get_the_ID() ) ),
-					'ajaxurl'            => admin_url( 'admin-ajax.php', 'relative' ),
-				) );
+			wp_localize_script( 'cmb2-attached-posts-field', 'CMBAP', array(
+				'edit_link_template' => str_replace( get_the_ID(), 'REPLACEME', get_edit_post_link( get_the_ID() ) ),
+				'ajaxurl'            => admin_url( 'admin-ajax.php', 'relative' ),
+			) );
 
 			$once = true;
 		}
@@ -520,8 +505,8 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  string $sanitized_val The sanitized value to be saved.
-	 * @param  string $val           The unsanitized value.
+	 * @param  string  $sanitized_val The sanitized value to be saved.
+	 * @param  string  $val           The unsanitized value.
 	 *
 	 * @return string                 The (maybe-modified) sanitized value to be saved.
 	 */
@@ -539,6 +524,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
+
 	 * @return void
 	 */
 	public function ajax_find_posts() {
@@ -563,7 +549,7 @@ class WDS_CMB2_Attached_Posts_Field {
 	 *
 	 * @since  1.2.4
 	 *
-	 * @param  WP_Query $query WP_Query instance during the pre_get_posts hook.
+	 * @param  WP_Query  $query WP_Query instance during the pre_get_posts hook.
 	 *
 	 * @return void
 	 */
@@ -585,7 +571,7 @@ class WDS_CMB2_Attached_Posts_Field {
 			if ( ! empty( $_POST['exclude'] ) && is_array( $_POST['exclude'] ) ) {
 				// Exclude the post that we're looking at.
 				$exclude = array_map( 'absint', $_POST['exclude'] );
-				$ids     = array_merge( $ids, $exclude );
+				$ids = array_merge( $ids, $exclude );
 			}
 
 			$query->set( $is_users ? 'exclude' : 'post__not_in', $ids );
@@ -625,5 +611,4 @@ class WDS_CMB2_Attached_Posts_Field {
 	}
 
 }
-
 WDS_CMB2_Attached_Posts_Field::get_instance();

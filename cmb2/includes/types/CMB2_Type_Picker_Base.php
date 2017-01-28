@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB Picker base field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -16,10 +15,8 @@ abstract class CMB2_Type_Picker_Base extends CMB2_Type_Text {
 	/**
 	 * Parse the picker attributes.
 	 * @since  2.2.0
-	 *
-	 * @param  string $arg  'date' or 'time'
-	 * @param  array  $args Optional arguments to modify (else use $this->field->args['attributes'])
-	 *
+	 * @param  string  $arg  'date' or 'time'
+	 * @param  array   $args Optional arguments to modify (else use $this->field->args['attributes'])
 	 * @return array         Array of field attributes
 	 */
 	public function parse_picker_options( $arg = 'date', $args = array() ) {
@@ -44,7 +41,7 @@ abstract class CMB2_Type_Picker_Base extends CMB2_Type_Text {
 				: array();
 
 			$data[ $arg . 'Format' ] = $js_format;
-			$atts[ $att ]            = function_exists( 'wp_json_encode' )
+			$atts[ $att ] = function_exists( 'wp_json_encode' )
 				? wp_json_encode( $data )
 				: json_encode( $data );
 		}

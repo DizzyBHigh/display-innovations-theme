@@ -1,19 +1,29 @@
 // Foundation override file
 @import "settings";
+
 // Import Foundation
 @import "../../node_modules/foundation-sites/scss/foundation";
 @import "vendors/foundation";
+
 // Our most basic level file type (variables, typography, etc)
 @import "base/base";
+
 // Our second level of file types that make up base files (forms, lists, etc)
 @import "components/components";
+
 // Large parts of our site that make up components (header, footer, etc)
 @import "sections/sections";
+
 // Our largest file types that encompass overall individual page styles
 @import "pages/pages";
+
 // Our largest file types that encompass overall individual page styles
 @import "pages/pages";
+
+
+
 // Third-party file types such as plugins and WordPress
 @import "vendors/vendors";
+
 // Quick fix sass file to be used temporarily and moved onto its proper location when time permits
 @import "shame";

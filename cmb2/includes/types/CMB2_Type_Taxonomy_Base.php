@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB Taxonomy base field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -57,7 +56,7 @@ abstract class CMB2_Type_Taxonomy_Base extends CMB2_Type_Multi_Base {
 	 */
 	public function non_post_object_terms() {
 		$object_id = $this->field->object_id;
-		$taxonomy  = $this->field->args( 'taxonomy' );
+		$taxonomy = $this->field->args( 'taxonomy' );
 
 		$cache_key = "cmb-cache-{$taxonomy}-{$object_id}";
 

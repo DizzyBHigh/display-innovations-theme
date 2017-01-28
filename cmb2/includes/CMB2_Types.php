@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB field type objects
  *
- * @since     1.0.0
+ * @since  1.0.0
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -47,7 +46,6 @@ class CMB2_Types {
 	/**
 	 * Default fallback. Allows rendering fields via "cmb2_render_$fieldtype" hook
 	 * @since 1.0.0
-	 *
 	 * @param string $fieldtype Non-existent field type name
 	 * @param array  $arguments All arguments passed to the method
 	 */
@@ -79,12 +77,7 @@ class CMB2_Types {
 		 *                                   but could also be `comment`, `user` or `options-page`.
 		 * @param object $field_type_object  This `CMB2_Types` object
 		 */
-		do_action( "cmb2_render_{$fieldtype}",
-			$this->field,
-			$this->field->escaped_value(),
-			$this->field->object_id,
-			$this->field->object_type,
-			$this );
+		do_action( "cmb2_render_{$fieldtype}", $this->field, $this->field->escaped_value(), $this->field->object_id, $this->field->object_type, $this );
 	}
 
 	/**
@@ -141,7 +134,7 @@ class CMB2_Types {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param string $method Method attempting to be called on the CMB2_Type_Base object.
+	 * @param string $method  Method attempting to be called on the CMB2_Type_Base object.
 	 */
 	protected function guess_type_object( $method ) {
 
@@ -180,25 +173,23 @@ class CMB2_Types {
 	/**
 	 * Check for methods to be proxied to the CMB2_Type_Base object.
 	 * @since  2.2.4
-	 *
 	 * @param  string $method    The possible method to proxy.
 	 * @param  array  $arguments All arguments passed to the method.
-	 *
 	 * @return bool|array       False if not proxied, else array with 'value' key being the return of the method.
 	 */
 	public function maybe_proxy_method( $method, $arguments ) {
 		$exists = false;
 
 		$proxied = array(
-			'get_object_terms'     => array(),
-			'is_valid_img_ext'     => false,
-			'parse_args'           => array(),
-			'concat_items'         => '',
-			'select_option'        => '',
-			'list_input'           => '',
-			'list_input_checkbox'  => '',
-			'img_status_output'    => '',
-			'file_status_output'   => '',
+			'get_object_terms' => array(),
+			'is_valid_img_ext' => false,
+			'parse_args' => array(),
+			'concat_items' => '',
+			'select_option' => '',
+			'list_input' => '',
+			'list_input_checkbox' => '',
+			'img_status_output' => '',
+			'file_status_output' => '',
 			'parse_picker_options' => array(),
 		);
 		if ( isset( $proxied[ $method ] ) ) {
@@ -214,7 +205,6 @@ class CMB2_Types {
 	/**
 	 * Checks for a custom field class to use for rendering.
 	 * @since 2.2.4
-	 *
 	 * @param string $fieldtype Non-existent field type name
 	 */
 	public function maybe_custom_field_object( $fieldtype ) {
@@ -225,8 +215,8 @@ class CMB2_Types {
 		 *
 		 * @since 2.2.4
 		 *
-		 * @param string $class             The custom field type class to use. Default null.
-		 * @param object $field_type_object This `CMB2_Types` object.
+		 * @param string $class              The custom field type class to use. Default null.
+		 * @param object $field_type_object  This `CMB2_Types` object.
 		 */
 		$render_class_name = apply_filters( "cmb2_render_class_{$fieldtype}", null, $this );
 
@@ -245,10 +235,8 @@ class CMB2_Types {
 	/**
 	 * Retrieve text parameter from field's options array (if it has one), or use fallback text
 	 * @since  2.0.0
-	 *
-	 * @param  string $text_key Key in field's options array
-	 * @param  string $fallback Fallback text
-	 *
+	 * @param  string  $text_key Key in field's options array
+	 * @param  string  $fallback Fallback text
 	 * @return string            Text
 	 */
 	public function _text( $text_key, $fallback = '' ) {
@@ -258,9 +246,7 @@ class CMB2_Types {
 	/**
 	 * Determine a file's extension
 	 * @since  1.0.0
-	 *
-	 * @param  string $file File url
-	 *
+	 * @param  string       $file File url
 	 * @return string|false       File extension or false
 	 */
 	public function get_file_ext( $file ) {
@@ -270,9 +256,7 @@ class CMB2_Types {
 	/**
 	 * Get the file name from a url
 	 * @since  2.0.0
-	 *
 	 * @param  string $value File url or path
-	 *
 	 * @return string        File name
 	 */
 	public function get_file_name_from_path( $value ) {
@@ -282,10 +266,8 @@ class CMB2_Types {
 	/**
 	 * Combines attributes into a string for a form element
 	 * @since  1.1.0
-	 *
-	 * @param  array $attrs        Attributes to concatenate
-	 * @param  array $attr_exclude Attributes that should NOT be concatenated
-	 *
+	 * @param  array  $attrs        Attributes to concatenate
+	 * @param  array  $attr_exclude Attributes that should NOT be concatenated
 	 * @return string               String of attributes for form element
 	 */
 	public function concat_attrs( $attrs, $attr_exclude = array() ) {
@@ -308,9 +290,7 @@ class CMB2_Types {
 			</div>
 		</div>
 		<p class="cmb-add-row">
-			<button type="button" data-selector="<?php echo $table_id; ?>"
-			        class="cmb-add-row-button button"><?php echo esc_html( $this->_text( 'add_row_text',
-					esc_html__( 'Add Row', 'cmb2' ) ) ); ?></button>
+			<button type="button" data-selector="<?php echo $table_id; ?>" class="cmb-add-row-button button"><?php echo esc_html( $this->_text( 'add_row_text', esc_html__( 'Add Row', 'cmb2' ) ) ); ?></button>
 		</p>
 
 		<?php
@@ -325,7 +305,7 @@ class CMB2_Types {
 	public function repeatable_rows() {
 		$meta_value = array_filter( (array) $this->field->escaped_value() );
 		// check for default content
-		$default = $this->field->get_default();
+		$default    = $this->field->get_default();
 
 		// check for saved data
 		if ( ! empty( $meta_value ) ) {
@@ -341,7 +321,7 @@ class CMB2_Types {
 			foreach ( (array) $meta_value as $val ) {
 				$this->field->escaped_value = $val;
 				$this->repeat_row( $count < 2 );
-				$this->iterator ++;
+				$this->iterator++;
 			}
 		} else {
 
@@ -354,16 +334,15 @@ class CMB2_Types {
 
 		// Then add an empty row
 		$this->field->escaped_value = '';
-		$this->iterator             = $this->iterator ? $this->iterator : 1;
+		$this->iterator = $this->iterator ? $this->iterator : 1;
 		$this->repeat_row( false, 'empty-row hidden' );
 	}
 
 	/**
 	 * Generates a repeatable row's markup
 	 * @since 1.1.0
-	 *
 	 * @param bool   $disable_remover Whether remove button should be disabled
-	 * @param string $class           Repeatable table row's class
+	 * @param string $class Repeatable table row's class
 	 */
 	protected function repeat_row( $disable_remover = false, $class = 'cmb-repeat-row' ) {
 		$disabled = $disable_remover ? ' button-disabled' : '';
@@ -374,22 +353,18 @@ class CMB2_Types {
 				<?php $this->_render(); ?>
 			</div>
 			<div class="cmb-td cmb-remove-row">
-				<button type="button"
-				        class="button cmb-remove-row-button<?php echo $disabled; ?>"><?php echo esc_html( $this->_text( 'remove_row_text',
-						esc_html__( 'Remove', 'cmb2' ) ) ); ?></button>
+				<button type="button" class="button cmb-remove-row-button<?php echo $disabled; ?>"><?php echo esc_html( $this->_text( 'remove_row_text', esc_html__( 'Remove', 'cmb2' ) ) ); ?></button>
 			</div>
 		</div>
 
-	<?php
+		<?php
 	}
 
 	/**
 	 * Generates description markup
 	 * @since  1.0.0
-	 *
 	 * @param  boolean $paragraph Paragraph tag or span
 	 * @param  boolean $echo      Whether to echo description or only return it
-	 *
 	 * @return string             Field's description markup
 	 */
 	public function _desc( $paragraph = false, $echo = false, $repeat_group = false ) {
@@ -404,7 +379,7 @@ class CMB2_Types {
 			return;
 		}
 
-		$tag  = $paragraph ? 'p' : 'span';
+		$tag = $paragraph ? 'p' : 'span';
 		$desc = sprintf( "\n" . '<%1$s class="cmb2-metabox-description">%2$s</%1$s>' . "\n", $tag, $desc );
 
 		if ( $echo ) {
@@ -417,9 +392,7 @@ class CMB2_Types {
 	/**
 	 * Generate field name attribute
 	 * @since  1.1.0
-	 *
-	 * @param  string $suffix For multi-part fields
-	 *
+	 * @param  string  $suffix For multi-part fields
 	 * @return string          Name attribute
 	 */
 	public function _name( $suffix = '' ) {
@@ -429,9 +402,7 @@ class CMB2_Types {
 	/**
 	 * Generate field id attribute
 	 * @since  1.1.0
-	 *
-	 * @param  string $suffix For multi-part fields
-	 *
+	 * @param  string  $suffix For multi-part fields
 	 * @return string          Id attribute
 	 */
 	public function _id( $suffix = '' ) {
@@ -441,29 +412,23 @@ class CMB2_Types {
 	/**
 	 * Handles outputting an 'input' element
 	 * @since  1.1.0
-	 *
 	 * @param  array  $args Override arguments
 	 * @param  string $type Field type
-	 *
 	 * @return string       Form input element
 	 */
 	public function input( $args = array(), $type = __FUNCTION__ ) {
 		$this->type = new CMB2_Type_Text( $this, $args, $type );
-
 		return $this->type->render();
 	}
 
 	/**
 	 * Handles outputting an 'textarea' element
 	 * @since  1.1.0
-	 *
-	 * @param  array $args Override arguments
-	 *
+	 * @param  array  $args Override arguments
 	 * @return string       Form textarea element
 	 */
 	public function textarea( $args = array() ) {
 		$this->type = new CMB2_Type_Textarea( $this, $args );
-
 		return $this->type->render();
 	}
 
@@ -477,36 +442,35 @@ class CMB2_Types {
 
 	public function hidden() {
 		$args = array(
-			'type'  => 'hidden',
-			'desc'  => '',
+			'type' => 'hidden',
+			'desc' => '',
 			'class' => 'cmb2-hidden',
 		);
 		if ( $this->field->group ) {
-			$args['data-groupid']  = $this->field->group->id();
+			$args['data-groupid'] = $this->field->group->id();
 			$args['data-iterator'] = $this->iterator;
 		}
-
 		return $this->input( $args );
 	}
 
 	public function text_small() {
 		return $this->input( array(
 			'class' => 'cmb2-text-small',
-			'desc'  => $this->_desc(),
+			'desc' => $this->_desc(),
 		) );
 	}
 
 	public function text_medium() {
 		return $this->input( array(
 			'class' => 'cmb2-text-medium',
-			'desc'  => $this->_desc(),
+			'desc' => $this->_desc(),
 		) );
 	}
 
 	public function text_email() {
 		return $this->input( array(
 			'class' => 'cmb2-text-email cmb2-text-medium',
-			'type'  => 'email',
+			'type' => 'email',
 		) );
 	}
 
@@ -520,34 +484,30 @@ class CMB2_Types {
 	public function text_money() {
 		$input = $this->input( array(
 			'class' => 'cmb2-text-money',
-			'desc'  => $this->_desc(),
+			'desc' => $this->_desc(),
 		) );
-
 		return ( ! $this->field->get_param_callback_result( 'before_field' ) ? '$ ' : ' ' ) . $input;
 	}
 
 	public function textarea_small() {
 		return $this->textarea( array(
 			'class' => 'cmb2-textarea-small',
-			'rows'  => 4,
+			'rows' => 4,
 		) );
 	}
 
 	public function textarea_code() {
 		$this->type = new CMB2_Type_Textarea_Code( $this );
-
 		return $this->type->render();
 	}
 
 	public function wysiwyg( $args = array() ) {
 		$this->type = new CMB2_Type_Wysiwyg( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function text_date( $args = array() ) {
 		$this->type = new CMB2_Type_Text_Date( $this, $args );
-
 		return $this->type->render();
 	}
 
@@ -558,55 +518,46 @@ class CMB2_Types {
 
 	public function text_time( $args = array() ) {
 		$this->type = new CMB2_Type_Text_Time( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function text_datetime_timestamp( $args = array() ) {
 		$this->type = new CMB2_Type_Text_Datetime_Timestamp( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function text_datetime_timestamp_timezone( $args = array() ) {
 		$this->type = new CMB2_Type_Text_Datetime_Timestamp_Timezone( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function select_timezone() {
 		$this->type = new CMB2_Type_Select_Timezone( $this );
-
 		return $this->type->render();
 	}
 
 	public function colorpicker( $args = array(), $meta_value = '' ) {
 		$this->type = new CMB2_Type_Colorpicker( $this, $args, $meta_value );
-
 		return $this->type->render();
 	}
 
 	public function title( $args = array() ) {
 		$this->type = new CMB2_Type_Title( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function select( $args = array() ) {
 		$this->type = new CMB2_Type_Select( $this, $args );
-
 		return $this->type->render();
 	}
 
 	public function taxonomy_select() {
 		$this->type = new CMB2_Type_Taxonomy_Select( $this );
-
 		return $this->type->render();
 	}
 
 	public function radio( $args = array(), $type = __FUNCTION__ ) {
 		$this->type = new CMB2_Type_Radio( $this, $args, $type );
-
 		return $this->type->render();
 	}
 
@@ -616,7 +567,6 @@ class CMB2_Types {
 
 	public function multicheck( $type = 'checkbox' ) {
 		$this->type = new CMB2_Type_Multicheck( $this, array(), $type );
-
 		return $this->type->render();
 	}
 
@@ -626,13 +576,11 @@ class CMB2_Types {
 
 	public function checkbox( $args = array(), $is_checked = null ) {
 		$this->type = new CMB2_Type_Checkbox( $this, $args, $is_checked );
-
 		return $this->type->render();
 	}
 
 	public function taxonomy_radio() {
 		$this->type = new CMB2_Type_Taxonomy_Radio( $this );
-
 		return $this->type->render();
 	}
 
@@ -642,7 +590,6 @@ class CMB2_Types {
 
 	public function taxonomy_multicheck() {
 		$this->type = new CMB2_Type_Taxonomy_Multicheck( $this );
-
 		return $this->type->render();
 	}
 
@@ -652,19 +599,16 @@ class CMB2_Types {
 
 	public function oembed() {
 		$this->type = new CMB2_Type_Oembed( $this );
-
 		return $this->type->render();
 	}
 
 	public function file_list() {
 		$this->type = new CMB2_Type_File_List( $this );
-
 		return $this->type->render();
 	}
 
 	public function file() {
 		$this->type = new CMB2_Type_File( $this );
-
 		return $this->type->render();
 	}
 

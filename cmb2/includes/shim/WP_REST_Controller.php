@@ -21,173 +21,134 @@ abstract class WP_REST_Controller {
 	 * Register the routes for the objects of the controller.
 	 */
 	public function register_routes() {
-		_doing_it_wrong( 'WP_REST_Controller::register_routes',
-			__( 'The register_routes() method must be overriden' ),
-			'WPAPI-2.0' );
+		_doing_it_wrong( 'WP_REST_Controller::register_routes', __( 'The register_routes() method must be overriden' ), 'WPAPI-2.0' );
 	}
 
 	/**
 	 * Check if a given request has access to get items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|boolean
 	 */
 	public function get_items_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Get a collection of items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_items( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Check if a given request has access to get a specific item.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|boolean
 	 */
 	public function get_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Get one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_item( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Check if a given request has access to create items.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|boolean
 	 */
 	public function create_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Create one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function create_item( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Check if a given request has access to update a specific item.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|boolean
 	 */
 	public function update_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Update one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function update_item( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Check if a given request has access to delete a specific item.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|boolean
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Delete one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function delete_item( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Prepare the item for create or update operation.
 	 *
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_Error|object $prepared_item
 	 */
 	protected function prepare_item_for_database( $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Prepare the item for the REST response.
 	 *
-	 * @param mixed           $item    WordPress representation of the item.
+	 * @param mixed $item WordPress representation of the item.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response $response
 	 */
 	public function prepare_item_for_response( $item, $request ) {
-		return new WP_Error( 'invalid-method',
-			sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ),
-			array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
 	 * Prepare a response for inserting into a collection.
 	 *
 	 * @param WP_REST_Response $response Response object.
-	 *
 	 * @return array Response data, ready for insertion into collection data.
 	 */
 	public function prepare_response_for_collection( $response ) {
@@ -195,7 +156,7 @@ abstract class WP_REST_Controller {
 			return $response;
 		}
 
-		$data   = (array) $response->get_data();
+		$data = (array) $response->get_data();
 		$server = rest_get_server();
 
 		if ( method_exists( $server, 'get_compact_response_links' ) ) {
@@ -214,9 +175,8 @@ abstract class WP_REST_Controller {
 	/**
 	 * Filter a response based on the context defined in the schema.
 	 *
-	 * @param array  $data
+	 * @param array $data
 	 * @param string $context
-	 *
 	 * @return array
 	 */
 	public function filter_response_by_context( $data, $context ) {
@@ -283,29 +243,29 @@ abstract class WP_REST_Controller {
 	 */
 	public function get_collection_params() {
 		return array(
-			'context'  => $this->get_context_param(),
-			'page'     => array(
-				'description'       => __( 'Current page of the collection.' ),
-				'type'              => 'integer',
-				'default'           => 1,
-				'sanitize_callback' => 'absint',
-				'validate_callback' => 'rest_validate_request_arg',
-				'minimum'           => 1,
+			'context'                => $this->get_context_param(),
+			'page'                   => array(
+				'description'        => __( 'Current page of the collection.' ),
+				'type'               => 'integer',
+				'default'            => 1,
+				'sanitize_callback'  => 'absint',
+				'validate_callback'  => 'rest_validate_request_arg',
+				'minimum'            => 1,
 			),
-			'per_page' => array(
-				'description'       => __( 'Maximum number of items to be returned in result set.' ),
-				'type'              => 'integer',
-				'default'           => 10,
-				'minimum'           => 1,
-				'maximum'           => 100,
-				'sanitize_callback' => 'absint',
-				'validate_callback' => 'rest_validate_request_arg',
+			'per_page'               => array(
+				'description'        => __( 'Maximum number of items to be returned in result set.' ),
+				'type'               => 'integer',
+				'default'            => 10,
+				'minimum'            => 1,
+				'maximum'            => 100,
+				'sanitize_callback'  => 'absint',
+				'validate_callback'  => 'rest_validate_request_arg',
 			),
-			'search'   => array(
-				'description'       => __( 'Limit results to those matching a string.' ),
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_text_field',
-				'validate_callback' => 'rest_validate_request_arg',
+			'search'                 => array(
+				'description'        => __( 'Limit results to those matching a string.' ),
+				'type'               => 'string',
+				'sanitize_callback'  => 'sanitize_text_field',
+				'validate_callback'  => 'rest_validate_request_arg',
 			),
 		);
 	}
@@ -315,18 +275,17 @@ abstract class WP_REST_Controller {
 	 *
 	 * Ensures consistent description between endpoints, and populates enum from schema.
 	 *
-	 * @param array $args
-	 *
+	 * @param array     $args
 	 * @return array
 	 */
 	public function get_context_param( $args = array() ) {
 		$param_details = array(
-			'description'       => __( 'Scope under which the request is made; determines fields present in response.' ),
-			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_key',
-			'validate_callback' => 'rest_validate_request_arg',
+			'description'        => __( 'Scope under which the request is made; determines fields present in response.' ),
+			'type'               => 'string',
+			'sanitize_callback'  => 'sanitize_key',
+			'validate_callback'  => 'rest_validate_request_arg',
 		);
-		$schema        = $this->get_item_schema();
+		$schema = $this->get_item_schema();
 		if ( empty( $schema['properties'] ) ) {
 			return array_merge( $param_details, $args );
 		}
@@ -340,16 +299,14 @@ abstract class WP_REST_Controller {
 			$param_details['enum'] = array_unique( $contexts );
 			rsort( $param_details['enum'] );
 		}
-
 		return array_merge( $param_details, $args );
 	}
 
 	/**
 	 * Add the values from additional fields to a data object.
 	 *
-	 * @param array           $object
+	 * @param array  $object
 	 * @param WP_REST_Request $request
-	 *
 	 * @return array modified object with additional fields.
 	 */
 	protected function add_additional_fields_to_object( $object, $request ) {
@@ -362,11 +319,7 @@ abstract class WP_REST_Controller {
 				continue;
 			}
 
-			$object[ $field_name ] = call_user_func( $field_options['get_callback'],
-				$object,
-				$field_name,
-				$request,
-				$this->get_object_type() );
+			$object[ $field_name ] = call_user_func( $field_options['get_callback'], $object, $field_name, $request, $this->get_object_type() );
 		}
 
 		return $object;
@@ -375,7 +328,7 @@ abstract class WP_REST_Controller {
 	/**
 	 * Update the values of additional fields added to a data object.
 	 *
-	 * @param array           $object
+	 * @param array  $object
 	 * @param WP_REST_Request $request
 	 */
 	protected function update_additional_fields_for_object( $object, $request ) {
@@ -393,12 +346,7 @@ abstract class WP_REST_Controller {
 				continue;
 			}
 
-			call_user_func( $field_options['update_callback'],
-				$request[ $field_name ],
-				$object,
-				$field_name,
-				$request,
-				$this->get_object_type() );
+			call_user_func( $field_options['update_callback'], $request[ $field_name ], $object, $field_name, $request, $this->get_object_type() );
 		}
 	}
 
@@ -436,7 +384,6 @@ abstract class WP_REST_Controller {
 	 * Get all the registered additional fields for a given object-type.
 	 *
 	 * @param  string $object_type
-	 *
 	 * @return array
 	 */
 	protected function get_additional_fields( $object_type = null ) {
@@ -481,14 +428,13 @@ abstract class WP_REST_Controller {
 	 *                       values and may fall-back to a given default, this
 	 *                       is not done on `EDITABLE` requests. Default is
 	 *                       WP_REST_Server::CREATABLE.
-	 *
 	 * @return array $endpoint_args
 	 */
 	public function get_endpoint_args_for_item_schema( $method = WP_REST_Server::CREATABLE ) {
 
-		$schema            = $this->get_item_schema();
-		$schema_properties = ! empty( $schema['properties'] ) ? $schema['properties'] : array();
-		$endpoint_args     = array();
+		$schema                = $this->get_item_schema();
+		$schema_properties     = ! empty( $schema['properties'] ) ? $schema['properties'] : array();
+		$endpoint_args = array();
 
 		foreach ( $schema_properties as $field_id => $params ) {
 
@@ -525,8 +471,7 @@ abstract class WP_REST_Controller {
 
 				// Only use required / default from arg_options on CREATABLE endpoints.
 				if ( WP_REST_Server::CREATABLE !== $method ) {
-					$params['arg_options'] = array_diff_key( $params['arg_options'],
-						array( 'required' => '', 'default' => '' ) );
+					$params['arg_options'] = array_diff_key( $params['arg_options'], array( 'required' => '', 'default' => '' ) );
 				}
 
 				$endpoint_args[ $field_id ] = array_merge( $endpoint_args[ $field_id ], $params['arg_options'] );
@@ -545,10 +490,9 @@ abstract class WP_REST_Controller {
 	 * post that is used in the REST API.
 	 *
 	 * @see get_post()
-	 * @global WP_Query   $wp_query
+	 * @global WP_Query $wp_query
 	 *
 	 * @param int|WP_Post $post Post ID or post object. Defaults to global $post.
-	 *
 	 * @return WP_Post|null A `WP_Post` object when successful.
 	 */
 	public function get_post( $post ) {
@@ -559,8 +503,8 @@ abstract class WP_REST_Controller {
 		 *
 		 * Allows plugins to filter the post object as returned by `\WP_REST_Controller::get_post()`.
 		 *
-		 * @param WP_Post|null $post_obj The post object as returned by `get_post()`.
-		 * @param int|WP_Post  $post     The original value used to obtain the post object.
+		 * @param WP_Post|null $post_obj  The post object as returned by `get_post()`.
+		 * @param int|WP_Post  $post      The original value used to obtain the post object.
 		 */
 		$post = apply_filters( 'rest_the_post', $post_obj, $post );
 

@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB colorpicker field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -47,12 +46,11 @@ class CMB2_Type_Colorpicker extends CMB2_Type_Text {
 
 		wp_enqueue_style( 'wp-color-picker' );
 
-		$args = wp_parse_args( $this->args,
-			array(
-				'class'           => 'cmb2-colorpicker cmb2-text-small',
-				'value'           => $meta_value,
-				'js_dependencies' => 'wp-color-picker',
-			) );
+		$args = wp_parse_args( $this->args, array(
+			'class'           => 'cmb2-colorpicker cmb2-text-small',
+			'value'           => $meta_value,
+			'js_dependencies' => 'wp-color-picker',
+		) );
 
 		return parent::render( $args );
 	}

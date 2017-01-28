@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB text field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -36,24 +35,20 @@ class CMB2_Type_Text extends CMB2_Type_Base {
 	/**
 	 * Handles outputting an 'input' element
 	 * @since  1.1.0
-	 *
-	 * @param  array $args Override arguments
-	 *
+	 * @param  array  $args Override arguments
 	 * @return string       Form input element
 	 */
 	public function render( $args = array() ) {
 		$args = empty( $args ) ? $this->args : $args;
-		$a    = $this->parse_args( $this->type,
-			array(
-				'type'            => 'text',
-				'class'           => 'regular-text',
-				'name'            => $this->_name(),
-				'id'              => $this->_id(),
-				'value'           => $this->field->escaped_value(),
-				'desc'            => $this->_desc( true ),
-				'js_dependencies' => array(),
-			),
-			$args );
+		$a = $this->parse_args( $this->type, array(
+			'type'            => 'text',
+			'class'           => 'regular-text',
+			'name'            => $this->_name(),
+			'id'              => $this->_id(),
+			'value'           => $this->field->escaped_value(),
+			'desc'            => $this->_desc( true ),
+			'js_dependencies' => array(),
+		), $args );
 
 		if ( ! empty( $a['js_dependencies'] ) ) {
 			$this->field->add_js_dependencies( $a['js_dependencies'] );

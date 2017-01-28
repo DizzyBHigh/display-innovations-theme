@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Handles the dependencies and enqueueing of the CMB2 JS scripts
  *
@@ -35,8 +34,7 @@ class CMB2_JS {
 	/**
 	 * Add a dependency to the array of CMB2 JS dependencies
 	 * @since 2.0.7
-	 *
-	 * @param array|string $dependencies Array (or string) of dependencies to add
+	 * @param array|string  $dependencies Array (or string) of dependencies to add
 	 */
 	public static function add_dependencies( $dependencies ) {
 		foreach ( (array) $dependencies as $dependency ) {
@@ -69,10 +67,7 @@ class CMB2_JS {
 
 		// if timepicker
 		if ( isset( $dependencies['jquery-ui-datetimepicker'] ) ) {
-			wp_register_script( 'jquery-ui-datetimepicker',
-				CMB2_Utils::url( 'js/jquery-ui-timepicker-addon.min.js' ),
-				array( 'jquery-ui-slider' ),
-				CMB2_VERSION );
+			wp_register_script( 'jquery-ui-datetimepicker', CMB2_Utils::url( 'js/jquery-ui-timepicker-addon.min.js' ), array( 'jquery-ui-slider' ), CMB2_VERSION );
 		}
 
 		// if cmb2-wysiwyg
@@ -84,10 +79,7 @@ class CMB2_JS {
 
 		// if SCRIPT_DEBUG, we need to enqueue separately.
 		if ( $enqueue_wysiwyg ) {
-			wp_enqueue_script( 'cmb2-wysiwyg',
-				CMB2_Utils::url( 'js/cmb2-wysiwyg.js' ),
-				array( 'jquery', 'wp-util' ),
-				CMB2_VERSION );
+			wp_enqueue_script( 'cmb2-wysiwyg', CMB2_Utils::url( 'js/cmb2-wysiwyg.js' ), array( 'jquery', 'wp-util' ), CMB2_VERSION );
 		}
 
 		self::localize( $debug );
@@ -98,19 +90,14 @@ class CMB2_JS {
 	 * @since  2.0.7
 	 */
 	protected static function colorpicker_frontend() {
-		wp_register_script( 'iris',
-			admin_url( 'js/iris.min.js' ),
-			array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ),
-			CMB2_VERSION );
+		wp_register_script( 'iris', admin_url( 'js/iris.min.js' ), array( 'jquery-ui-draggable', 'jquery-ui-slider', 'jquery-touch-punch' ), CMB2_VERSION );
 		wp_register_script( 'wp-color-picker', admin_url( 'js/color-picker.min.js' ), array( 'iris' ), CMB2_VERSION );
-		wp_localize_script( 'wp-color-picker',
-			'wpColorPickerL10n',
-			array(
-				'clear'         => esc_html__( 'Clear', 'cmb2' ),
-				'defaultString' => esc_html__( 'Default', 'cmb2' ),
-				'pick'          => esc_html__( 'Select Color', 'cmb2' ),
-				'current'       => esc_html__( 'Current Color', 'cmb2' ),
-			) );
+		wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', array(
+			'clear'         => esc_html__( 'Clear', 'cmb2' ),
+			'defaultString' => esc_html__( 'Default', 'cmb2' ),
+			'pick'          => esc_html__( 'Select Color', 'cmb2' ),
+			'current'       => esc_html__( 'Current Color', 'cmb2' ),
+		) );
 	}
 
 	/**
@@ -124,7 +111,7 @@ class CMB2_JS {
 		}
 
 		$localized = true;
-		$l10n      = array(
+		$l10n = array(
 			'ajax_nonce'       => wp_create_nonce( 'ajax_nonce' ),
 			'ajaxurl'          => admin_url( '/admin-ajax.php' ),
 			'script_debug'     => $debug,
@@ -136,15 +123,11 @@ class CMB2_JS {
 					'changeMonth'     => true,
 					'changeYear'      => true,
 					'dateFormat'      => _x( 'mm/dd/yy', 'Valid formatDate string for jquery-ui datepicker', 'cmb2' ),
-					'dayNames'        => explode( ',',
-						esc_html__( 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', 'cmb2' ) ),
+					'dayNames'        => explode( ',', esc_html__( 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', 'cmb2' ) ),
 					'dayNamesMin'     => explode( ',', esc_html__( 'Su, Mo, Tu, We, Th, Fr, Sa', 'cmb2' ) ),
 					'dayNamesShort'   => explode( ',', esc_html__( 'Sun, Mon, Tue, Wed, Thu, Fri, Sat', 'cmb2' ) ),
-					'monthNames'      => explode( ',',
-						esc_html__( 'January, February, March, April, May, June, July, August, September, October, November, December',
-							'cmb2' ) ),
-					'monthNamesShort' => explode( ',',
-						esc_html__( 'Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec', 'cmb2' ) ),
+					'monthNames'      => explode( ',', esc_html__( 'January, February, March, April, May, June, July, August, September, October, November, December', 'cmb2' ) ),
+					'monthNamesShort' => explode( ',', esc_html__( 'Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec', 'cmb2' ) ),
 					'nextText'        => esc_html__( 'Next', 'cmb2' ),
 					'prevText'        => esc_html__( 'Prev', 'cmb2' ),
 					'currentText'     => esc_html__( 'Today', 'cmb2' ),
@@ -159,14 +142,12 @@ class CMB2_JS {
 					'secondText'    => esc_html__( 'Second', 'cmb2' ),
 					'currentText'   => esc_html__( 'Now', 'cmb2' ),
 					'closeText'     => esc_html__( 'Done', 'cmb2' ),
-					'timeFormat'    => _x( 'hh:mm TT',
-						'Valid formatting string, as per http://trentrichardson.com/examples/timepicker/',
-						'cmb2' ),
+					'timeFormat'    => _x( 'hh:mm TT', 'Valid formatting string, as per http://trentrichardson.com/examples/timepicker/', 'cmb2' ),
 					'controlType'   => 'select',
 					'stepMinute'    => 5,
 				),
 			),
-			'strings'          => array(
+			'strings' => array(
 				'upload_file'  => esc_html__( 'Use this file', 'cmb2' ),
 				'upload_files' => esc_html__( 'Use these files', 'cmb2' ),
 				'remove_image' => esc_html__( 'Remove Image', 'cmb2' ),

@@ -2,7 +2,7 @@
 /**
  * Template part for displaying page content in page.php.
  *
- * @link    https://codex.wordpress.org/Template_Hierarchy
+ * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package Heisenberg
  */
@@ -11,32 +11,29 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header>
-	<!-- .entry-header -->
+	</header><!-- .entry-header -->
 
 	<div class="entry-content">
 		<?php the_content(); ?>
 		<?php
-		wp_link_pages( array(
-			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'display-innovations' ),
-			'after'  => '</div>',
-		) );
+			wp_link_pages( array(
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'display-innovations' ),
+				'after'  => '</div>',
+			) );
 		?>
-	</div>
-	<!-- .entry-content -->
+	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">
 		<?php
 		edit_post_link(
 			sprintf(
-			/* translators: %s: Name of current post */
+				/* translators: %s: Name of current post */
 				esc_html__( 'Edit %s', 'display-innovations' ),
 				the_title( '<span class="screen-reader-text">"', '"</span>', false )
 			),
 			'<span class="edit-link">',
 			'</span>'
 		);
-		?>
-	</footer>
-	<!-- .entry-footer -->
+	?>
+	</footer><!-- .entry-footer -->
 </article><!-- #post-## -->

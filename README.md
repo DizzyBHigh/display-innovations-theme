@@ -1,11 +1,7 @@
-# Base5Designs - Display Innovations
+# Heisenberg - Zeek Starter Theme
 
-This is The theme for the http://display-innovations.com wordpress site.
-It is based on the Hesienberg Zeek Starter theme, based on <a href="http://underscores.me/">Underscores</a> and Foundation for Sites, version ^6.2.4.
+This is the Zeek Starter theme, based on <a href="http://underscores.me/">Underscores</a> and Foundation for Sites, version ^6.2.4.
 
-The Original Heisenberg theme has been heavily modified.
-
-This theme uses CMB2 Meta Boxes for content specific to Display Innovations.
 
 ## Prerequisites
 * Node.js 4.x.x and npm 2.x.x
@@ -13,11 +9,8 @@ This theme uses CMB2 Meta Boxes for content specific to Display Innovations.
 
 **Note: if you run into errors when using Terminal, you may have to use the sudo command to install Gulp.js. For instance, `sudo npm install -g gulp`**
 
-Please note if you want the base theme please download Heisenberg Here which will contain everything you need to create a site from scratch.
-Also check out the DOCS on Foundation's site http://foundation.zurb.com/.
-
 ## How to get started
-1. Clone or [download](https://github.com/DizzyBHigh/display-innovations-theme/master.zip "Get The Theme") the project into your `themes` directory `(./wp-content/themes)`
+1. Clone or [download](https://github.com/ZeekInteractive/display-innovations/archive/master.zip "Download the Heisenberg Zip") the project onto your `themes` directory `(./wp-content/themes)`
 2. From the theme directory, run `npm install`. All of the theme dependencies will be installed into `node_modules`.
 3. Run a find and replace to remove the `display-innovations` slug/string throughout with your project name.
 4. Run `gulp serve`

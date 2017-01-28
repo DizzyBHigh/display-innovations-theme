@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB2 field sanitization
  *
- * @since     0.0.4
+ * @since  0.0.4
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -30,7 +29,6 @@ class CMB2_Sanitize {
 	/**
 	 * Setup our class vars
 	 * @since 1.1.0
-	 *
 	 * @param CMB2_Field $field A CMB2 field object
 	 * @param mixed      $value Field value
 	 */
@@ -42,7 +40,6 @@ class CMB2_Sanitize {
 	/**
 	 * Catchall method if field's 'sanitization_cb' is NOT defined, or field type does not have a corresponding validation method
 	 * @since  1.0.0
-	 *
 	 * @param  string $name      Non-existent method name
 	 * @param  array  $arguments All arguments passed to the method
 	 */
@@ -62,17 +59,9 @@ class CMB2_Sanitize {
 		 * @deprecated See documentation for "cmb2_sanitize_{$this->type()}".
 		 */
 		if ( function_exists( 'apply_filters_deprecated' ) ) {
-			$override_value = apply_filters_deprecated( "cmb2_validate_{$this->field->type()}",
-				array( null, $this->value, $this->field->object_id, $this->field->args(), $this ),
-				'2.0.0',
-				"cmb2_sanitize_{$this->field->type()}" );
+			$override_value = apply_filters_deprecated( "cmb2_validate_{$this->field->type()}", array( null, $this->value, $this->field->object_id, $this->field->args(), $this ), '2.0.0', "cmb2_sanitize_{$this->field->type()}" );
 		} else {
-			$override_value = apply_filters( "cmb2_validate_{$this->field->type()}",
-				null,
-				$this->value,
-				$this->field->object_id,
-				$this->field->args(),
-				$this );
+			$override_value = apply_filters( "cmb2_validate_{$this->field->type()}", null, $this->value, $this->field->object_id, $this->field->args(), $this );
 		}
 
 		if ( null !== $override_value ) {
@@ -117,8 +106,7 @@ class CMB2_Sanitize {
 	 */
 	protected function _default_sanitization() {
 		// Handle repeatable fields array
-		return is_array( $this->value ) ? array_map( 'sanitize_text_field',
-			$this->value ) : sanitize_text_field( $this->value );
+		return is_array( $this->value ) ? array_map( 'sanitize_text_field', $this->value ) : sanitize_text_field( $this->value );
 	}
 
 	/**
@@ -130,9 +118,7 @@ class CMB2_Sanitize {
 		$sanitized_value = '';
 
 		if ( ! $this->field->args( 'taxonomy' ) ) {
-			CMB2_Utils::log_if_debug( __METHOD__,
-				__LINE__,
-				"{$this->field->type()} {$this->field->_id()} is missing the 'taxonomy' parameter." );
+			CMB2_Utils::log_if_debug( __METHOD__, __LINE__, "{$this->field->type()} {$this->field->_id()} is missing the 'taxonomy' parameter." );
 		} else {
 
 			if ( 'options-page' !== $this->field->object_type ) {
@@ -156,7 +142,7 @@ class CMB2_Sanitize {
 			 *
 			 * @param bool          $return_values By default, this is only true for 'options-page' boxes. To enable:
 			 *                                     `add_filter( "cmb2_return_taxonomy_values_{$cmb_id}", '__return_true' );`
-			 * @param CMB2_Sanitize $sanitizer     This object.
+			 * @param CMB2_Sanitize $sanitizer This object.
 			 */
 			if ( apply_filters( "cmb2_return_taxonomy_values_{$cmb_id}", $return_values, $this ) ) {
 				$sanitized_value = $this->_default_sanitization();
@@ -197,7 +183,7 @@ class CMB2_Sanitize {
 	public function colorpicker() {
 		// for repeatable
 		if ( is_array( $this->value ) ) {
-			$check       = $this->value;
+			$check = $this->value;
 			$this->value = array();
 			foreach ( $check as $key => $val ) {
 				if ( $val && '#' != $val ) {
@@ -207,7 +193,6 @@ class CMB2_Sanitize {
 		} else {
 			$this->value = ! $this->value || '#' == $this->value ? '' : esc_attr( $this->value );
 		}
-
 		return $this->value;
 	}
 
@@ -220,7 +205,7 @@ class CMB2_Sanitize {
 		// for repeatable
 		if ( is_array( $this->value ) ) {
 			foreach ( $this->value as $key => $val ) {
-				$val                 = trim( $val );
+				$val = trim( $val );
 				$this->value[ $key ] = is_email( $val ) ? $val : '';
 			}
 		} else {
@@ -243,7 +228,7 @@ class CMB2_Sanitize {
 
 		global $wp_locale;
 
-		$search  = array( $wp_locale->number_format['thousands_sep'], $wp_locale->number_format['decimal_point'] );
+		$search = array( $wp_locale->number_format['thousands_sep'], $wp_locale->number_format['decimal_point'] );
 		$replace = array( '', '.' );
 
 		// for repeatable
@@ -437,7 +422,7 @@ class CMB2_Sanitize {
 		$i       = $this->field->group->index;
 
 		// Check group $alldata data
-		$id_val = isset( $alldata[ $base_id ][ $i ][ $id_key ] )
+		$id_val  = isset( $alldata[ $base_id ][ $i ][ $id_key ] )
 			? absint( $alldata[ $base_id ][ $i ][ $id_key ] )
 			: '';
 
@@ -447,7 +432,7 @@ class CMB2_Sanitize {
 		}
 
 		return array(
-			'value'                  => $this->text_url(),
+			'value' => $this->text_url(),
 			'supporting_field_value' => $id_val,
 			'supporting_field_id'    => $id_key,
 		);
@@ -487,7 +472,7 @@ class CMB2_Sanitize {
 	 */
 	public function _new_supporting_field( $new_field_id ) {
 		return $this->field->get_field_clone( array(
-			'id'              => $new_field_id,
+			'id' => $new_field_id,
 			'sanitization_cb' => false,
 		) );
 	}
@@ -495,10 +480,8 @@ class CMB2_Sanitize {
 	/**
 	 * If repeating, loop through and re-apply sanitization method
 	 * @since  1.1.0
-	 *
 	 * @param  string $method Class method
 	 * @param  bool   $repeat Whether repeating or not
-	 *
 	 * @return mixed          Sanitized value
 	 */
 	public function _check_repeat( $method, $repeat ) {
@@ -526,18 +509,14 @@ class CMB2_Sanitize {
 	/**
 	 * Determine if passed value is an empty array
 	 * @since  2.0.6
-	 *
-	 * @param  mixed $to_check Value to check
-	 *
+	 * @param  mixed  $to_check Value to check
 	 * @return boolean          Whether value is an array that's empty
 	 */
 	public function _is_empty_array( $to_check ) {
 		if ( is_array( $to_check ) ) {
 			$cleaned_up = array_filter( $to_check );
-
 			return empty( $cleaned_up );
 		}
-
 		return false;
 	}
 

@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Handles hooking CMB2 forms/metaboxes into the post/attachement/user screens
  * and handles hooking in and saving those fields.
  *
- * @since     2.0.0
+ * @since  2.0.0
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -45,11 +44,10 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Constructor
 	 * @since 2.0.0
-	 *
 	 * @param CMB2 $cmb The CMB2 object to hookup
 	 */
 	public function __construct( CMB2 $cmb ) {
-		$this->cmb         = $cmb;
+		$this->cmb = $cmb;
 		$this->object_type = $this->cmb->mb_object_type();
 	}
 
@@ -98,7 +96,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 		if ( $this->cmb->has_columns ) {
 			add_filter( 'manage_edit-comments_columns', array( $this, 'register_column_headers' ) );
-			add_action( 'manage_comments_custom_column', array( $this, 'column_display' ), 10, 3 );
+			add_action( 'manage_comments_custom_column', array( $this, 'column_display'  ), 10, 3 );
 		}
 	}
 
@@ -115,14 +113,13 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 		if ( $this->cmb->has_columns ) {
 			add_filter( 'manage_users_columns', array( $this, 'register_column_headers' ) );
-			add_filter( 'manage_users_custom_column', array( $this, 'return_column_display' ), 10, 3 );
+			add_filter( 'manage_users_custom_column', array( $this, 'return_column_display'  ), 10, 3 );
 		}
 	}
 
 	public function term_hooks() {
 		if ( ! function_exists( 'get_term_meta' ) ) {
-			wp_die( esc_html__( 'Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress install.',
-				'cmb2' ) );
+			wp_die( esc_html__( 'Term Metadata is a WordPress 4.4+ feature. Please upgrade your WordPress install.', 'cmb2' ) );
 		}
 
 		if ( ! $this->cmb->prop( 'taxonomies' ) ) {
@@ -150,7 +147,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 			if ( $this->cmb->has_columns ) {
 				add_filter( "manage_edit-{$taxonomy}_columns", array( $this, 'register_column_headers' ) );
-				add_filter( "manage_{$taxonomy}_custom_column", array( $this, 'return_column_display' ), 10, 3 );
+				add_filter( "manage_{$taxonomy}_custom_column", array( $this, 'return_column_display'  ), 10, 3 );
 			}
 		}
 
@@ -177,9 +174,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 		// Filter required styles and register stylesheet
 		$dependencies = apply_filters( 'cmb2_style_dependencies', array() );
 		wp_register_style( 'cmb2-styles', CMB2_Utils::url( "css/cmb2{$front}{$rtl}{$min}.css" ), $dependencies );
-		wp_register_style( 'cmb2-display-styles',
-			CMB2_Utils::url( "css/cmb2-display{$rtl}{$min}.css" ),
-			$dependencies );
+		wp_register_style( 'cmb2-display-styles', CMB2_Utils::url( "css/cmb2-display{$rtl}{$min}.css" ), $dependencies );
 
 		self::$css_registration_done = true;
 	}
@@ -257,12 +252,12 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 			} else {
 
-				$before                 = array_slice( $columns, 0, absint( $column['position'] ) );
+				$before = array_slice( $columns, 0, absint( $column['position'] ) );
 				$before[ $field['id'] ] = $column['name'];
-				$columns                = $before + $columns;
+				$columns = $before + $columns;
 			}
 
-			$column['field']               = $field;
+			$column['field'] = $field;
 			$this->columns[ $field['id'] ] = $column;
 		}
 
@@ -275,7 +270,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	 */
 	public function column_display( $column_name, $object_id ) {
 		if ( isset( $this->columns[ $column_name ] ) ) {
-			$field = new CMB2_Field( array(
+ 			$field = new CMB2_Field( array(
 				'field_args'  => $this->columns[ $column_name ]['field'],
 				'object_type' => $this->object_type,
 				'object_id'   => $this->cmb->object_id( $object_id ),
@@ -323,27 +318,20 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 
 		foreach ( $this->cmb->prop( 'object_types' ) as $post_type ) {
 			if ( $this->cmb->prop( 'closed' ) ) {
-				add_filter( "postbox_classes_{$post_type}_{$this->cmb->cmb_id}",
-					array( $this, 'close_metabox_class' ) );
+				add_filter( "postbox_classes_{$post_type}_{$this->cmb->cmb_id}", array( $this, 'close_metabox_class' ) );
 			}
 
 			if ( count( $this->cmb->tax_metaboxes_to_remove ) ) {
 				$this->remove_default_tax_metaboxes( $post_type );
 			}
 
-			add_meta_box( $this->cmb->cmb_id,
-				$this->cmb->prop( 'title' ),
-				array( $this, 'metabox_callback' ),
-				$post_type,
-				$this->cmb->prop( 'context' ),
-				$this->cmb->prop( 'priority' ) );
+			add_meta_box( $this->cmb->cmb_id, $this->cmb->prop( 'title' ), array( $this, 'metabox_callback' ), $post_type, $this->cmb->prop( 'context' ), $this->cmb->prop( 'priority' ) );
 		}
 	}
 
 	/**
 	 * Remove the specified default taxonomy metaboxes for a post-type.
 	 * @since 2.2.3
-	 *
 	 * @param string $post_type Post type to remove the metabox for.
 	 */
 	protected function remove_default_tax_metaboxes( $post_type ) {
@@ -360,14 +348,11 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Add 'closed' class to metabox
 	 * @since  2.0.0
-	 *
-	 * @param  array $classes Array of classes
-	 *
+	 * @param  array  $classes Array of classes
 	 * @return array           Modified array of classes
 	 */
 	public function close_metabox_class( $classes ) {
 		$classes[] = 'closed';
-
 		return $classes;
 	}
 
@@ -411,9 +396,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Display metaboxes for an object type
 	 * @since  2.2.0
-	 *
 	 * @param  string $type Object type
-	 *
 	 * @return void
 	 */
 	public function show_form_for_type( $type ) {
@@ -447,9 +430,9 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 		/**
 		 * Filter to determine if metabox should show. Default is true
 		 *
-		 * @param array $show          Default is true, show the metabox
-		 * @param mixed $meta_box_args Array of the metabox arguments
-		 * @param mixed $cmb           The CMB2 instance
+		 * @param array  $show          Default is true, show the metabox
+		 * @param mixed  $meta_box_args Array of the metabox arguments
+		 * @param mixed  $cmb           The CMB2 instance
 		 */
 		$show = (bool) apply_filters( 'cmb2_show_on', $show, $this->cmb->meta_box, $this->cmb );
 
@@ -459,9 +442,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Get the CMB priority property set to numeric hook priority.
 	 * @since  2.2.0
-	 *
 	 * @param  integer $default Default display hook priority.
-	 *
 	 * @return integer          Hook priority.
 	 */
 	public function get_priority( $default = 10 ) {
@@ -490,10 +471,8 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Save data from post metabox
 	 * @since  1.0.0
-	 *
-	 * @param  int   $post_id Post ID
-	 * @param  mixed $post    Post object
-	 *
+	 * @param  int    $post_id Post ID
+	 * @param  mixed  $post    Post object
 	 * @return null
 	 */
 	public function save_post( $post_id, $post = false ) {
@@ -519,9 +498,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Save data from comment metabox
 	 * @since  2.0.9
-	 *
-	 * @param  int $comment_id Comment ID
-	 *
+	 * @param  int    $comment_id Comment ID
 	 * @return null
 	 */
 	public function save_comment( $comment_id ) {
@@ -536,9 +513,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Save data from user fields
 	 * @since  1.0.x
-	 *
-	 * @param  int $user_id User ID
-	 *
+	 * @param  int   $user_id  User ID
 	 * @return null
 	 */
 	public function save_user( $user_id ) {
@@ -551,11 +526,9 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Save data from term fields
 	 * @since  2.2.0
-	 *
 	 * @param  int    $term_id  Term ID
 	 * @param  int    $tt_id    Term Taxonomy ID
 	 * @param  string $taxonomy Taxonomy
-	 *
 	 * @return null
 	 */
 	public function save_term( $term_id, $tt_id, $taxonomy = '' ) {
@@ -570,11 +543,9 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Delete term meta when a term is deleted.
 	 * @since  2.2.0
-	 *
 	 * @param  int    $term_id  Term ID
 	 * @param  int    $tt_id    Term Taxonomy ID
 	 * @param  string $taxonomy Taxonomy
-	 *
 	 * @return null
 	 */
 	public function delete_term( $term_id, $tt_id, $taxonomy = '' ) {
@@ -592,33 +563,28 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 	/**
 	 * Determines if the current object is able to be saved
 	 * @since  2.0.9
-	 *
-	 * @param  string $type Current post_type or comment_type
-	 *
+	 * @param  string  $type Current post_type or comment_type
 	 * @return bool          Whether object can be saved
 	 */
 	public function can_save( $type = '' ) {
-		return apply_filters( 'cmb2_can_save',
-			(
-				$this->cmb->prop( 'save_fields' )
-				// check nonce
-				&& isset( $_POST[ $this->cmb->nonce() ] )
-				&& wp_verify_nonce( $_POST[ $this->cmb->nonce() ], $this->cmb->nonce() )
-				// check if autosave
-				&& ! ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-				// get the metabox types & compare it to this type
-				&& ( $type && in_array( $type, $this->cmb->prop( 'object_types' ) ) )
-				// Don't do updates during a switch-to-blog instance.
-				&& ! ( is_multisite() && ms_is_switched() )
-			) );
+		return apply_filters( 'cmb2_can_save', (
+			$this->cmb->prop( 'save_fields' )
+			// check nonce
+			&& isset( $_POST[ $this->cmb->nonce() ] )
+			&& wp_verify_nonce( $_POST[ $this->cmb->nonce() ], $this->cmb->nonce() )
+			// check if autosave
+			&& ! ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			// get the metabox types & compare it to this type
+			&& ( $type && in_array( $type, $this->cmb->prop( 'object_types' ) ) )
+			// Don't do updates during a switch-to-blog instance.
+			&& ! ( is_multisite() && ms_is_switched() )
+		) );
 	}
 
 	/**
 	 * Determine if taxonomy of term being modified is cmb2-editable.
 	 * @since  2.2.0
-	 *
 	 * @param  string $taxonomy Taxonomy of term being modified.
-	 *
 	 * @return bool             Whether taxonomy is editable.
 	 */
 	public function taxonomy_can_save( $taxonomy ) {
@@ -646,7 +612,7 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 			&& $this->cmb->has_columns
 			&& $this->cmb->prop( 'cmb_styles' )
 			&& in_array( $pagenow, array( 'edit.php', 'users.php', 'edit-comments.php', 'edit-tags.php' ), 1 )
-		) {
+			) {
 			self::enqueue_cmb_css( 'cmb2-display-styles' );
 		}
 	}
@@ -666,7 +632,6 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 		 * White list the options as this method can be used as a hook callback
 		 * and have a different argument passed.
 		 */
-
 		return wp_enqueue_style( 'cmb2-display-styles' === $handle ? $handle : 'cmb2-styles' );
 	}
 
@@ -680,7 +645,6 @@ class CMB2_hookup extends CMB2_Hookup_Base {
 		}
 
 		self::register_js();
-
 		return true;
 	}
 

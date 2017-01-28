@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB oembed field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -33,8 +32,8 @@ class CMB2_Type_Oembed extends CMB2_Type_Text {
 			'data-objectid'   => $field->object_id,
 			'data-objecttype' => $field->object_type,
 		) )
-		       . '<p class="cmb-spinner spinner" style="display:none;"></p>'
-		       . '<div id="' . $this->_id( '-status' ) . '" class="cmb2-media-status ui-helper-clearfix embed_wrap">' . $oembed . '</div>';
+		. '<p class="cmb-spinner spinner" style="display:none;"></p>'
+		. '<div id="'. $this->_id( '-status' ). '" class="cmb2-media-status ui-helper-clearfix embed_wrap">' . $oembed . '</div>';
 	}
 
 }

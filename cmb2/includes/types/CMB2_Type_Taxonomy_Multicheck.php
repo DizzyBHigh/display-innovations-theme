@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB taxonomy_multicheck field type
  *
- * @since     2.2.2
+ * @since  2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -22,27 +21,25 @@ class CMB2_Type_Taxonomy_Multicheck extends CMB2_Type_Taxonomy_Base {
 			: wp_list_pluck( $names, 'slug' );
 		$terms       = $this->get_terms();
 		$name        = $this->_name() . '[]';
-		$options     = '';
-		$i           = 1;
+		$options     = ''; $i = 1;
 
 		if ( ! $terms ) {
-			$options .= sprintf( '<li><label>%s</label></li>',
-				esc_html( $this->_text( 'no_terms_text', esc_html__( 'No terms', 'cmb2' ) ) ) );
+			$options .= sprintf( '<li><label>%s</label></li>', esc_html( $this->_text( 'no_terms_text', esc_html__( 'No terms', 'cmb2' ) ) ) );
 		} else {
 
 			foreach ( $terms as $term ) {
 				$args = array(
 					'value' => $term->slug,
 					'label' => $term->name,
-					'type'  => 'checkbox',
-					'name'  => $name,
+					'type' => 'checkbox',
+					'name' => $name,
 				);
 
 				if ( is_array( $saved_terms ) && in_array( $term->slug, $saved_terms ) ) {
 					$args['checked'] = 'checked';
 				}
 				$options .= $this->types->list_input( $args, $i );
-				$i ++;
+				$i++;
 			}
 		}
 

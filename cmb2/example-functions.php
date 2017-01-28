@@ -33,7 +33,6 @@ function yourprefix_show_if_front_page( $cmb ) {
 	if ( $cmb->object_id !== get_option( 'page_on_front' ) ) {
 		return false;
 	}
-
 	return true;
 }
 
@@ -49,7 +48,6 @@ function yourprefix_hide_if_no_cats( $field ) {
 	if ( ! has_tag( 'cats', $field->object_id ) ) {
 		return false;
 	}
-
 	return true;
 }
 
@@ -69,12 +67,10 @@ function yourprefix_render_row_cb( $field_args, $field ) {
 	?>
 	<div class="custom-field-row <?php echo $classes; ?>">
 		<p><label for="<?php echo $id; ?>"><?php echo $label; ?></label></p>
-
 		<p><input id="<?php echo $id; ?>" type="text" name="<?php echo $name; ?>" value="<?php echo $value; ?>"/></p>
-
 		<p class="description"><?php echo $description; ?></p>
 	</div>
-<?php
+	<?php
 }
 
 /**
@@ -87,17 +83,16 @@ function yourprefix_display_text_small_column( $field_args, $field ) {
 	?>
 	<div class="custom-column-display <?php echo $field->row_classes(); ?>">
 		<p><?php echo $field->escaped_value(); ?></p>
-
 		<p class="description"><?php echo $field->args( 'description' ); ?></p>
 	</div>
-<?php
+	<?php
 }
 
 /**
  * Conditionally displays a message if the $post_id is 2
  *
- * @param  array $field_args Array of field parameters
- * @param        CMB2_Field  object $field      Field object
+ * @param  array             $field_args Array of field parameters
+ * @param  CMB2_Field object $field      Field object
  */
 function yourprefix_before_row_if_2( $field_args, $field ) {
 	if ( 2 == $field->object_id ) {
@@ -118,9 +113,9 @@ function yourprefix_register_demo_metabox() {
 	 * Sample metabox to demonstrate each field type included
 	 */
 	$cmb_demo = new_cmb2_box( array(
-		'id'           => $prefix . 'metabox',
-		'title'        => esc_html__( 'Test Metabox', 'cmb2' ),
-		'object_types' => array( 'page', ), // Post type
+		'id'            => $prefix . 'metabox',
+		'title'         => esc_html__( 'Test Metabox', 'cmb2' ),
+		'object_types'  => array( 'page', ), // Post type
 		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
 		// 'context'    => 'normal',
 		// 'priority'   => 'high',
@@ -178,10 +173,10 @@ function yourprefix_register_demo_metabox() {
 	) );
 
 	$cmb_demo->add_field( array(
-		'name'          => esc_html__( 'Custom Rendered Field', 'cmb2' ),
-		'desc'          => esc_html__( 'field description (optional)', 'cmb2' ),
-		'id'            => $prefix . 'render_row_cb',
-		'type'          => 'text',
+		'name' => esc_html__( 'Custom Rendered Field', 'cmb2' ),
+		'desc' => esc_html__( 'field description (optional)', 'cmb2' ),
+		'id'   => $prefix . 'render_row_cb',
+		'type' => 'text',
 		'render_row_cb' => 'yourprefix_render_row_cb',
 	) );
 
@@ -411,7 +406,7 @@ function yourprefix_register_demo_metabox() {
 	$cmb_demo->add_field( array(
 		'name' => esc_html__( 'oEmbed', 'cmb2' ),
 		'desc' => sprintf(
-		/* translators: %s: link to codex.wordpress.org/Embeds */
+			/* translators: %s: link to codex.wordpress.org/Embeds */
 			esc_html__( 'Enter a youtube, twitter, or instagram URL. Supports services listed at %s.', 'cmb2' ),
 			'<a href="https://codex.wordpress.org/Embeds">codex.wordpress.org/Embeds</a>'
 		),
@@ -498,35 +493,31 @@ function yourprefix_register_repeatable_group_field_metabox() {
 	 *
 	 * The parent field's id needs to be passed as the first argument.
 	 */
-	$cmb_group->add_group_field( $group_field_id,
-		array(
-			'name' => esc_html__( 'Entry Title', 'cmb2' ),
-			'id'   => 'title',
-			'type' => 'text',
-			// 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
-		) );
+	$cmb_group->add_group_field( $group_field_id, array(
+		'name'       => esc_html__( 'Entry Title', 'cmb2' ),
+		'id'         => 'title',
+		'type'       => 'text',
+		// 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+	) );
 
-	$cmb_group->add_group_field( $group_field_id,
-		array(
-			'name'        => esc_html__( 'Description', 'cmb2' ),
-			'description' => esc_html__( 'Write a short description for this entry', 'cmb2' ),
-			'id'          => 'description',
-			'type'        => 'textarea_small',
-		) );
+	$cmb_group->add_group_field( $group_field_id, array(
+		'name'        => esc_html__( 'Description', 'cmb2' ),
+		'description' => esc_html__( 'Write a short description for this entry', 'cmb2' ),
+		'id'          => 'description',
+		'type'        => 'textarea_small',
+	) );
 
-	$cmb_group->add_group_field( $group_field_id,
-		array(
-			'name' => esc_html__( 'Entry Image', 'cmb2' ),
-			'id'   => 'image',
-			'type' => 'file',
-		) );
+	$cmb_group->add_group_field( $group_field_id, array(
+		'name' => esc_html__( 'Entry Image', 'cmb2' ),
+		'id'   => 'image',
+		'type' => 'file',
+	) );
 
-	$cmb_group->add_group_field( $group_field_id,
-		array(
-			'name' => esc_html__( 'Image Caption', 'cmb2' ),
-			'id'   => 'image_caption',
-			'type' => 'text',
-		) );
+	$cmb_group->add_group_field( $group_field_id, array(
+		'name' => esc_html__( 'Image Caption', 'cmb2' ),
+		'id'   => 'image_caption',
+		'type' => 'text',
+	) );
 
 }
 
@@ -542,13 +533,10 @@ function yourprefix_register_user_profile_metabox() {
 	 */
 	$cmb_user = new_cmb2_box( array(
 		'id'               => $prefix . 'edit',
-		'title'            => esc_html__( 'User Profile Metabox', 'cmb2' ),
-		// Doesn't output for user boxes
-		'object_types'     => array( 'user' ),
-		// Tells CMB2 to use user_meta vs post_meta
+		'title'            => esc_html__( 'User Profile Metabox', 'cmb2' ), // Doesn't output for user boxes
+		'object_types'     => array( 'user' ), // Tells CMB2 to use user_meta vs post_meta
 		'show_names'       => true,
-		'new_user_section' => 'add-new-user',
-		// where form will show on new user page. 'add-existing-user' is only other valid option.
+		'new_user_section' => 'add-new-user', // where form will show on new user page. 'add-existing-user' is only other valid option.
 	) );
 
 	$cmb_user->add_field( array(
@@ -560,10 +548,10 @@ function yourprefix_register_user_profile_metabox() {
 	) );
 
 	$cmb_user->add_field( array(
-		'name' => esc_html__( 'Avatar', 'cmb2' ),
-		'desc' => esc_html__( 'field description (optional)', 'cmb2' ),
-		'id'   => $prefix . 'avatar',
-		'type' => 'file',
+		'name'    => esc_html__( 'Avatar', 'cmb2' ),
+		'desc'    => esc_html__( 'field description (optional)', 'cmb2' ),
+		'id'      => $prefix . 'avatar',
+		'type'    => 'file',
 	) );
 
 	$cmb_user->add_field( array(
@@ -614,10 +602,10 @@ function yourprefix_register_taxonomy_metabox() {
 	 * Metabox to add fields to categories and tags
 	 */
 	$cmb_term = new_cmb2_box( array(
-		'id'           => $prefix . 'edit',
-		'title'        => esc_html__( 'Category Metabox', 'cmb2' ), // Doesn't output for term boxes
-		'object_types' => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta
-		'taxonomies'   => array( 'category', 'post_tag' ), // Tells CMB2 which taxonomies should have these fields
+		'id'               => $prefix . 'edit',
+		'title'            => esc_html__( 'Category Metabox', 'cmb2' ), // Doesn't output for term boxes
+		'object_types'     => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta
+		'taxonomies'       => array( 'category', 'post_tag' ), // Tells CMB2 which taxonomies should have these fields
 		// 'new_term_section' => true, // Will display in the "Add New Category" section
 	) );
 
@@ -709,30 +697,27 @@ function yourprefix_register_rest_api_box() {
 	$prefix = 'yourprefix_rest_';
 
 	$cmb_rest = new_cmb2_box( array(
-		'id'           => $prefix . 'metabox',
-		'title'        => esc_html__( 'REST Test Box', 'cmb2' ),
-		'object_types' => array( 'page', ),
-		// Post type
-		'show_in_rest' => WP_REST_Server::ALLMETHODS,
-		// WP_REST_Server::READABLE|WP_REST_Server::EDITABLE, // Determines which HTTP methods the box is visible in.
+		'id'            => $prefix . 'metabox',
+		'title'         => esc_html__( 'REST Test Box', 'cmb2' ),
+		'object_types'  => array( 'page', ), // Post type
+		'show_in_rest' => WP_REST_Server::ALLMETHODS, // WP_REST_Server::READABLE|WP_REST_Server::EDITABLE, // Determines which HTTP methods the box is visible in.
 		// Optional callback to limit box visibility.
 		// See: https://github.com/WebDevStudios/CMB2/wiki/REST-API#permissions
 		// 'get_box_permissions_check_cb' => 'yourprefix_limit_rest_view_to_logged_in_users',
 	) );
 
 	$cmb_rest->add_field( array(
-		'name' => esc_html__( 'REST Test Text', 'cmb2' ),
-		'desc' => esc_html__( 'Will show in the REST API for this box and for pages.', 'cmb2' ),
-		'id'   => $prefix . 'text',
-		'type' => 'text',
+		'name'       => esc_html__( 'REST Test Text', 'cmb2' ),
+		'desc'       => esc_html__( 'Will show in the REST API for this box and for pages.', 'cmb2' ),
+		'id'         => $prefix . 'text',
+		'type'       => 'text',
 	) );
 
 	$cmb_rest->add_field( array(
-		'name'         => esc_html__( 'REST Editable Test Text', 'cmb2' ),
-		'desc'         => esc_html__( 'Will show in REST API "editable" contexts only (`POST` requests).', 'cmb2' ),
-		'id'           => $prefix . 'editable_text',
-		'type'         => 'text',
-		'show_in_rest' => WP_REST_Server::EDITABLE
-		// WP_REST_Server::ALLMETHODS|WP_REST_Server::READABLE, // Determines which HTTP methods the field is visible in. Will override the cmb2_box 'show_in_rest' param.
+		'name'       => esc_html__( 'REST Editable Test Text', 'cmb2' ),
+		'desc'       => esc_html__( 'Will show in REST API "editable" contexts only (`POST` requests).', 'cmb2' ),
+		'id'         => $prefix . 'editable_text',
+		'type'       => 'text',
+		'show_in_rest' => WP_REST_Server::EDITABLE// WP_REST_Server::ALLMETHODS|WP_REST_Server::READABLE, // Determines which HTTP methods the field is visible in. Will override the cmb2_box 'show_in_rest' param.
 	) );
 }

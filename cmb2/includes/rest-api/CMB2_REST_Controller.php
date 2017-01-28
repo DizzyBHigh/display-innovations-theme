@@ -8,8 +8,10 @@ if ( ! class_exists( 'WP_REST_Controller' ) ) {
  * Creates CMB2 objects/fields endpoint for WordPres REST API.
  * Allows access to fields registered to a specific post type and more.
  *
+ * @todo  Add better documentation.
+ * @todo  Research proper schema.
  *
- * @since     2.2.3
+ * @since 2.2.3
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -184,7 +186,6 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 	 * @since 2.2.3
 	 *
 	 * @param  mixed $data
-	 *
 	 * @return array $data
 	 */
 	public function prepare_item( $data ) {
@@ -197,7 +198,6 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 	 * @since  2.2.3
 	 *
 	 * @param  mixed $cb Callable function/method.
-	 *
 	 * @return mixed     Results of output buffer after calling function/method.
 	 */
 	public function get_cb_results( $cb ) {
@@ -214,9 +214,8 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 	 *
 	 * @since 2.2.3
 	 *
-	 * @param  mixed           $item    WordPress representation of the item.
-	 * @param  WP_REST_Request $request Request object.
-	 *
+	 * @param  mixed            $item     WordPress representation of the item.
+	 * @param  WP_REST_Request  $request  Request object.
 	 * @return WP_REST_Response $response
 	 */
 	public function prepare_item_for_response( $data, $request = null ) {
@@ -231,7 +230,6 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 		 * @param object $request        The WP_REST_Request object
 		 * @param object $cmb2_endpoints This endpoints object
 		 */
-
 		return apply_filters( 'cmb2_rest_prepare', rest_ensure_response( $data ), $this->request, $this );
 	}
 
@@ -249,9 +247,7 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 		$this->initiate_rest_box( $request, $request_type );
 
 		if ( ! is_wp_error( $this->rest_box ) && ! $this->rest_box->rest_read ) {
-			$this->rest_box = new WP_Error( 'cmb2_rest_no_read_error',
-				__( 'This box does not have read permissions.', 'cmb2' ),
-				array( 'status' => 403 ) );
+			$this->rest_box = new WP_Error( 'cmb2_rest_no_read_error', __( 'This box does not have read permissions.', 'cmb2' ), array( 'status' => 403 ) );
 		}
 	}
 
@@ -269,9 +265,7 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 		$this->initiate_rest_box( $request, $request_type );
 
 		if ( ! is_wp_error( $this->rest_box ) && ! $this->rest_box->rest_edit ) {
-			$this->rest_box = new WP_Error( 'cmb2_rest_no_write_error',
-				__( 'This box does not have write permissions.', 'cmb2' ),
-				array( 'status' => 403 ) );
+			$this->rest_box = new WP_Error( 'cmb2_rest_no_write_error', __( 'This box does not have write permissions.', 'cmb2' ), array( 'status' => 403 ) );
 		}
 	}
 
@@ -292,10 +286,7 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 
 		if ( ! $this->rest_box ) {
 
-			$this->rest_box = new WP_Error( 'cmb2_rest_box_not_found_error',
-				__( 'No box found by that id. A box needs to be registered with the "show_in_rest" parameter configured.',
-					'cmb2' ),
-				array( 'status' => 403 ) );
+			$this->rest_box = new WP_Error( 'cmb2_rest_box_not_found_error', __( 'No box found by that id. A box needs to be registered with the "show_in_rest" parameter configured.', 'cmb2' ), array( 'status' => 403 ) );
 
 		} else {
 
@@ -366,24 +357,24 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 	 */
 	public function get_item_schema() {
 		$schema = array(
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
-			'title'      => 'CMB2',
-			'type'       => 'object',
-			'properties' => array(
+			'$schema'              => 'http://json-schema.org/draft-04/schema#',
+			'title'                => 'CMB2',
+			'type'                 => 'object',
+			'properties'           => array(
 				'description' => array(
-					'description' => __( 'A human-readable description of the object.', 'cmb2' ),
-					'type'        => 'string',
-					'context'     => array( 'view' ),
-				),
-				'name'        => array(
-					'description' => __( 'The id for the object.', 'cmb2' ),
-					'type'        => 'integer',
-					'context'     => array( 'view' ),
-				),
-				'name'        => array(
-					'description' => __( 'The title for the object.', 'cmb2' ),
-					'type'        => 'string',
-					'context'     => array( 'view' ),
+					'description'  => __( 'A human-readable description of the object.', 'cmb2' ),
+					'type'         => 'string',
+					'context'      => array( 'view' ),
+					),
+					'name'             => array(
+						'description'  => __( 'The id for the object.', 'cmb2' ),
+						'type'         => 'integer',
+						'context'      => array( 'view' ),
+					),
+				'name' => array(
+					'description'  => __( 'The title for the object.', 'cmb2' ),
+					'type'         => 'string',
+					'context'      => array( 'view' ),
 				),
 			),
 		);
@@ -393,12 +384,12 @@ abstract class CMB2_REST_Controller extends WP_REST_Controller {
 
 	/**
 	 * Return an array of contextual links for endpoint/object
-	 * @link   http://v2.wp-api.org/extending/linking/
-	 * @link   http://www.iana.org/assignments/link-relations/link-relations.xhtml
+	 * @link http://v2.wp-api.org/extending/linking/
+	 * @link http://www.iana.org/assignments/link-relations/link-relations.xhtml
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  mixed $object Object to build links from.
+	 * @param  mixed  $object Object to build links from.
 	 *
 	 * @return array          Array of links
 	 */

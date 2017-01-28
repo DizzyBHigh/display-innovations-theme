@@ -11,7 +11,6 @@
  * Adds custom classes to the array of body classes.
  *
  * @param array $classes Classes for the body element.
- *
  * @return array
  */
 function heisenberg_body_classes( $classes ) {
@@ -22,7 +21,6 @@ function heisenberg_body_classes( $classes ) {
 
 	return $classes;
 }
-
 add_filter( 'body_class', 'heisenberg_body_classes' );
 
 
@@ -37,5 +35,4 @@ function heisenberg_oembed_flex_wrapper( $html, $url, $attr, $post_ID ) {
 
 	return $html;
 }
-
 add_filter( 'embed_oembed_html', 'heisenberg_oembed_flex_wrapper', 10, 4 );

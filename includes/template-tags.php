@@ -44,8 +44,7 @@ function heisenberg_entry_footer() {
 		/* translators: used between list items, there is a space after the comma */
 		$categories_list = get_the_category_list( esc_html__( ', ', 'display-innovations' ) ); // WPCS: XSS OK.
 		if ( $categories_list && heisenberg_categorized_blog() ) {
-			printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'display-innovations' ) . '</span>',
-				$categories_list ); // WPCS: XSS OK.
+			printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'display-innovations' ) . '</span>', $categories_list ); // WPCS: XSS OK.
 		}
 
 		/* translators: used between list items, there is a space after the comma */
@@ -57,15 +56,13 @@ function heisenberg_entry_footer() {
 
 	if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
 		echo '<span class="comments-link">';
-		comments_popup_link( esc_html__( 'Leave a comment', 'display-innovations' ),
-			esc_html__( '1 Comment', 'display-innovations' ),
-			esc_html__( '% Comments', 'display-innovations' ) );
+		comments_popup_link( esc_html__( 'Leave a comment', 'display-innovations' ), esc_html__( '1 Comment', 'display-innovations' ), esc_html__( '% Comments', 'display-innovations' ) );
 		echo '</span>';
 	}
 
 	edit_post_link(
 		sprintf(
-		/* translators: %s: Name of current post */
+			/* translators: %s: Name of current post */
 			esc_html__( 'Edit %s', 'display-innovations' ),
 			the_title( '<span class="screen-reader-text">"', '"</span>', false )
 		),
@@ -86,6 +83,7 @@ function heisenberg_categorized_blog() {
 		$all_the_cool_cats = get_categories( array(
 			'fields'     => 'ids',
 			'hide_empty' => 1,
+
 			// We only need to know if there is more than one category.
 			'number'     => 2,
 		) );
@@ -115,6 +113,5 @@ function heisenberg_category_transient_flusher() {
 
 	delete_transient( 'heisenberg_categories' );
 }
-
 add_action( 'edit_category', 'heisenberg_category_transient_flusher' );
-add_action( 'save_post', 'heisenberg_category_transient_flusher' );
+add_action( 'save_post',     'heisenberg_category_transient_flusher' );

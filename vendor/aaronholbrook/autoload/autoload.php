@@ -40,7 +40,9 @@ if ( ! function_exists( 'AaronHolbrook\Autoload\autoload' ) ) :
 			if ( 'dir' === $filetype ) {
 
 				autoload( $filename );
-			} // If it's a file, let's try to load it
+			}
+
+			// If it's a file, let's try to load it
 			else if ( 'file' === $filetype ) {
 
 				$pathinfo = pathinfo( $filename );
@@ -54,12 +56,12 @@ if ( ! function_exists( 'AaronHolbrook\Autoload\autoload' ) ) :
 				if ( empty( $pathinfo['extension'] ) ) {
 					continue;
 				}
-
+				
 				// Actually, we want just a PHP extension!
 				if ( 'php' !== $pathinfo['extension'] ) {
 					continue;
 				}
-
+				
 				// Only for files that really exist
 				if ( true !== file_exists( $filename ) ) {
 					continue;

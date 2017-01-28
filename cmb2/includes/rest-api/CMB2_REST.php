@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Handles hooking CMB2 objects/fields into the WordPres REST API
  * which can allow fields to be read and/or updated.
  *
- * @since     2.2.3
+ * @since  2.2.3
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -12,8 +11,8 @@
  * @license   GPL-2.0+
  * @link      http://webdevstudios.com
  *
- * @property-read read_fields Array   of readable field objects.
- * @property-read edit_fields Array   of editable field objects.
+ * @property-read read_fields Array of readable field objects.
+ * @property-read edit_fields Array of editable field objects.
  * @property-read rest_read   Whether CMB2 object is readable via the rest api.
  * @property-read rest_edit   Whether CMB2 object is editable via the rest api.
  */
@@ -50,10 +49,10 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @since 2.2.3
 	 */
 	protected static $type_boxes = array(
-		'post'    => array(),
-		'user'    => array(),
+		'post' => array(),
+		'user' => array(),
 		'comment' => array(),
-		'term'    => array(),
+		'term' => array(),
 	);
 
 	/**
@@ -90,7 +89,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @param CMB2 $cmb The CMB2 object to be registered for the API.
 	 */
 	public function __construct( CMB2 $cmb ) {
-		$this->cmb                   = $cmb;
+		$this->cmb = $cmb;
 		self::$boxes[ $cmb->cmb_id ] = $this;
 
 		$show_value = $this->cmb->prop( 'show_in_rest' );
@@ -171,7 +170,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 			}
 
 			if ( ! empty( $types ) ) {
-				$alltypes                            = array_merge( $alltypes, array_flip( $types ) );
+				$alltypes = array_merge( $alltypes, array_flip( $types ) );
 				self::$type_boxes['post'][ $cmb_id ] = $cmb_id;
 			}
 		}
@@ -202,18 +201,16 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @param string|array $object_types Object(s) the field is being registered
 	 *                                   to, "post"|"term"|"comment" etc.
-	 * @param string       $object_types Canonical object type for callbacks.
+	 * @param string $object_types       Canonical object type for callbacks.
 	 *
 	 * @return void
 	 */
 	protected static function register_rest_field( $object_types, $object_type ) {
-		register_rest_field( $object_types,
-			'cmb2',
-			array(
-				'get_callback'    => array( __CLASS__, "get_{$object_type}_rest_values" ),
-				'update_callback' => array( __CLASS__, "update_{$object_type}_rest_values" ),
-				'schema'          => null,
-			) );
+		register_rest_field( $object_types, 'cmb2', array(
+			'get_callback'    => array( __CLASS__, "get_{$object_type}_rest_values" ),
+			'update_callback' => array( __CLASS__, "update_{$object_type}_rest_values" ),
+			'schema'          => null, // @todo add schema
+		) );
 	}
 
 	/**
@@ -483,13 +480,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @return bool|int
 	 */
-	protected static function update_rest_values(
-		$values,
-		$object,
-		$request,
-		$object_type,
-		$main_object_type = 'post'
-	) {
+	protected static function update_rest_values( $values, $object, $request, $object_type, $main_object_type = 'post' ) {
 		if ( empty( $values ) || ! is_array( $values ) ) {
 			return;
 		}
@@ -525,8 +516,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.o
 	 *
-	 * @param  array $values Array of values being provided.
-	 *
+	 * @param  array   $values Array of values being provided.
 	 * @return array           Array of updated/sanitized values.
 	 */
 	public function sanitize_box_values( array $values ) {
@@ -548,8 +538,8 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  array  $values   Array of values being provided.
-	 * @param  string $field_id The id of the field to update.
+	 * @param  array   $values   Array of values being provided.
+	 * @param  string  $field_id The id of the field to update.
 	 *
 	 * @return mixed             The results of saving/sanitizing a field value.
 	 */
@@ -579,8 +569,8 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  array      $values Array of values being provided.
-	 * @param  CMB2_Field $field  CMB2_Field object.
+	 * @param  array       $values Array of values being provided.
+	 * @param  CMB2_Field  $field  CMB2_Field object.
 	 *
 	 * @return mixed               The results of saving/sanitizing the group field value.
 	 */
@@ -686,7 +676,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  string $cmb_id CMB2 config id
+	 * @param  string  $cmb_id CMB2 config id
 	 *
 	 * @return CMB2_REST|false The CMB2_REST object or false.
 	 */
@@ -724,18 +714,16 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  mixed $value Value to check.
+	 * @param  mixed  $value Value to check.
 	 *
 	 * @return boolean       Whether value is considered readable.
 	 */
 	public static function is_readable( $value ) {
-		return ! empty( $value ) && ! in_array( $value,
-			array(
-				WP_REST_Server::CREATABLE,
-				WP_REST_Server::EDITABLE,
-				WP_REST_Server::DELETABLE,
-			),
-			true );
+		return ! empty( $value ) && ! in_array( $value, array(
+			WP_REST_Server::CREATABLE,
+			WP_REST_Server::EDITABLE,
+			WP_REST_Server::DELETABLE,
+		), true );
 	}
 
 	/**
@@ -745,24 +733,21 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 *
 	 * @since  2.2.3
 	 *
-	 * @param  mixed $value Value to check.
+	 * @param  mixed  $value Value to check.
 	 *
 	 * @return boolean       Whether value is considered editable.
 	 */
 	public static function is_editable( $value ) {
-		return in_array( $value,
-			array(
-				WP_REST_Server::EDITABLE,
-				WP_REST_Server::ALLMETHODS,
-			),
-			true );
+		return in_array( $value, array(
+			WP_REST_Server::EDITABLE,
+			WP_REST_Server::ALLMETHODS,
+		), true );
 	}
 
 	/**
 	 * Magic getter for our object.
 	 *
 	 * @param string $field
-	 *
 	 * @throws Exception Throws an exception if the field is invalid.
 	 *
 	 * @return mixed

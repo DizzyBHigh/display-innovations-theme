@@ -56,7 +56,8 @@ $menu-border: $light-gray !default;
 
     @if $global-flexbox {
       flex: 0 0 auto;
-    } @else {
+    }
+    @else {
       display: table-cell;
       vertical-align: middle;
     }
@@ -84,7 +85,8 @@ $menu-border: $light-gray !default;
     > li {
       flex: 1 1 0px; // sass-lint:disable-line zero-unit
     }
-  } @else {
+  }
+  @else {
     display: table;
     width: 100%;
     table-layout: fixed;
@@ -105,12 +107,14 @@ $menu-border: $light-gray !default;
       > li {
         flex: 0 0 auto;
       }
-    } @else {
+    }
+    @else {
       > li {
         display: table-cell;
       }
     }
-  } @else if $dir == vertical {
+  }
+  @else if $dir == vertical {
     @if $global-flexbox {
       flex-wrap: wrap;
 
@@ -119,16 +123,18 @@ $menu-border: $light-gray !default;
         max-width: 100%;
       }
 
-      > li > a {
+      > li  > a {
         justify-content: flex-start;
         align-items: flex-start;
       }
-    } @else {
+    }
+    @else {
       > li {
         display: block;
       }
     }
-  } @else {
+  }
+  @else {
     @warn 'The direction used for menu-direction() must be horizontal or vertical.';
   }
 }
@@ -178,7 +184,8 @@ $menu-border: $light-gray !default;
       > li > a {
         display: flex;
       }
-    } @else {
+    }
+    @else {
       > li > a {
         img,
         i,
@@ -209,11 +216,13 @@ $menu-border: $light-gray !default;
         }
       }
     }
-  } @else if $position == top {
+  }
+  @else if $position == top {
     > li > a {
       @if $global-flexbox {
         flex-flow: column nowrap;
-      } @else {
+      }
+      @else {
         text-align: center;
       }
 
@@ -223,7 +232,8 @@ $menu-border: $light-gray !default;
         @if not $global-flexbox {
           display: block;
           margin: 0 auto $menu-icon-spacing;
-        } @else {
+        }
+        @else {
           align-self: stretch;
           margin-bottom: $menu-icon-spacing;
           text-align: center;
@@ -290,7 +300,8 @@ $menu-border: $light-gray !default;
     &.align-#{$global-right} {
       @if $global-flexbox {
         justify-content: flex-end;
-      } @else {
+      }
+      @else {
         @include clearfix;
 
         > li {

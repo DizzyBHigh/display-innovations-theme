@@ -1,6 +1,6 @@
 {
-  "name": "display-innovations-theme",
-  "description": "Display Innovations Theme for Wordpress by Base5 Designs",
+  "name": "display-innovations",
+  "description": "B5-WP-Foundation - Base5 Designs Starter Theme ===",
   "version": "2.0.3",
   "main": "gulpfile.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dizzybhigh/display-innovations-theme"
+    "url": "https://github.com/base5designs/B5-WP-Foundation"
   },
-  "author": "Dizzy B High, Zeek Interactive",
+  "author": "Zeek Interactive",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dizzybhigh/display-innovations-theme/issues"
+    "url": "https://github.com/base5designs/B5-WP-Foundation/issues"
   },
-  "homepage": "https://github.com/dizzybhigh/display-innovations-theme",
+  "homepage": "https://github.com/base5designs/B5-WP-Foundation",
   "dependencies": {
     "foundation-sites": "^6.2.3"
   },

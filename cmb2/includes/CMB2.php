@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CMB2 - The core metabox object
  *
@@ -10,10 +9,10 @@
  * @link      http://webdevstudios.com
  *
  * @property-read string $cmb_id
- * @property-read array  $meta_box
- * @property-read array  $updated
- * @property-read bool   $has_columns
- * @property-read array  $tax_metaboxes_to_remove
+ * @property-read array $meta_box
+ * @property-read array $updated
+ * @property-read bool  $has_columns
+ * @property-read array $tax_metaboxes_to_remove
  */
 class CMB2 extends CMB2_Base {
 
@@ -109,7 +108,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get started
 	 * @since 0.4.0
-	 *
 	 * @param array   $config    Metabox config array
 	 * @param integer $object_id Optional object id
 	 */
@@ -119,7 +117,7 @@ class CMB2 extends CMB2_Base {
 			wp_die( esc_html__( 'Metabox configuration is required to have an ID parameter.', 'cmb2' ) );
 		}
 
-		$this->meta_box           = wp_parse_args( $config, $this->mb_defaults );
+		$this->meta_box = wp_parse_args( $config, $this->mb_defaults );
 		$this->meta_box['fields'] = array();
 
 		$this->object_id( $object_id );
@@ -145,7 +143,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Loops through and displays fields
 	 * @since 1.0.0
-	 *
 	 * @param int    $object_id   Object ID
 	 * @param string $object_type Type of object being saved. (e.g., post, user, or comment)
 	 */
@@ -163,15 +160,13 @@ class CMB2 extends CMB2_Base {
 	 * Outputs the opening form markup and runs corresponding hooks:
 	 * 'cmb2_before_form' and "cmb2_before_{$object_type}_form_{$this->cmb_id}"
 	 * @since  2.2.0
-	 *
 	 * @param  integer $object_id   Object ID
 	 * @param  string  $object_type Object type
-	 *
 	 * @return void
 	 */
 	public function render_form_open( $object_id = 0, $object_type = '' ) {
 		$object_type = $this->object_type( $object_type );
-		$object_id   = $this->object_id( $object_id );
+		$object_id = $this->object_id( $object_id );
 
 		echo "\n<!-- Begin CMB2 Fields -->\n";
 
@@ -180,12 +175,12 @@ class CMB2 extends CMB2_Base {
 		/**
 		 * Hook before form table begins
 		 *
-		 * @param array  $cmb_id         The current box ID
-		 * @param int    $object_id      The ID of the current object
-		 * @param string $object_type    The type of object you are working with.
-		 *                               Usually `post` (this applies to all post-types).
-		 *                               Could also be `comment`, `user` or `options-page`.
-		 * @param array  $cmb            This CMB2 object
+		 * @param array  $cmb_id      The current box ID
+		 * @param int    $object_id   The ID of the current object
+		 * @param string $object_type The type of object you are working with.
+		 *	                           Usually `post` (this applies to all post-types).
+		 *	                           Could also be `comment`, `user` or `options-page`.
+		 * @param array  $cmb         This CMB2 object
 		 */
 		do_action( 'cmb2_before_form', $this->cmb_id, $object_id, $object_type, $this );
 
@@ -198,9 +193,9 @@ class CMB2 extends CMB2_Base {
 		 *
 		 * The second dynamic portion of the hook name, $this->cmb_id, is the meta_box id.
 		 *
-		 * @param array $cmb_id    The current box ID
-		 * @param int   $object_id The ID of the current object
-		 * @param array $cmb       This CMB2 object
+		 * @param array  $cmb_id      The current box ID
+		 * @param int    $object_id   The ID of the current object
+		 * @param array  $cmb         This CMB2 object
 		 */
 		do_action( "cmb2_before_{$object_type}_form_{$this->cmb_id}", $object_id, $this );
 
@@ -221,12 +216,12 @@ class CMB2 extends CMB2_Base {
 		// Use the callback to fetch classes.
 		if ( $added_classes = $this->get_param_callback_result( 'classes_cb' ) ) {
 			$added_classes = is_array( $added_classes ) ? $added_classes : array( $added_classes );
-			$classes       = array_merge( $classes, $added_classes );
+			$classes = array_merge( $classes, $added_classes );
 		}
 
 		if ( $added_classes = $this->prop( 'classes' ) ) {
 			$added_classes = is_array( $added_classes ) ? $added_classes : array( $added_classes );
-			$classes       = array_merge( $classes, $added_classes );
+			$classes = array_merge( $classes, $added_classes );
 		}
 
 		/**
@@ -250,15 +245,13 @@ class CMB2 extends CMB2_Base {
 	 * Outputs the closing form markup and runs corresponding hooks:
 	 * 'cmb2_after_form' and "cmb2_after_{$object_type}_form_{$this->cmb_id}"
 	 * @since  2.2.0
-	 *
 	 * @param  integer $object_id   Object ID
 	 * @param  string  $object_type Object type
-	 *
 	 * @return void
 	 */
 	public function render_form_close( $object_id = 0, $object_type = '' ) {
 		$object_type = $this->object_type( $object_type );
-		$object_id   = $this->object_id( $object_id );
+		$object_id = $this->object_id( $object_id );
 
 		echo '</div></div>';
 
@@ -267,12 +260,12 @@ class CMB2 extends CMB2_Base {
 		/**
 		 * Hook after form form has been rendered
 		 *
-		 * @param array  $cmb_id         The current box ID
-		 * @param int    $object_id      The ID of the current object
-		 * @param string $object_type    The type of object you are working with.
-		 *                               Usually `post` (this applies to all post-types).
-		 *                               Could also be `comment`, `user` or `options-page`.
-		 * @param array  $cmb            This CMB2 object
+		 * @param array  $cmb_id      The current box ID
+		 * @param int    $object_id   The ID of the current object
+		 * @param string $object_type The type of object you are working with.
+		 *	                           Usually `post` (this applies to all post-types).
+		 *	                           Could also be `comment`, `user` or `options-page`.
+		 * @param array  $cmb         This CMB2 object
 		 */
 		do_action( 'cmb2_after_form', $this->cmb_id, $object_id, $object_type, $this );
 
@@ -285,8 +278,8 @@ class CMB2 extends CMB2_Base {
 		 * you are working with. Usually `post` (this applies to all post-types).
 		 * Could also be `comment`, `user` or `options-page`.
 		 *
-		 * @param int   $object_id The ID of the current object
-		 * @param array $cmb       This CMB2 object
+		 * @param int    $object_id   The ID of the current object
+		 * @param array  $cmb         This CMB2 object
 		 */
 		do_action( "cmb2_after_{$object_type}_form_{$this->cmb_id}", $object_id, $this );
 
@@ -297,9 +290,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Renders a field based on the field type
 	 * @since  2.2.0
-	 *
 	 * @param  array $field_args A field configuration array.
-	 *
 	 * @return mixed CMB2_Field object if successful.
 	 */
 	public function render_field( $field_args ) {
@@ -329,9 +320,7 @@ class CMB2 extends CMB2_Base {
 
 	/**
 	 * Render a repeatable group.
-	 *
 	 * @param array $args Array of field arguments for a group field parent.
-	 *
 	 * @return CMB2_Field|null Group field object.
 	 */
 	public function render_group( $args ) {
@@ -347,10 +336,10 @@ class CMB2 extends CMB2_Base {
 			return;
 		}
 
-		$desc               = $field_group->args( 'description' );
-		$label              = $field_group->args( 'name' );
-		$group_val          = (array) $field_group->value();
-		$remove_disabled    = count( $group_val ) <= 1 ? 'disabled="disabled" ' : '';
+		$desc            = $field_group->args( 'description' );
+		$label           = $field_group->args( 'name' );
+		$group_val       = (array) $field_group->value();
+		$remove_disabled = count( $group_val ) <= 1 ? 'disabled="disabled" ' : '';
 		$field_group->index = 0;
 
 		$field_group->peform_param_callback( 'before_group' );
@@ -360,19 +349,19 @@ class CMB2 extends CMB2_Base {
 		if ( $desc || $label ) {
 			$class = $desc ? ' cmb-group-description' : '';
 			echo '<div class="cmb-row', $class, '"><div class="cmb-th">';
-			if ( $label ) {
-				echo '<h2 class="cmb-group-name">', $label, '</h2>';
-			}
-			if ( $desc ) {
-				echo '<p class="cmb2-metabox-description">', $desc, '</p>';
-			}
+				if ( $label ) {
+					echo '<h2 class="cmb-group-name">', $label, '</h2>';
+				}
+				if ( $desc ) {
+					echo '<p class="cmb2-metabox-description">', $desc, '</p>';
+				}
 			echo '</div></div>';
 		}
 
 		if ( ! empty( $group_val ) ) {
 			foreach ( $group_val as $group_key => $field_id ) {
 				$this->render_group_row( $field_group, $remove_disabled );
-				$field_group->index ++;
+				$field_group->index++;
 			}
 		} else {
 			$this->render_group_row( $field_group, $remove_disabled );
@@ -392,9 +381,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get the group wrap attributes, which are passed through a filter.
 	 * @since  2.2.3
-	 *
 	 * @param  CMB2_Field $field_group The group CMB2_Field object.
-	 *
 	 * @return string                  The attributes string.
 	 */
 	public function group_wrap_attributes( $field_group ) {
@@ -426,9 +413,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Render a repeatable group row
 	 * @since  1.0.2
-	 *
-	 * @param  CMB2_Field $field_group     CMB2_Field group field object
-	 * @param  string     $remove_disabled Attribute string to disable the remove button
+	 * @param  CMB2_Field $field_group  CMB2_Field group field object
+	 * @param  string  $remove_disabled Attribute string to disable the remove button
 	 */
 	public function render_group_row( $field_group, $remove_disabled ) {
 
@@ -438,40 +424,40 @@ class CMB2 extends CMB2_Base {
 		echo '
 		<div class="postbox cmb-row cmb-repeatable-grouping', $closed_class, '" data-iterator="', $field_group->index, '">';
 
-		if ( $field_group->args( 'repeatable' ) ) {
-			echo '<button type="button" ', $remove_disabled, 'data-selector="', $field_group->id(), '_repeat" class="dashicons-before dashicons-no-alt cmb-remove-group-row" title="', esc_attr( $field_group->options( 'remove_button' ) ), '"></button>';
-		}
+			if ( $field_group->args( 'repeatable' ) ) {
+				echo '<button type="button" ', $remove_disabled, 'data-selector="', $field_group->id(), '_repeat" class="dashicons-before dashicons-no-alt cmb-remove-group-row" title="', esc_attr( $field_group->options( 'remove_button' ) ), '"></button>';
+			}
 
-		echo '
-			<div class="cmbhandle" title="', esc_attr__( 'Click to toggle', 'cmb2' ), '"><br></div>
+			echo '
+			<div class="cmbhandle" title="' , esc_attr__( 'Click to toggle', 'cmb2' ), '"><br></div>
 			<h3 class="cmb-group-title cmbhandle-title"><span>', $field_group->replace_hash( $field_group->options( 'group_title' ) ), '</span></h3>
 
 			<div class="inside cmb-td cmb-nested cmb-field-list">';
-		// Loop and render repeatable group fields
-		foreach ( array_values( $field_group->args( 'fields' ) ) as $field_args ) {
-			if ( 'hidden' == $field_args['type'] ) {
+				// Loop and render repeatable group fields
+				foreach ( array_values( $field_group->args( 'fields' ) ) as $field_args ) {
+					if ( 'hidden' == $field_args['type'] ) {
 
-				// Save rendering for after the metabox
-				$this->add_hidden_field( $field_args, $field_group );
+						// Save rendering for after the metabox
+						$this->add_hidden_field( $field_args, $field_group );
 
-			} else {
+					} else {
 
-				$field_args['show_names'] = $field_group->args( 'show_names' );
-				$field_args['context']    = $field_group->args( 'context' );
+						$field_args['show_names'] = $field_group->args( 'show_names' );
+						$field_args['context']    = $field_group->args( 'context' );
 
-				$field = $this->get_field( $field_args, $field_group )->render_field();
-			}
-		}
-		if ( $field_group->args( 'repeatable' ) ) {
-			echo '
+						$field = $this->get_field( $field_args, $field_group )->render_field();
+					}
+				}
+				if ( $field_group->args( 'repeatable' ) ) {
+					echo '
 					<div class="cmb-row cmb-remove-field-row">
 						<div class="cmb-remove-row">
 							<button type="button" ', $remove_disabled, 'data-selector="', $field_group->id(), '_repeat" class="button cmb-remove-group-row alignright">', $field_group->options( 'remove_button' ), '</button>
 						</div>
 					</div>
 					';
-		}
-		echo '
+				}
+			echo '
 			</div>
 		</div>
 		';
@@ -482,7 +468,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Add a hidden field to the list of hidden fields to be rendered later
 	 * @since 2.0.0
-	 *
 	 * @param array           $field_args  Array of field arguments to be passed to CMB2_Field
 	 * @param CMB2_Field|null $field_group CMB2_Field group field object
 	 */
@@ -520,8 +505,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Returns array of sanitized field values (without saving them)
 	 * @since  2.0.3
-	 *
-	 * @param  array $data_to_sanitize Array of field_id => value data for sanitizing (likely $_POST data).
+	 * @param  array  $data_to_sanitize Array of field_id => value data for sanitizing (likely $_POST data).
 	 */
 	public function get_sanitized_values( array $data_to_sanitize ) {
 		$this->data_to_save = $data_to_sanitize;
@@ -557,7 +541,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Loops through and saves field data
 	 * @since  1.0.0
-	 *
 	 * @param  int    $object_id    Object ID
 	 * @param  string $object_type  Type of object being saved. (e.g., post, user, or comment)
 	 * @param  array  $data_to_save Array of key => value data for saving. Likely $_POST data.
@@ -566,8 +549,8 @@ class CMB2 extends CMB2_Base {
 
 		// Fall-back to $_POST data
 		$this->data_to_save = ! empty( $data_to_save ) ? $data_to_save : $_POST;
-		$object_id          = $this->object_id( $object_id );
-		$object_type        = $this->object_type( $object_type );
+		$object_id = $this->object_id( $object_id );
+		$object_type = $this->object_type( $object_type );
 
 		$this->process_fields();
 
@@ -601,8 +584,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Process and save a field
 	 * @since  2.0.0
-	 *
-	 * @param  array $field_args Array of field arguments
+	 * @param  array  $field_args Array of field arguments
 	 */
 	public function process_field( $field_args ) {
 
@@ -639,8 +621,8 @@ class CMB2 extends CMB2_Base {
 		 * The dynamic portion of the hook name, $this->cmb_id, is the meta_box id.
 		 *
 		 * The dynamic portion of the hook name, $object_type, refers to the metabox/form's object type
-		 *    Usually `post` (this applies to all post-types).
-		 *    Could also be `comment`, `user` or `options-page`.
+		 * 	Usually `post` (this applies to all post-types).
+		 *  	Could also be `comment`, `user` or `options-page`.
 		 *
 		 * @param array $cmb       This CMB2 object
 		 * @param int   $object_id The ID of the current object
@@ -656,8 +638,8 @@ class CMB2 extends CMB2_Base {
 		 * Fires after all fields have been saved.
 		 *
 		 * The dynamic portion of the hook name, $object_type, refers to the metabox/form's object type
-		 *    Usually `post` (this applies to all post-types).
-		 *    Could also be `comment`, `user` or `options-page`.
+		 * 	Usually `post` (this applies to all post-types).
+		 *  	Could also be `comment`, `user` or `options-page`.
 		 *
 		 * @param int    $object_id   The ID of the current object
 		 * @param array  $cmb_id      The current box ID
@@ -673,8 +655,8 @@ class CMB2 extends CMB2_Base {
 		 * The dynamic portion of the hook name, $this->cmb_id, is the meta_box id.
 		 *
 		 * The dynamic portion of the hook name, $object_type, refers to the metabox/form's object type
-		 *    Usually `post` (this applies to all post-types).
-		 *    Could also be `comment`, `user` or `options-page`.
+		 * 	Usually `post` (this applies to all post-types).
+		 *  	Could also be `comment`, `user` or `options-page`.
 		 *
 		 * @param int    $object_id   The ID of the current object
 		 * @param string $updated     Array of field ids that were updated.
@@ -687,9 +669,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Save a repeatable group
 	 * @since  1.x.x
-	 *
-	 * @param  array $args Field arguments array
-	 *
+	 * @param  array  $args Field arguments array
 	 * @return mixed        Return of CMB2_Field::update_data()
 	 */
 	public function save_group( $args ) {
@@ -703,9 +683,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Save a repeatable group
 	 * @since  1.x.x
-	 *
 	 * @param  CMB2_Field $field_group CMB2_Field group field object
-	 *
 	 * @return mixed                   Return of CMB2_Field::update_data()
 	 */
 	public function save_group_field( $field_group ) {
@@ -715,12 +693,12 @@ class CMB2 extends CMB2_Base {
 			return;
 		}
 
-		$old = $field_group->get_data();
+		$old        = $field_group->get_data();
 		// Check if group field has sanitization_cb
 		$group_vals = $field_group->sanitization_cb( $this->data_to_save[ $base_id ] );
 		$saved      = array();
 
-		$field_group->index        = 0;
+		$field_group->index = 0;
 		$field_group->data_to_save = $this->data_to_save;
 
 		foreach ( array_values( $field_group->fields() ) as $field_args ) {
@@ -789,9 +767,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get object id from global space if no id is provided
 	 * @since  1.0.0
-	 *
 	 * @param  integer $object_id Object ID
-	 *
 	 * @return integer $object_id Object ID
 	 */
 	public function object_id( $object_id = 0 ) {
@@ -799,7 +775,6 @@ class CMB2 extends CMB2_Base {
 
 		if ( $object_id ) {
 			$this->object_id = $object_id;
-
 			return $this->object_id;
 		}
 
@@ -847,7 +822,6 @@ class CMB2 extends CMB2_Base {
 
 		if ( $this->is_options_page_mb() ) {
 			$this->mb_object_type = 'options-page';
-
 			return $this->mb_object_type;
 		}
 
@@ -897,8 +871,7 @@ class CMB2 extends CMB2_Base {
 	 * @return boolean True/False
 	 */
 	public function is_options_page_mb() {
-		return ( isset( $this->meta_box['show_on']['key'] ) && 'options-page' === $this->meta_box['show_on']['key'] || array_key_exists( 'options-page',
-				$this->meta_box['show_on'] ) );
+		return ( isset( $this->meta_box['show_on']['key'] ) && 'options-page' === $this->meta_box['show_on']['key'] || array_key_exists( 'options-page', $this->meta_box['show_on'] ) );
 	}
 
 	/**
@@ -909,7 +882,6 @@ class CMB2 extends CMB2_Base {
 	public function object_type( $object_type = '' ) {
 		if ( $object_type ) {
 			$this->object_type = $object_type;
-
 			return $this->object_type;
 		}
 
@@ -949,10 +921,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Set metabox property.
 	 * @since  2.2.2
-	 *
 	 * @param  string $property Metabox config property to retrieve
 	 * @param  mixed  $value    Value to set if no value found
-	 *
 	 * @return mixed            Metabox config property value or false
 	 */
 	public function set_prop( $property, $value ) {
@@ -964,10 +934,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get metabox property and optionally set a fallback
 	 * @since  2.0.0
-	 *
 	 * @param  string $property Metabox config property to retrieve
 	 * @param  mixed  $fallback Fallback value to set if no value found
-	 *
 	 * @return mixed            Metabox config property value or false
 	 */
 	public function prop( $property, $fallback = null ) {
@@ -981,10 +949,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get a field object
 	 * @since  2.0.3
-	 *
 	 * @param  string|array|CMB2_Field $field       Metabox field id or field config array or CMB2_Field object
 	 * @param  CMB2_Field|null         $field_group (optional) CMB2_Field object (group parent)
-	 *
 	 * @return CMB2_Field|false                     CMB2_Field object (or false)
 	 */
 	public function get_field( $field, $field_group = null ) {
@@ -995,7 +961,7 @@ class CMB2 extends CMB2_Base {
 		$field_id = is_string( $field ) ? $field : $field['id'];
 
 		$parent_field_id = ! empty( $field_group ) ? $field_group->id() : '';
-		$ids             = $this->get_field_ids( $field_id, $parent_field_id );
+		$ids = $this->get_field_ids( $field_id, $parent_field_id );
 
 		if ( ! $ids ) {
 			return false;
@@ -1008,10 +974,7 @@ class CMB2 extends CMB2_Base {
 			return $this->fields[ $index ];
 		}
 
-		$this->fields[ $index ] = new CMB2_Field( $this->get_field_args( $field_id,
-			$field,
-			$sub_field_id,
-			$field_group ) );
+		$this->fields[ $index ] = new CMB2_Field( $this->get_field_args( $field_id, $field, $sub_field_id, $field_group ) );
 
 		return $this->fields[ $index ];
 	}
@@ -1019,12 +982,10 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Handles determining which type of arguments to pass to CMB2_Field
 	 * @since  2.0.7
-	 *
 	 * @param  mixed           $field_id     Field (or group field) ID
 	 * @param  mixed           $field_args   Array of field arguments
 	 * @param  mixed           $sub_field_id Sub field ID (if field_group exists)
 	 * @param  CMB2_Field|null $field_group  If a sub-field, will be the parent group CMB2_Field object
-	 *
 	 * @return array                         Array of CMB2_Field arguments
 	 */
 	public function get_field_args( $field_id, $field_args, $sub_field_id, $field_group ) {
@@ -1048,10 +1009,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get default field arguments specific to this CMB2 object.
 	 * @since  2.2.0
-	 *
 	 * @param  array      $field_args  Metabox field config array.
 	 * @param  CMB2_Field $field_group (optional) CMB2_Field object (group parent)
-	 *
 	 * @return array                   Array of field arguments.
 	 */
 	protected function get_default_args( $field_args, $field_group = null ) {
@@ -1075,10 +1034,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Get a new field object specific to this CMB2 object.
 	 * @since  2.2.0
-	 *
 	 * @param  array      $field_args  Metabox field config array.
 	 * @param  CMB2_Field $field_group (optional) CMB2_Field object (group parent)
-	 *
 	 * @return CMB2_Field CMB2_Field object
 	 */
 	protected function get_new_field( $field_args, $field_group = null ) {
@@ -1088,7 +1045,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * When fields are added in the old-school way, intitate them as they should be
 	 * @since 2.1.0
-	 *
 	 * @param array $fields          Array of fields to add
 	 * @param mixed $parent_field_id Parent field id or null
 	 */
@@ -1114,10 +1070,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Add a field to the metabox
 	 * @since  2.0.0
-	 *
-	 * @param  array $field    Metabox field config array
-	 * @param  int   $position (optional) Position of metabox. 1 for first, etc
-	 *
+	 * @param  array  $field           Metabox field config array
+	 * @param  int    $position        (optional) Position of metabox. 1 for first, etc
 	 * @return string|false            Field id or false
 	 */
 	public function add_field( array $field, $position = 0 ) {
@@ -1150,9 +1104,7 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Defines a field's column if requesting to be show in admin columns.
 	 * @since  2.2.3
-	 *
-	 * @param  array $field Metabox field config array.
-	 *
+	 * @param  array  $field Metabox field config array.
 	 * @return array         Modified metabox field config array.
 	 */
 	protected function define_field_column( array $field ) {
@@ -1160,11 +1112,10 @@ class CMB2 extends CMB2_Base {
 
 		$column = is_array( $field['column'] ) ? $field['column'] : array();
 
-		$field['column'] = wp_parse_args( $column,
-			array(
-				'name'     => isset( $field['name'] ) ? $field['name'] : '',
-				'position' => false,
-			) );
+		$field['column'] = wp_parse_args( $column, array(
+			'name'     => isset( $field['name'] ) ? $field['name'] : '',
+			'position' => false,
+		) );
 
 		return $field;
 	}
@@ -1172,11 +1123,9 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Add a field to a group
 	 * @since  2.0.0
-	 *
 	 * @param  string $parent_field_id The field id of the group field to add the field
 	 * @param  array  $field           Metabox field config array
 	 * @param  int    $position        (optional) Position of metabox. 1 for first, etc
-	 *
 	 * @return mixed                   Array of parent/field ids or false
 	 */
 	public function add_group_field( $parent_field_id, array $field, $position = 0 ) {
@@ -1206,7 +1155,6 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Add a field array to a fields array in desired position
 	 * @since 2.0.2
-	 *
 	 * @param array   $field    Metabox field config array
 	 * @param array   &$fields  Array (passed by reference) to append the field (array) to
 	 * @param integer $position Optionally specify a position in the array to be inserted
@@ -1222,10 +1170,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Remove a field from the metabox
 	 * @since 2.0.0
-	 *
 	 * @param  string $field_id        The field id of the field to remove
 	 * @param  string $parent_field_id (optional) The field id of the group field to remove field from
-	 *
 	 * @return bool                    True if field was removed
 	 */
 	public function remove_field( $field_id, $parent_field_id = '' ) {
@@ -1241,7 +1187,6 @@ class CMB2 extends CMB2_Base {
 
 		if ( ! $sub_field_id ) {
 			unset( $this->meta_box['fields'][ $field_id ] );
-
 			return true;
 		}
 
@@ -1251,19 +1196,16 @@ class CMB2 extends CMB2_Base {
 		if ( isset( $this->meta_box['fields'][ $field_id ]['fields'][ $sub_field_id ] ) ) {
 			unset( $this->meta_box['fields'][ $field_id ]['fields'][ $sub_field_id ] );
 		}
-
 		return true;
 	}
 
 	/**
 	 * Update or add a property to a field
 	 * @since  2.0.0
-	 *
 	 * @param  string $field_id        Field id
 	 * @param  string $property        Field property to set/update
 	 * @param  mixed  $value           Value to set the field property
 	 * @param  string $parent_field_id (optional) The field id of the group field to remove field from
-	 *
 	 * @return mixed                   Field id. Strict compare to false, as success can return a falsey value (like 0)
 	 */
 	public function update_field_property( $field_id, $property, $value, $parent_field_id = '' ) {
@@ -1277,22 +1219,18 @@ class CMB2 extends CMB2_Base {
 
 		if ( ! $sub_field_id ) {
 			$this->meta_box['fields'][ $field_id ][ $property ] = $value;
-
 			return $field_id;
 		}
 
 		$this->meta_box['fields'][ $field_id ]['fields'][ $sub_field_id ][ $property ] = $value;
-
 		return $field_id;
 	}
 
 	/**
 	 * Check if field ids match a field and return the index/field id
 	 * @since  2.0.2
-	 *
-	 * @param  string $field_id        Field id
-	 * @param  string $parent_field_id (optional) Parent field id
-	 *
+	 * @param  string  $field_id        Field id
+	 * @param  string  $parent_field_id (optional) Parent field id
 	 * @return mixed                    Array of field/parent ids, or false
 	 */
 	public function get_field_ids( $field_id, $parent_field_id = '' ) {
@@ -1326,25 +1264,20 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * When using the old array filter, it is unlikely field array indexes will be the field id
 	 * @since  2.0.2
-	 *
 	 * @param  string $field_id The field id
 	 * @param  array  $fields   Array of fields to search
-	 *
 	 * @return mixed            Field index or false
 	 */
 	public function search_old_school_array( $field_id, $fields ) {
-		$ids   = wp_list_pluck( $fields, 'id' );
+		$ids = wp_list_pluck( $fields, 'id' );
 		$index = array_search( $field_id, $ids );
-
 		return false !== $index ? $index : false;
 	}
 
 	/**
 	 * Handles metabox property callbacks, and passes this $cmb object as property.
 	 * @since  2.2.3
-	 *
 	 * @param  callable $cb The callback method/function/closure
-	 *
 	 * @return mixed        Return of the callback function.
 	 */
 	protected function do_callback( $cb ) {
@@ -1370,15 +1303,12 @@ class CMB2 extends CMB2_Base {
 			return $this->generated_nonce;
 		}
 		$this->generated_nonce = sanitize_html_class( 'nonce_' . basename( __FILE__ ) . $this->cmb_id );
-
 		return $this->generated_nonce;
 	}
 
 	/**
 	 * Magic getter for our object.
-	 *
 	 * @param string $field
-	 *
 	 * @throws Exception Throws an exception if the field is invalid.
 	 * @return mixed
 	 */

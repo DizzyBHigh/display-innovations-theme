@@ -51,3 +51,6 @@ crashlytics-build.properties
 
 display-innovations/yarn.lock
 display-innovations/node_modules
+.idea
+node_modules
+yarn.lock

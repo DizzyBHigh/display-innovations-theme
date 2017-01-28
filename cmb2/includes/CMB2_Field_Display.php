@@ -1,9 +1,8 @@
 <?php
-
 /**
  * CMB2 field display base.
  *
- * @since     2.2.2
+ * @since 2.2.2
  *
  * @category  WordPress_Plugin
  * @package   CMB2
@@ -30,9 +29,7 @@ class CMB2_Field_Display {
 	/**
 	 * Get the corresponding display class for the field type.
 	 * @since  2.2.2
-	 *
 	 * @param  CMB2_Field $field
-	 *
 	 * @return CMB2_Field_Display
 	 */
 	public static function get( CMB2_Field $field ) {
@@ -105,7 +102,6 @@ class CMB2_Field_Display {
 	/**
 	 * Setup our class vars
 	 * @since 2.2.2
-	 *
 	 * @param CMB2_Field $field A CMB2 field object
 	 */
 	public function __construct( CMB2_Field $field ) {
@@ -126,10 +122,11 @@ class CMB2_Field_Display {
 			if ( is_array( $this->field->value ) ) {
 
 				// Then loop and output.
-				echo '<ul class="cmb2-' . str_replace( '_', '-', $this->field->type() ) . '">';
+				echo '<ul class="cmb2-'. str_replace( '_', '-', $this->field->type() ) .'">';
 				foreach ( $this->field->value as $val ) {
 					$this->value = $val;
-					echo '<li>', $this->_display(), '</li>';;
+					echo '<li>', $this->_display(), '</li>';
+					;
 				}
 				echo '</ul>';
 			}
@@ -165,7 +162,7 @@ class CMB2_Display_Text_Money extends CMB2_Field_Display {
 	 */
 	protected function _display() {
 		$this->value = $this->value ? $this->value : '0';
-		echo( ! $this->field->get_param_callback_result( 'before_field' ) ? '$' : ' ' ), $this->value;
+		echo ( ! $this->field->get_param_callback_result( 'before_field' ) ? '$' : ' ' ), $this->value;
 	}
 }
 
@@ -252,7 +249,7 @@ class CMB2_Display_Textarea_Code extends CMB2_Field_Display {
 	 * @since 2.2.2
 	 */
 	protected function _display() {
-		echo '<xmp class="cmb2-code">' . print_r( $this->value, true ) . '</xmp>';
+		echo '<xmp class="cmb2-code">'. print_r( $this->value, true ) .'</xmp>';
 	}
 }
 
@@ -288,13 +285,13 @@ class CMB2_Display_Text_Date_Timezone extends CMB2_Field_Display {
 			return;
 		}
 
-		$datetime    = maybe_unserialize( $this->value );
+		$datetime = maybe_unserialize( $this->value );
 		$this->value = $tzstring = '';
 
 		if ( $datetime && $datetime instanceof DateTime ) {
-			$tz          = $datetime->getTimezone();
-			$tzstring    = $tz->getName();
-			$this->value = $datetime->getTimestamp();
+			$tz       = $datetime->getTimezone();
+			$tzstring = $tz->getName();
+			$this->value    = $datetime->getTimestamp();
 		}
 
 		$date = $this->field->get_timestamp_format( 'date_format', $this->value );
@@ -318,7 +315,7 @@ class CMB2_Display_Taxonomy_Radio extends CMB2_Field_Display {
 		if ( is_wp_error( $terms ) || empty( $terms ) && ( $default = $this->field->get_default() ) ) {
 			$term = get_term_by( 'slug', $default, $taxonomy );
 		} elseif ( ! empty( $terms ) ) {
-			$term = $terms[ key( $terms ) ];
+			$term = $terms[key( $terms )];
 		}
 
 		if ( $term ) {
@@ -353,8 +350,8 @@ class CMB2_Display_Taxonomy_Multicheck extends CMB2_Field_Display {
 
 			$links = array();
 			foreach ( $terms as $term ) {
-				$link    = get_edit_term_link( $term->term_id, $taxonomy );
-				$links[] = '<a href="' . esc_url( $link ) . '">' . esc_html( $term->name ) . '</a>';
+				$link = get_edit_term_link( $term->term_id, $taxonomy );
+				$links[] = '<a href="'. esc_url( $link ) .'">'. esc_html( $term->name ) .'</a>';
 			}
 			// Then loop and output.
 			echo '<div class="cmb2-taxonomy-terms-', esc_attr( $taxonomy ), '">';
@@ -397,7 +394,7 @@ class CMB2_Display_File extends CMB2_Field_Display {
 			if ( $id ) {
 				$image = wp_get_attachment_image( $id, $img_size, null, array( 'class' => 'cmb-image-display' ) );
 			} else {
-				$size  = is_array( $img_size ) ? $img_size[0] : 200;
+				$size = is_array( $img_size ) ? $img_size[0] : 200;
 				$image = '<img class="cmb-image-display" style="max-width: ' . absint( $size ) . 'px; width: 100%; height: auto;" src="' . $url_value . '" alt="" />';
 			}
 
