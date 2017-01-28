@@ -636,33 +636,36 @@ function did_show_case_studies($id) {
 	$image_list = $data[0];
 	//var_dump($image_list);
 	//loop through urls and get the attachment ID
-	$count = 0;
+	$count = 1;
 	if ( $image_list ) {
 		foreach ( $image_list as $image_url ) {
 			$attachment_id = did_get_attachment_id( $image_url );
 			$image_meta    = did_get_post_meta( $attachment_id );
 			//var_dump($image_meta);
-			if ( $count < 1 ) {
-				echo '<a class="fancybox" rel="casestudies" data-title-id="title-' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
-				echo '<div class="case-studies-button">'.$buttonText.'</div>';
+			if ( $count < 2 ) {
+				echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
+					echo '<div class="case-studies-button">'.$buttonText.'</div>';
 				echo '</a>';
-				echo '<div class="fancybox-hidden">';
-				// add hidden div to store titles html
-				echo '<div id="title-' . $count . '">';
-				echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
+
+				echo '<div class="fancybox-hidden">';// add hidden div to store titles html
+					echo '<div id="cs-title-' . $count . '">';
+					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
 				echo '</div>';
+
 			} else {
-				echo '<a class="fancybox" rel="casestudies" data-title-id="title-' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
-				echo '<img src="' . $image_url . '" />';
+				echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
+					echo '<img src="' . $image_url . '" />';
 				echo '</a>';
 				// add hidden div to store titles html
-				echo '<div id="title-' . $count . '">';
-				echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
-				echo '</div>';
+				echo '<div class="fancybox-hidden">';// add hidden div to store titles html
+					echo '<div id="cs-title-' . $count . '">';
+						echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
+					echo '</div>';
+				echo '</div>';// end hidden div to store titles html
 			}
 			$count ++;
-		}
-		echo '</div'; //close hidden div
+		}echo '</div>';// end hidden div to store titles html
+
 	}
 }
 
@@ -673,7 +676,7 @@ function did_show_images($id) {
 	$iconData = get_post_meta( $id, 'icons'); //array of icons
 	$icons = $iconData[0];
 	$title = false;
-	$count=0;
+	$count=1;
 	if($icons){
 		foreach($icons as $icon) {
 			$count ++;
@@ -683,7 +686,7 @@ function did_show_images($id) {
 			$title      = $icon_meta['title'];
 			$image_meta = did_get_post_meta( $icon['image_id'] );
 			if ( $popup[0] == 'on' ) { //Show Popup
-				echo '<a class="fancybox flexbox-display-icon" rel="images" data-title-id="title-' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+				echo '<a class="fancybox flexbox-display-icon" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
 				if ( $titlePosition[0] == 'top' ) {
 					echo $title . '<br>';
 				}
@@ -694,13 +697,12 @@ function did_show_images($id) {
 				echo '</a>';
 				// add hidden div to store titles html
 				echo '<div class="fancybox-hidden">';
-				echo '<div id="title-' . $count . '">';
+				echo '<div id="i-title-' . $count . '">';
 				echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
 				echo '</div>';
 				echo '</div>';
 
 			} else { //Show Icons Only
-
 				echo '<div class="flexbox-display-icon-static">';
 				//Title at Top
 				if ( $titlePosition[0] == 'top' ) {
@@ -714,6 +716,7 @@ function did_show_images($id) {
 				echo '</div>';
 			}
 		}
+
 	}
 }
 

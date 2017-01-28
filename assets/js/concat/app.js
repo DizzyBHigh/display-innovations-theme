@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
     $(document).foundation();
     //set up for fancybox
     $(".fancybox")
-        .attr('rel', 'gallery')
+        .attr('rel', 'casestudy')
         .fancybox({
             openEffect : 'none',
             closeEffect: 'none',
@@ -12,11 +12,11 @@ jQuery(document).ready(function($) {
             loop: false,
             preLoad : 3,
             beforeLoad: function () {
-                var el, id = $(this.element).data('title-id');
-                if (id) {
-                    el = $('#' + id);
-                    if (el.length) {
-                        this.title = el.html()+ '<br><i>Image ' + (this.index + 1) + ' of ' + this.group.length+'</i>';
+                var csel, csid = $(this.element).data('cs-title');
+                if (csid) {
+                    csel = $('#cs-title-' + csid);
+                    if (csel.length) {
+                        this.title = csel.html()+ '<br><i>Image ' + (this.index + 1) + ' of ' + this.group.length+'</i>';
                     }
                 }
             },

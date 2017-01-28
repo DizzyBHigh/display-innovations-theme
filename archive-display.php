@@ -23,8 +23,6 @@ get_header(); ?>
 	</div>
 </div>
 
-
-
 <div class="row">
 	<div class="medium-3 medium-offset-1">
 		<?php do_action('did_displays_menu'); ?>
