@@ -1,0 +1,39 @@
+{
+  "name": "display-innovations-theme",
+  "description": "Display Innovations Theme for Wordpress by Base5 Designs",
+  "version": "2.0.3",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dizzybhigh/display-innovations-theme"
+  },
+  "author": "Dizzy B High, Zeek Interactive",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dizzybhigh/display-innovations-theme/issues"
+  },
+  "homepage": "https://github.com/dizzybhigh/display-innovations-theme",
+  "dependencies": {
+    "foundation-sites": "^6.2.3"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.12.5",
+    "del": "^2.2.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^1.11.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-sass": "^2.3.1",
+    "gulp-size": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-svg-sprite": "^1.2.19",
+    "gulp-svgmin": "^1.2.2",
+    "gulp-uglify": "^1.2.0"
+  }
+}
