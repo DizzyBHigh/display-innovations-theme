@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
     //set up for fancybox
     $(".fancybox")
         .attr('rel', 'casestudy')
+        .attr('rel', 'images')
         .fancybox({
             openEffect : 'none',
             closeEffect: 'none',
@@ -17,6 +18,13 @@ jQuery(document).ready(function($) {
                     csel = $('#cs-title-' + csid);
                     if (csel.length) {
                         this.title = csel.html()+ '<br><i>Image ' + (this.index + 1) + ' of ' + this.group.length+'</i>';
+                    }
+                }
+                var iel, iid = $(this.element).data('i-title');
+                if (iid) {
+                    iel = $('#i-title-' + iid);
+                    if (iel.length) {
+                        this.title = iel.html()+ '<br><i>Image ' + (this.index + 1) + ' of ' + this.group.length+'</i>';
                     }
                 }
             },
