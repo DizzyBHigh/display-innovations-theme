@@ -27,26 +27,23 @@ get_header(); ?>
 
 			<?php while ( have_posts() ) : the_post(); ?>
 				<div class="row">
-					<div class="medium-12">
+					<div class="small-12 medium-12">
+						<h2><?php the_title(); ?></h2>
 						<div class="did-case-study">
 							<?php do_action('did_show_case_studies', get_the_ID() ); ?><br>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="medium-12">
+					<div class="small-12 medium-12">
 						<div class="flexbox-display-icons">
 							<?php do_action('did_show_images', get_the_ID() ); ?>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="medium-12">
-						<?php the_content( sprintf(
-						/* translators: %s: Name of current post. */
-						wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'display-innovations' ), array( 'span' => array( 'class' => array() ) ) ),
-						                                                                      the_title( '<span class="screen-reader-text">"', '"</span>', false )
-						) );?>
+					<div class="small-12 medium-12">
+						<?php the_content(); ?>
 				</div>
 			</div>
 
