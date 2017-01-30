@@ -37,7 +37,7 @@ add_action( 'init',  'cpt_display' );
 add_action( 'init', 'cpt_technical' );
 
 //Custom Meta Boxes
-add_action( 'cmb2_init', 'cmb2_display_metaboxes' );
+
 
 //Enable Duplication of Tech Specs
 add_action( 'admin_action_rd_duplicate_post_as_draft', 'rd_duplicate_post_as_draft' );
@@ -147,286 +147,6 @@ function cpt_technical(){
 }
 
 /**
- * Function to add custom meta boxes to display admin pages
- */
-function cmb2_display_metaboxes() {
-
-	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_did_';
-
-	/**
-	 * Initiate Metaboxes
-	 */
-	// Display Icon and Banner
-	$cmb = new_cmb2_box( array(
-		'id'            => 'display',
-		'title'         => 'Display Icon and Banner',
-		'object_types'  => array( 'display' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles'    => true, // false to disable the CMB stylesheet
-		// 'closed'     => true, // Keep the metabox closed by default
-	) );
-	// Menu Label
-	$cmb->add_field( array(
-		'name'    => 'Menu Label',
-		'desc'    => 'Enter the text you want on the Menu button',
-		'id'      => $prefix . 'menu_label',
-		'type'    => 'text',
-		// Optional:
-	) );
-	// -- Homepage Icon - File Upload
-	$cmb->add_field( array(
-		'id'      =>  $prefix . 'icon',
-		'name'    => 'Display Icon',
-		'desc'    => 'Upload an image to be used as the Icon for this display.',
-		'type'    => 'file',
-		// Optional:
-		'options' => array(
-			'url' => false, // Hide the text input for the url
-		),
-		'text'    => array(
-			'add_upload_file_text' => 'Upload Display Icon' // Change upload button text. Default: "Add or Upload File"
-		),
-	) );
-	// -- Page Banner - File Upload
-	$cmb->add_field( array(
-		'name'    => 'Display Banner',
-		'desc'    => 'Upload an image to be used for the displays banner.',
-		'id'      => $prefix . 'banner',
-		'type'    => 'file',
-		// Optional:
-		'options' => array(
-			'url' => false, // Hide the text input for the url
-		),
-		'text'    => array(
-			'add_upload_file_text' => 'Upload Banner Image' // Change upload button text. Default: "Add or Upload File"
-		),
-	) );
-
-	//Case Study Box
-	$cmbCaseStudy = new_cmb2_box(array(
-		'id'            => 'case_study',
-		'title'         => 'Case Study',
-		'object_types'  => array('display' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles' => true, // false to disable the CMB stylesheet
-		// 'closed'     => true, // Keep the metabox closed by default
-
-	));
-	// -- Case Study Button Label
-	$cmbCaseStudy->add_field( array(
-		'name'    => 'Button Label',
-		'desc'    => 'Enter the text you want on the case study button',
-		'id'      => $prefix . 'buttonlabel',
-		'type'    => 'text',
-		// Optional:
-	) );
-	// -- Case Study Images - File List
-	$cmbCaseStudy->add_field( array(
-		'name'    => 'Case Study Images',
-		'desc'    => 'Select the Images for the case study',
-		'id'      => $prefix . 'images',
-		'type'    => 'file_list'
-	) );
-
-	//Images Box
-	$cmbImages = new_cmb2_box(array(
-		'id'            => 'images',
-		'title'         => 'Page Images',
-		'object_types'  => array('display' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles' => true, // false to disable the CMB stylesheet
-		'closed'     => true, // Keep the metabox closed by default
-
-	));
-	// -- Images - Icon Title Position - Radio
-	$cmbImages->add_field( array(
-		'name'    => 'Show Image Title',
-		'id'      => $prefix. 'show_title',
-		'type'    => 'radio_inline',
-		'description' => 'None - No Title Shown.<br>Top - Title shown at Top.<br>Bottom - Title Shown at Bottom<br>',
-		'options' => array(
-			'none' => __('None', 'cmb2'),
-			'top'   => __( 'Top', 'cmb2' ),
-			'bottom'     => __( 'Bottom', 'cmb2' ),
-		),
-		'default' => 'default',
-	));
-	// -- Images - Use Popup Checkbox
-	$cmbImages->add_field( array(
-		'name' => 'Use Popup',
-		'desc' => 'When checked the large images will be displayed in a pop-up window when clicked',
-		'id'   => $prefix . 'popup',
-		'type' => 'checkbox',
-	));
-	// -- Images Group
-	$pageImagesGroup = $cmbImages->add_field( array(
-		'id'          => 'icons',
-		'type'        => 'group',
-		'description' => __( 'Add images for the display here.', 'cmb2' ),
-		'repeatable'  => true, // use false if you want non-repeatable group
-		'options'     => array(
-			'group_title'   => __( 'Image {#}', 'cmb2' ), // since version 1.1.4, {#} gets replaced by row number
-			'add_button'    => __( 'Add Image', 'cmb2' ),
-			'remove_button' => __( 'Remove Image', 'cmb2' ),
-			'sortable'      => true, // beta
-			'closed'     => false, // true to have the groups closed by default
-		),
-	) );
-	// -- Images Group - Icon
-	$cmbImages->add_group_field( $pageImagesGroup, array(
-		'name' => 'Icon',
-		'id'   => 'icon',
-		'type' => 'file',
-	) );
-	// -- Images Group - Main Image
-	$cmbImages->add_group_field( $pageImagesGroup, array(
-		'name' => 'Image',
-		'id'   => 'image',
-		'type' => 'file',
-	) );
-
-	// Applications
-	$cmbApplications = new_cmb2_box(array(
-		'id'            => 'applications',
-		'title'         => 'Applications',
-		'object_types'  => array('display' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles' => true, // false to disable the CMB stylesheet
-		'closed'     => true, // Keep the metabox closed by default
-
-	));
-	// -- Applications Group
-	$applicationsGroup = $cmbApplications->add_field( array(
-		'id'          => 'applications',
-		'type'        => 'group',
-		'description' => __( 'Add Applications.', 'cmb2' ),
-		'repeatable'  => true, // use false if you want non-repeatable group
-		'options'     => array(
-			'group_title'   => __( 'Application {#}', 'cmb2' ), // since version 1.1.4, {#} gets replaced by row number
-			'add_button'    => __( 'Add Application', 'cmb2' ),
-			'remove_button' => __( 'Remove Application', 'cmb2' ),
-			'sortable'      => true, // beta
-			'closed'        => true, // true to have the groups closed by default
-		),
-	) );
-
-	// Add Fields for case study Image
-	$cmbApplications->add_group_field( $applicationsGroup, array(
-		'name' => 'Application',
-		'id'   => 'app',
-		'type' => 'text',
-	) );
-
-	//Tech Box
-	$cmbTech = new_cmb2_box(array(
-		'id'            => 'tech',
-		'title'         => 'Technical Specifications',
-		'object_types'  => array('display' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles' => true, // false to disable the CMB stylesheet
-		'closed'     => false, // Keep the metabox closed by default
-
-	));
-	// -- Type Select Radio
-	$cmbTech->add_field( array(
-		'name'    => 'Tech Specs',
-		'id'      => $prefix. 'techtype',
-		'type'    => 'radio_inline',
-		'description' => 'None - Technical specifications will not be shown.<br>Default - The Default Specifications will be used. (You can set the default specs in the settings page)<br>Custom - The text entered into the Custom Specs box will be used.<br>List - The specifications added to the List will be displayed in an accordian.',
-		'options' => array(
-			'none' => __('None', 'cmb2'),
-			'default' => __( 'Default', 'cmb2' ),
-			'custom'   => __( 'Custom', 'cmb2' ),
-			'list'     => __( 'List', 'cmb2' ),
-		),
-		'default' => 'default',
-	));
-	// -- Custom Tech Text
-	$cmbTech->add_field(array(
-		'name' => 'Custom Text',
-		'desc' => 'Enter the custom text you would like for Technical Specifications',
-		'id' => $prefix . 'custom',
-		'type' => 'wysiwyg',
-		'options' => array(
-			'media_buttons' => false,
-		),
-	),
-		$cmbTech->add_field( array(
-			'name'    => __( 'Technical Specifications', 'cmb2' ),
-			'desc'    => __( 'Drag specs from the left column to the right column to attach them to this page.<br />You may rearrange the order of the specs in the right column by dragging and dropping.', 'cmb2' ),
-			'id'      => 'techspecs',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'show_thumbnails' => true, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
-				'query_args'      => array(
-					'posts_per_page' => 10,
-					'post_type'      => 'technical',
-				), // override the get_posts args
-			),
-		) ));
-
-	// Add other metaboxes as needed
-
-	// METABOXES FOR TECH SPECS
-	/**
-	 * Initiate Metaboxes
-	 */
-	// Display Icon and Banner Box
-	$cmbTechSpecs = new_cmb2_box( array(
-		'id'            => 'technical',
-		'title'         => 'Specifications',
-		'object_types'  => array( 'technical' ), // Post type
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true, // Show field names on the left
-		'cmb_styles'    => true, // false to disable the CMB stylesheet
-		'closed'     => true, // Keep the metabox closed by default
-	) );
-
-	$techSpecsGroup  = $cmbTechSpecs->add_field( array(
-		'id'          => 'tech',
-		'type'        => 'group',
-		'description' => __( 'Add Specifications for the display here.', 'cmb2' ),
-		'repeatable'  => true, // use false if you want non-repeatable group
-		'options'     => array(
-			'group_title'   => __( 'Specification {#}', 'cmb2' ), // since version 1.1.4, {#} gets replaced by row number
-			'add_button'    => __( 'Add Specification', 'cmb2' ),
-			'remove_button' => __( 'Remove Specification', 'cmb2' ),
-			'sortable'      => true, // beta
-			'closed'        => true, // true to have the groups closed by default
-		),
-	) );
-
-	$cmbTechSpecs->add_group_field($techSpecsGroup, array(
-		'name'    => 'Specification',
-		'desc'    => 'Enter name of the Specification',
-		'id'      => 'spec_name',
-		'type'    => 'text',
-		// Optional:
-	) );
-	$cmbTechSpecs->add_group_field($techSpecsGroup, array(
-		'name'    => 'Value',
-		'desc'    => 'Enter the Value of the Specification',
-		'id'      => 'spec_value',
-		'type'    => 'text',
-		// Optional:
-	) );
-
-}
-
-/**
  * Function creates post duplicate as a draft and redirects then to the edit post screen
  */
 function rd_duplicate_post_as_draft(){
@@ -529,11 +249,11 @@ function rd_duplicate_post_link( $actions, $post ) {
  * Register Thumbnail sizes
  */
 function did_set_image_sizes(){
-	add_image_size( 'di_display_icon', '180', '143', array( "center", "center") );
-	add_image_size( 'di_banner_image', '978', '198', array( "center", "center") );
-	add_image_size( 'di_Image_icon', '200', '170', array( "center", "center") );
-	add_image_size( 'di_image_no_title', '210', '200', array( "center", "center") );
-	add_image_size( 'di_main_image', '730', '522', array( "center", "center") );
+	add_image_size( 'di_display_icon', '180', '143', false );
+	add_image_size( 'di_banner_image', '978', '198', false );
+	add_image_size( 'di_image_icon', '200', '170', false );
+	add_image_size( 'di_image_icon_no_title', '210', '200', false );
+	add_image_size( 'di_main_image', '730', '522', false );
 }
 
 function did_show_home_icon( $attachment_id) {
@@ -614,7 +334,7 @@ function did_display_icons(){
 			$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
 			//get the post id of the icon image
 			$iconID = $post_meta['_did_icon_id'][0];
-			echo '<div class="flexbox-display-icon">';
+			echo '<div class="flexbox-display-icon-home">';
 			echo '<a class="" href="' . get_the_permalink($post->ID) .'">';
 			do_action('did_show_home_icon', $iconID);
 			echo '</a>';
@@ -629,7 +349,7 @@ function did_display_icons(){
 
 function did_show_case_studies($id) {
 	//get list of case study images
-	$data = get_post_meta( $id, 'did_case_study_images', 0 ); //array of case study images
+	$data = get_post_meta( $id, '_did_images', 0 ); //array of case study images
 	//var_dump($data);
 	$buttonData = get_post_meta( $id, '_did_buttonlabel', 0 );
 	$buttonText = $buttonData[0];
@@ -670,31 +390,63 @@ function did_show_case_studies($id) {
 }
 
 function did_show_images($id) {
-	//get list of case study images
+	//get list of images
 	$titlePosition = get_post_meta( $id, '_did_show_title'); //Title Position
 	$popup = get_post_meta($id, '_did_popup'); //show popup check
 	$iconData = get_post_meta( $id, 'icons'); //array of icons
 	$icons = $iconData[0];
 	$title = false;
 	$count=1;
+	$posData = get_post_meta( $id );
+	//var_dump($iconData);
 	if($icons){
 		foreach($icons as $icon) {
+			//var_dump($icon);
 			$count ++;
 			//get icon meta data
 			$icon_meta = did_get_post_meta( $icon['icon_id'] );
-			//var_dump($icon_meta);
+			$stretch = $icon['stretch'];
+			//var_dump($stretch);
+			//check stretch option
+			switch ( $stretch ) {
+				case 'tall':
+					$class = '-tall';
+					break;
+				case 'wide':
+					$class = '-wide';
+					break;
+				default:
+					$class = '';
+
+			}
+			//var_dump($icon['stretch']);
 			$title      = $icon_meta['title'];
 			$image_meta = did_get_post_meta( $icon['image_id'] );
-			if ( $popup[0] == 'on' ) { //Show Popup
-				echo '<a class="fancybox flexbox-display-icon" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
-				if ( $titlePosition[0] == 'top' ) {
-					echo $title . '<br>';
+			if ( $popup[0] == 'on' ) { //Show icons as Fancybox links
+				if ( $icon['icon_id'] ) {
+					echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+				} else {
+					echo '<a class="fancybox" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
 				}
-				echo '<img src="' . $icon_meta['src'] . '" />';
-				if ( $titlePosition[0] == 'bottom' ) {
-					echo '<br>' . $title;
+				//show title if top or bottom is selected
+				if ( $titlePosition != 'none' ) {
+					if ( $titlePosition[0] == 'top' ) {
+						echo $title . '<br>';
+					}
+					echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
+					if ( $titlePosition[0] == 'bottom' ) {
+						echo '<br>' . $title;
+					}
+				} else {
+					//show th slightly larger image as theres no title
+					echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
 				}
-				echo '</a>';
+				if ( $icon['icon_id'] ) {
+					echo '</a>';
+				} else {
+					echo '</a>';
+				}
+
 				// add hidden div to store titles html
 				echo '<div class="fancybox-hidden">';
 				echo '<div id="i-title-' . $count . '">';
@@ -703,12 +455,12 @@ function did_show_images($id) {
 				echo '</div>';
 
 			} else { //Show Icons Only
-				echo '<div class="flexbox-display-icon-static">';
+				echo '<div class="flexbox-display-icon-static' . $class . '">';
 				//Title at Top
 				if ( $titlePosition[0] == 'top' ) {
 					echo $title . '<br>';
 				}
-				echo wp_get_attachment_image( $icon['icon_id'], 'di_display_icon' );
+				echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
 				//Title at Bottom
 				if ( $titlePosition[0] == 'bottom' ) {
 					echo '<br>' . $title;
