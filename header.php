@@ -59,7 +59,9 @@
 						<div class="main-nav">
 							<?php wp_nav_menu(
 								array( 'theme_location' => 'primary',
-			                          'container' => ''
+								       'container'       => 'div',
+								       'container_id'    => 'primary-menu',
+								       'container_class' => 'main-nav',
 								)
 							); ?>
 						</div>

@@ -32,11 +32,11 @@ $menu-icon-spacing: 0.25rem !default;
 
 /// Background color for an hovered menu item.
 /// @type Color
-$menu-item-background-hover: $light-gray !default;
+$menu-item-background-hover: $di-dark-blue !default;
 
 /// Color for bordered menu
 /// @type Color
-$menu-border: $light-gray !default;
+$menu-border: $white !default;
 
 /// Creates the base styles for a Menu.
 @mixin menu-base {
