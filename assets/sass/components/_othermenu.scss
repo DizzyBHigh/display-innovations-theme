@@ -1,0 +1,70 @@
+/* =Menu
+----------------------------------------------- */
+#main-navigation {
+  z-index: 100;
+  margin-top: 101px;
+}
+
+// container class first unordered list
+#main-navigation .main-nav ul {
+  font-weight: bolder;
+  margin-right: 10px;
+}
+
+// Nav Items list
+#main-navigation .main-nav li {
+  background-color: $white;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+  border-width: 1px;
+  border-color: $di-dark-blue;
+  border-style: solid;
+  border-bottom: 0px;
+  width: 147px;
+  height: 22px;
+  text-align: center;
+}
+
+#main-navigation .main-nav li:hover {
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+  border-width: 1px;
+  border-color: $di-dark-blue;
+  border-style: solid;
+  border-bottom: 0px;
+  width: 147px;
+  height: 22px;
+  text-align: center;
+  background: -moz-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(6, 98, 149, 1)), color-stop(40%, rgba(104, 159, 190, 1)), color-stop(80%, rgba(104, 159, 190, 1)), color-stop(100%, rgba(6, 98, 149, 1))); /* safari4+,chrome */
+  background: -webkit-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ie10+ */
+  background: linear-gradient(57deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1); /* ie6-9 */
+}
+
+#main-navigation .main-nav .current-menu-item {
+  color: $white !important;
+  background: -moz-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(6, 98, 149, 1)), color-stop(40%, rgba(104, 159, 190, 1)), color-stop(80%, rgba(104, 159, 190, 1)), color-stop(100%, rgba(6, 98, 149, 1))); /* safari4+,chrome */
+  background: -webkit-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ie10+ */
+  background: linear-gradient(57deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1); /* ie6-9 */
+}
+
+#main-navigation .main-nav .current-menu-item a {
+  color: $white !important;
+}
+
+#main-navigation .main-nav li a {
+  color: $di-dark-blue !important;
+}
+
+#main-navigation .main-nav li a:hover {
+  color: $white !important;
+}

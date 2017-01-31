@@ -38,6 +38,21 @@
   align-items:         flex-start;
 }
 
+.flexbox-display-icons-center {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction: row;
+  -webkit-flex-wrap: wrap; /* Safari */
+  flex-wrap: wrap;
+  -webkit-justify-content: center; /* Safari */
+  justify-content: center;
+  -webkit-align-content: center; /* Safari */
+  align-content: center;
+  -webkit-align-items: center; /* Safari */
+  align-items: center;
+}
+
 .flexbox-banner-item{
 
 }

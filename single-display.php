@@ -38,9 +38,9 @@ get_header(); ?>
 				</div>
 				<div class="row">
 					<div class="small-12 medium-12">
-						<div class="flexbox-display-icons">
-							<?php do_action('did_show_images', get_the_ID() ); ?>
-						</div>
+
+						<?php do_action( 'did_show_images', get_the_ID() ); ?>
+
 					</div>
 				</div>
 				<div class="row">

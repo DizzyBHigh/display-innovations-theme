@@ -393,6 +393,7 @@ function did_show_images($id) {
 	//get list of images
 	$titlePosition = get_post_meta( $id, '_did_show_title'); //Title Position
 	$popup = get_post_meta($id, '_did_popup'); //show popup check
+	$align = get_post_meta( $id, '_did_align' ); //show popup check
 	$iconData = get_post_meta( $id, 'icons'); //array of icons
 	$icons = $iconData[0];
 	$title = false;
@@ -400,6 +401,12 @@ function did_show_images($id) {
 	$posData = get_post_meta( $id );
 	//var_dump($iconData);
 	if($icons){
+		//we have Icons so check alignment
+		$align_class = '';
+		if ( $align[0] == 'center' ) {
+			$align_class = '-center';
+		}
+		echo '<div class="flexbox-display-icons' . $align_class . '">';
 		foreach($icons as $icon) {
 			//var_dump($icon);
 			$count ++;
@@ -426,7 +433,7 @@ function did_show_images($id) {
 				if ( $icon['icon_id'] ) {
 					echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
 				} else {
-					echo '<a class="fancybox" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+					echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
 				}
 				//show title if top or bottom is selected
 				if ( $titlePosition != 'none' ) {
@@ -468,7 +475,7 @@ function did_show_images($id) {
 				echo '</div>';
 			}
 		}
-
+		echo '</div>';
 	}
 }
 

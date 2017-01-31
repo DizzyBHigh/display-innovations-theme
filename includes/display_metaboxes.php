@@ -118,6 +118,17 @@ function cmb2_display_metaboxes() {
 		),
 		'default'     => 'none',
 	) );
+	$cmbImages->add_field( array(
+		'name'        => 'Icon Alignment',
+		'id'          => $prefix . 'align',
+		'type'        => 'radio_inline',
+		'description' => 'Justify Left - Icons Left justified.<br>Centered - Icons centered.',
+		'options'     => array(
+			'left'   => __( 'Justify Left', 'cmb2' ),
+			'center' => __( 'Justify center', 'cmb2' ),
+		),
+		'default'     => 'left',
+	) );
 	// -- Images - Use Popup Checkbox
 	$cmbImages->add_field( array(
 		'name' => 'Use Popup',
