@@ -56,12 +56,11 @@
 						</a>
 					</div>
 					<div class="small-12 medium-6 ">
-						<div class="main-nav">
+						<div id="main-navigation">
 							<?php wp_nav_menu(
 								array( 'theme_location' => 'primary',
-								       'container'       => 'div',
-								       'container_id'    => 'primary-menu',
 								       'container_class' => 'main-nav',
+
 								)
 							); ?>
 						</div>

@@ -5311,6 +5311,59 @@ a.ofc-home {
     display: none
 }
 
+#main-navigation {
+    z-index: 100;
+    margin-top: 101px
+}
+
+#main-navigation .main-nav ul {
+    font-weight: bolder;
+    margin-right: 10px
+}
+
+#main-navigation .main-nav li {
+    background-color: #fefefe;
+    border-radius: 10px 10px 0px 0px;
+    border-width: 1px;
+    border-color: #146bab;
+    border-style: solid;
+    border-bottom: 0px;
+    width: 147px;
+    height: 22px;
+    text-align: center
+}
+
+#main-navigation .main-nav li:hover {
+    border-radius: 10px 10px 0px 0px;
+    border-width: 1px;
+    border-color: #146bab;
+    border-style: solid;
+    border-bottom: 0px;
+    width: 147px;
+    height: 22px;
+    text-align: center;
+    background: linear-gradient(57deg, #066295 0%, #689fbe 40%, #689fbe 80%, #066295 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1)
+}
+
+#main-navigation .main-nav .current-menu-item {
+    color: #fefefe !important;
+    background: linear-gradient(57deg, #066295 0%, #689fbe 40%, #689fbe 80%, #066295 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1)
+}
+
+#main-navigation .main-nav .current-menu-item a {
+    color: #fefefe !important
+}
+
+#main-navigation .main-nav li a {
+    color: #146bab !important
+}
+
+#main-navigation .main-nav li a:hover {
+    color: #fefefe !important
+}
+
 #masthead {
     margin-bottom: 1.25rem;
     background-color: #ededed;
