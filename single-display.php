@@ -51,6 +51,9 @@ get_header(); ?>
 
 			<?php endwhile; // End of the loop. ?>
 		</div>
+		<div class="show-for-small-only small-offset-1 small-10 small-push-1">
+			<?php do_action( 'did_displays_menu' ); ?>
+		</div>
 	</div>
 <?php
 get_footer();
