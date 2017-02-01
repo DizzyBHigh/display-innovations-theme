@@ -3730,7 +3730,7 @@ select[multiple] {
 }
 
 .orbit-previous:hover, .orbit-next:hover, .orbit-previous:active, .orbit-next:active, .orbit-previous:focus, .orbit-next:focus {
-    background-color: rgba(10, 10, 10, 0.5)
+    background-color: #fefefe
 }
 
 .orbit-previous {
@@ -5362,6 +5362,36 @@ a.ofc-home {
 
 #main-navigation .main-nav li a:hover {
     color: #fefefe !important
+}
+
+.orbit-previous {
+    color: #146bab;
+    left: -50px;
+    border: none
+}
+
+.orbit-next {
+    color: #146bab;
+    right: -50px;
+    border: none
+}
+
+.orbit-prev:hover {
+    border: none;
+    color: #6ea1c0 !important
+}
+
+.orbit-next:hover {
+    border: none;
+    color: #6ea1c0 !important
+}
+
+.orbit-prev:active {
+    border: none
+}
+
+.orbit-next:active {
+    border: none
 }
 
 #masthead {

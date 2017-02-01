@@ -9,19 +9,10 @@
 
 get_header(); ?>
 
-	<div class="row bottom-blue">
-		<div class="columns">
-			<div class="flexbox-banner">
 
-				<?php if ( get_theme_mod( 'di_default_banner' ) ) { ?>
+<?php do_action( 'did_show_banner' ); ?>
 
-					<img class="flexbox-banner-item" src="<?php echo get_theme_mod( 'di_default_banner' ); ?>" width="978" height="198">
 
-					<?php // add a fallback if the logo doesn't exist
-				}; ?>
-			</div>
-		</div>
-	</div>
 
 	<div class="row">
 

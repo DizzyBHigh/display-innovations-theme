@@ -12,7 +12,11 @@
  * @package Heisenberg
  */
 
-get_header(); ?>
+get_header();
+
+do_action( 'did_show_banner' );
+?>
+
 
 <div class="row">
 
@@ -37,12 +41,6 @@ get_header(); ?>
 			</main>
 
 		</div>
-
-	</div>
-
-	<div class="medium-4 columns">
-
-		<?php get_sidebar(); ?>
 
 	</div>
 

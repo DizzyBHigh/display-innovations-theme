@@ -1,0 +1,33 @@
+.orbit-previous {
+  color: $di-dark-blue;
+  left: -50px;
+  border: none;
+}
+
+.orbit-next {
+  color: $di-dark-blue;
+  right: -50px;
+  border: none;
+}
+
+.orbit-prev:hover {
+  border: none;
+  color: $di-light-blue !important;
+}
+
+.orbit-next:hover {
+  border: none;
+  color: $di-light-blue !important;
+}
+
+.orbit-prev:active {
+  border: none;
+}
+
+.orbit-next:active {
+  border: none;
+}
+
+
+
+

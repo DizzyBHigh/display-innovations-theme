@@ -100,6 +100,7 @@ gulp.task('browser-sync', function() {
 	});
 });
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // Styles - Sass
 ////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +129,12 @@ gulp.task('styles', function() {
 		}));
 });
 
+gulp.task('motion-ui', function () {
+    gulp.src(paths.sassPath + 'app.scss')
+        .pipe(sass({
+            includePaths: ['node_modules/motion-ui/src']
+        }));
+});
 ////////////////////////////////////////////////////////////////////////////////
 // JS
 ////////////////////////////////////////////////////////////////////////////////
@@ -235,4 +242,4 @@ gulp.task('watch', function() {
 gulp.task('serve', ['move-img', 'svg-sprite', 'styles', 'js', 'browser-sync', 'foundation-js', 'fancybox-js', 'watch']);
 
 // Our default gulp task, which runs a one-time task
-gulp.task('default', ['move-img', 'styles', 'js', 'svg-sprite', 'fancybox-js']);
+gulp.task('default', ['move-img', 'motion-ui', 'styles', 'js', 'svg-sprite', 'fancybox-js']);

@@ -23,21 +23,6 @@ if ( file_exists( get_template_directory() . '/cmb2-attached-posts/cmb2-attached
 	wp_die("CMB2 MetaBoxes Attached Posts is missing.");
 };
 
-/**
- * Add The CMB2 Fields for the Displays
- */
-
-//Template selector
-//add_filter( 'template_include', 'did_template_chooser' );
-
-//Register Display Post Type
-add_action( 'init',  'cpt_display' );
-
-//Register Display Post Type
-add_action( 'init', 'cpt_technical' );
-
-//Custom Meta Boxes
-
 
 //Enable Duplication of Tech Specs
 add_action( 'admin_action_rd_duplicate_post_as_draft', 'rd_duplicate_post_as_draft' );
@@ -57,94 +42,11 @@ add_action( 'did_show_case_studies','did_show_case_studies' , 10, 1  );
 
 add_action( 'did_show_images','did_show_images' , 10, 1  );
 
-/** Function to set up Display custom post type */
-function cpt_display(){
-	// Custom Post Type Labels
-	$labels = array(
-		'name' => esc_html__( 'Displays', 'di_display' ),
-		'singular_name' => esc_html__( 'Display', 'di_display' ),
-		'add_new' => esc_html__( 'Add New', 'di_display' ),
-		'add_new_item' => esc_html__( 'Add New Display', 'di_display' ),
-		'edit_item' => esc_html__( 'Edit Display', 'di_display' ),
-		'new_item' => esc_html__( 'New Display', 'di_display' ),
-		'view_item' => esc_html__( 'View Display', 'di_display' ),
-		'search_items' => esc_html__( 'Search Display', 'di_display' ),
-		'not_found' => esc_html__( 'No Display found', 'di_display' ),
-		'not_found_in_trash' => esc_html__( 'No display found in trash', 'di_display' ),
-		'parent_item_colon' => ''
-	);
+add_action( 'did_get_displays', 'did_get_displays', 10, 1 );
 
-	// Supports
-	$supports = array( 'title', 'editor', 'page_attributes' );
+add_action( 'did_show_banner', 'did_show_banner', 10, 1 );
 
-	// Custom Post Type Supports
-	$args = array(
-		'labels' => $labels,
-		'public' => true,
-		'has_archive' => true,
-		'publicly_queryable' => true,
-		'show_ui' => true,
-		'query_var' => true,
-		'can_export' => true,
-		'rewrite' => array( 'slug' => 'displays', 'with_front' => true ),
-		'capability_type' => 'page',
-		'hierarchical' => false,
-		'taxonomies' => array('category'),
-		'menu_position' => 25,
-		'supports' => $supports,
-		'menu_icon' => get_template_directory_uri() . '/assets/dist/img/DI-icon.png', // you can set your own icon here
-	);
-
-	// Finally register the "display" custom post type
-	register_post_type( 'display' , $args );
-
-	flush_rewrite_rules();
-
-}
-
-/** Function to set up Technical Specs custom post type */
-function cpt_technical(){
-	// Custom Post Type Labels
-	$labels = array(
-		'name' => esc_html__( 'Technical specs', 'di_display' ),
-		'singular_name' => esc_html__( 'Technical spec', 'di_display' ),
-		'add_new' => esc_html__( 'Add New', 'di_display' ),
-		'add_new_item' => esc_html__( 'Add New Techspec', 'di_display' ),
-		'edit_item' => esc_html__( 'Edit Technical spec', 'di_display' ),
-		'new_item' => esc_html__( 'New Technical spec', 'di_display' ),
-		'view_item' => esc_html__( 'View Technical spec', 'di_display' ),
-		'search_items' => esc_html__( 'Search Technical spec', 'di_display' ),
-		'not_found' => esc_html__( 'No Technical spec found', 'di_display' ),
-		'not_found_in_trash' => esc_html__( 'No Technical spec found in trash', 'di_display' ),
-		'parent_item_colon' => ''
-	);
-
-	// Supports
-	$supports = array( 'title' );
-
-	// Custom Post Type Supports
-	$args = array(
-		'labels' => $labels,
-		'public' => false,
-		'has_archive' => true,
-		'publicly_queryable' => true,
-		'show_ui' => true,
-		'query_var' => true,
-		'can_export' => true,
-		'rewrite' => array( 'slug' => 'technical', 'with_front' => true ),
-		'capability_type' => 'page',
-		'hierarchical' => false,
-		'taxonomies' => array(),
-		'menu_position' => 25,
-		'supports' => $supports,
-		'menu_icon' => get_template_directory_uri() . '/assets/dist/img/tech-spec.gif', // you can set your own icon here
-	);
-
-	// Finally register the "display" custom post type
-	register_post_type( 'technical' , $args );
-
-	flush_rewrite_rules();
-}
+add_action( 'did_make_slider', 'did_make_slider', 10, 1 );
 
 /**
  * Function creates post duplicate as a draft and redirects then to the edit post screen
@@ -263,11 +165,16 @@ function did_show_home_icon( $attachment_id) {
 	echo $meta['title'];
 }
 
-function did_show_banner( $attachment_id) {
-	$attachment = get_post( $attachment_id );
-	$meta = did_get_post_meta($attachment_id);
-	echo wp_get_attachment_image( $attachment_id , 'di_banner_image' ) .'<br>';
-	echo $meta['title'];
+function did_get_displays() {
+	$args = array(
+		'posts_per_page' => - 1, // -1 is for all
+		'post_type'      => 'display', // or 'post', 'page'
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC', // or 'DESC'
+	);
+
+	$query = new WP_Query( $args ); //
+	return $query->posts;
 }
 
 function did_displays_menu(){
@@ -513,3 +420,64 @@ function did_get_post_meta( $attachment_id){
 	);
 	return $meta;
 }
+
+function did_make_slider() {
+	//first get a list of the displays in order
+	$displays = did_get_displays();
+	//var_dump($displays);
+	$isActive = 'is-active';
+	if ( $displays ) {
+		echo '<div class="orbit" role="region" aria-label="" data-orbit data-use-m-u-i="false">';
+		echo '<button class="orbit-previous"><span class="show-for-sr">Previous Slide</span><</button>';
+		echo '<ul class="orbit-container">';
+		foreach ( $displays as $display ) {
+			$banner = get_post_meta( $display->ID, '_did_banner' );
+			echo '<li class="' . $isActive . ' orbit-slide">';
+			echo '<a href="' . get_permalink( $display->ID ) . '">';
+			echo '<img class="orbit-image" src="' . $banner[0] . '" alt="Display Innovations">';
+			echo '</a>';
+			echo '</li>';
+			$isActive = '';
+		}
+		echo '</ul>';
+		echo '<button class="orbit-next"><span class="show-for-sr">Next Slide</span> > </button>';
+		echo '</div>';
+	} else {
+		echo 'No Displays Installed';
+	}
+}
+
+function did_show_banner() {
+	global $post;
+	$bannerOption = get_post_meta( $post->ID, 'banneroption' );
+	$meta         = get_post_meta( $post->ID );
+	//var_dump($meta);
+	$front_wrap = '<div class="row bottom-blue"><div class="columns"><div class="flexbox-banner">';
+	$back_wrap  = '</div></div></div>';
+	switch ( $bannerOption[0] ) {
+		case 'custom':
+			//echo 'custom option';
+			// get the custom banner
+			$banner = get_post_meta( $post->ID, '_did_banner' );
+			echo $front_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_wrap;
+			break;
+
+		case 'slider':
+			// add the slider call here
+			//echo 'slider option';
+			echo $front_wrap;
+			did_make_slider();
+			echo $back_wrap;
+			break;
+		case 'none':
+			//echo 'none option';
+			// dont show no banner!
+			return;
+			break;
+		default:
+			echo 'default option';
+			echo $front_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_wrap;
+	}
+
+}
+

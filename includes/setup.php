@@ -94,5 +94,5 @@ add_action( 'after_setup_theme', function() {
  * @global int $content_width
  */
 add_action( 'after_setup_theme', function() {
-	$GLOBALS['content_width'] = apply_filters( '_heisenberg_content_width', 640 );
+	$GLOBALS['content_width'] = apply_filters( '_heisenberg_content_width', 1024 );
 }, 0 );
