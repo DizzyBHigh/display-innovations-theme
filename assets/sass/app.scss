@@ -10,8 +10,6 @@
 
 // Our second level of file types that make up base files (forms, lists, etc)
 @import "components/components";
-//import motion UI stuff
-@import "motion-ui/motion-ui";
 
 // Large parts of our site that make up components (header, footer, etc)
 @import "sections/sections";
@@ -24,8 +22,9 @@
 
 // Third-party file types such as plugins and WordPress
 @import "vendors/vendors";
+// owl carousel styles
 @import "owl-carousel/owl.carousel";
-@import "owl-carousel/owl.theme.default";
+@import "owl-carousel/owl.theme.di";
 
 // Quick fix sass file to be used temporarily and moved onto its proper location when time permits
 @import "shame";

@@ -130,8 +130,6 @@ gulp.task('styles', function() {
 			message: "✔ SCSS Styles compiled to assest/dist/css/ task complete",
 			onLast: true
 		}));
-
-
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -242,14 +240,14 @@ gulp.task('owl-js', function () {
 // Watch our files and fire off a task when something changes
 gulp.task('watch', function() {
 	gulp.watch(paths.sassPath + '**/*.scss', ['styles']).on('change', browserSync.reload);
-	gulp.watch(paths.jsPath + '**/*.js', ['js']);
-    gulp.watch(paths.jsPath + '**/fancybox/*.js', ['fancybox-js']);
+    gulp.watch(paths.jsPath + '**/*.js', ['js']).on('change', browserSync.reload);
+    gulp.watch(paths.jsPath + '**/fancybox/*.js', ['fancybox-js']).on('change', browserSync.reload);
 	gulp.watch(paths.imgPath + 'svg/**/*.svg', ['svg-sprite']);
     gulp.watch(paths.imgPath + '*.{png,gif,jpg}', ['move-img']);
 });
 
 // Full gulp build, including server + watch
-gulp.task('serve', ['move-img', 'svg-sprite', 'styles', 'js', 'browser-sync', 'foundation-js', 'fancybox-js', 'watch']);
+gulp.task('serve', ['default', 'watch', 'browser-sync']);
 
 // Our default gulp task, which runs a one-time task
-gulp.task('default', ['move-img', 'styles', 'owl-js', 'fancybox-js', 'js', 'svg-sprite']);
+gulp.task('default', ['move-img', 'styles', 'foundation-js', 'owl-js', 'fancybox-js', 'js', 'svg-sprite']);
