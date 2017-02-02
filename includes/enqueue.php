@@ -14,6 +14,21 @@ add_action( 'wp_enqueue_scripts', function() {
 		HEISENBERG_VERSION,
 		''
 	);
+	wp_enqueue_style(
+		'heisenberg_styles',
+		HEISENBERG_URL . '/assets/dist/css/owl-carousel.css',
+		'',
+		HEISENBERG_VERSION,
+		''
+	);
+	wp_enqueue_style(
+		'heisenberg_styles',
+		HEISENBERG_URL . '/assets/dist/css/owl.theme.di.css',
+		'',
+		HEISENBERG_VERSION,
+		''
+	);
+
 } );
 
 /**

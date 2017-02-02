@@ -427,20 +427,17 @@ function did_make_slider() {
 	//var_dump($displays);
 	$isActive = 'is-active';
 	if ( $displays ) {
-		echo '<div class="orbit" role="region" aria-label="" data-orbit data-use-m-u-i="false">';
-		echo '<button class="orbit-previous"><span class="show-for-sr">Previous Slide</span><</button>';
-		echo '<ul class="orbit-container">';
+		echo '<div class="owl-carousel owl-theme">';
+
 		foreach ( $displays as $display ) {
 			$banner = get_post_meta( $display->ID, '_did_banner' );
-			echo '<li class="' . $isActive . ' orbit-slide">';
+			echo '<div class="">';
 			echo '<a href="' . get_permalink( $display->ID ) . '">';
-			echo '<img class="orbit-image" src="' . $banner[0] . '" alt="Display Innovations">';
+			echo '<img src="' . $banner[0] . '" width="978" height="198">';
 			echo '</a>';
-			echo '</li>';
-			$isActive = '';
+			echo '</div>';
 		}
-		echo '</ul>';
-		echo '<button class="orbit-next"><span class="show-for-sr">Next Slide</span> > </button>';
+
 		echo '</div>';
 	} else {
 		echo 'No Displays Installed';
@@ -452,22 +449,26 @@ function did_show_banner() {
 	$bannerOption = get_post_meta( $post->ID, 'banneroption' );
 	$meta         = get_post_meta( $post->ID );
 	//var_dump($meta);
-	$front_wrap = '<div class="row bottom-blue"><div class="columns"><div class="flexbox-banner">';
-	$back_wrap  = '</div></div></div>';
+	$front_static_wrap = '<div class="row bottom-blue"><div class="columns"><div class="flexbox-banner">';
+	$back_static_wrap  = '</div></div></div>';
 	switch ( $bannerOption[0] ) {
 		case 'custom':
 			//echo 'custom option';
 			// get the custom banner
 			$banner = get_post_meta( $post->ID, '_did_banner' );
-			echo $front_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_wrap;
+			echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
 			break;
 
 		case 'slider':
 			// add the slider call here
 			//echo 'slider option';
-			echo $front_wrap;
+			echo '<div class="row bottom-blue">';
+			echo '<div class="column hide-for-small-only medium-2 medium-centered"><div class="di-slider-nav di-prev-slide"><h2> < </h2></div></div>';
+			echo '<div class="small-12 medium-8 ">';
 			did_make_slider();
-			echo $back_wrap;
+			echo '</div>';
+			echo '<div class="hide-for-small-only medium-2"><div class="di-slider-nav di-next-slide"><h2> > </h2></div> </div>';
+			echo '</div>';
 			break;
 		case 'none':
 			//echo 'none option';
@@ -475,8 +476,8 @@ function did_show_banner() {
 			return;
 			break;
 		default:
-			echo 'default option';
-			echo $front_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_wrap;
+			echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
+
 	}
 
 }

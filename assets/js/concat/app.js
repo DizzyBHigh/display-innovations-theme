@@ -35,34 +35,22 @@ jQuery(document).ready(function($) {
             }
         }
     );
+    var owl = $(".owl-carousel");
+    owl.owlCarousel({
+        items: 1,
+        center: true,
+        loop: true,
+        nav: false,
+        dots: false,
+        autoplay: true,
+        //autoplayTimeout:500,
+        autoplaySpeed: 1000
 
-    $(".banner-slider").slick({
-
-        // normal options...
-        infinite: false,
-
-        // the magic
-        responsive: [{
-
-            breakpoint: 980,
-            settings: {
-                slidesToShow: 1,
-                infinite: true
-            }
-
-        }, {
-
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 1,
-                dots: true
-            }
-
-        }, {
-
-            breakpoint: 300,
-            settings: "unslick" // destroys slick
-
-        }]
+    });
+    $(".di-prev-slide").on('click', function () {
+        owl.trigger('prev.owl.carousel', [1000])
+    });
+    $(".di-next-slide").on('click', function () {
+        owl.trigger('next.owl.carousel', [1000])
     });
 });
