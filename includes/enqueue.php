@@ -47,6 +47,15 @@ add_action( 'wp_enqueue_scripts', function() {
 		true
 	);
 
+	wp_enqueue_script(
+		'jquery-owl-js',
+		HEISENBERG_URL . '/assets/dist/js/jquery.owl.js',
+		[ 'jquery' ],
+		HEISENBERG_VERSION,
+		true
+	);
+
+
 	// Add comment script on single posts with comments
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

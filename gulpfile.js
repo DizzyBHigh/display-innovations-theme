@@ -17,16 +17,18 @@ var gulp = require( 'gulp' ),
 
 // Path Configs ///////////////////////////////////////////////////////////////////////////////
 var paths = {
-	sassPath: 'assets/sass/',
-	nodePath: 'node_modules/',
-	jsPath: 'assets/js/concat',
-	destPath: 'assets/dist/',
+    sassPath: 'assets/sass/',
+    nodePath: 'node_modules/',
+    jsPath: 'assets/js/concat',
+    destPath: 'assets/dist/',
 	foundationJSpath: 'node_modules/foundation-sites/js/',
-	imgPath: 'assets/img/',
-    fancyBox: 'assets/js/fancybox/'
+    imgPath: 'assets/img/',
+    fancyBox: 'assets/js/fancybox/',
+    owl: 'assets/js/owl-carousel/'
 };
 // Set Proxy url //////////////////////////////////////////////////////////////////////////////
 var bsProxy = 'localhost:8000';
+
 // Copy images and output them in dist ////////////////////////////////////////////////////////
 gulp.task('move-img',function(){
     return gulp.src(paths.imgPath + '*.{png,gif,jpg}')
@@ -35,6 +37,7 @@ gulp.task('move-img',function(){
         .pipe(notify({ message: "✔︎Images Minified and copied to assets/dist/assets/img/ "}));
 
 });
+
 // Delete compiled SVGs before creating a new one /////////////////////////////////////////////
 gulp.task('clean:svgs', function () {
   return del([
@@ -127,14 +130,10 @@ gulp.task('styles', function() {
 			message: "✔ SCSS Styles compiled to assest/dist/css/ task complete",
 			onLast: true
 		}));
+
+
 });
 
-gulp.task('motion-ui', function () {
-    gulp.src(paths.sassPath + 'app.scss')
-        .pipe(sass({
-            includePaths: ['node_modules/motion-ui/src']
-        }));
-});
 ////////////////////////////////////////////////////////////////////////////////
 // JS
 ////////////////////////////////////////////////////////////////////////////////
@@ -229,6 +228,17 @@ gulp.task('fancybox-js', function() {
         .pipe(gulp.dest(paths.destPath + 'js'));
 });
 
+gulp.task('owl-js', function () {
+    return gulp.src(paths.owl + 'owl.carousel.js')
+        .pipe(babel({
+            presets: ['es2015'],
+            compact: true
+        }))
+        .pipe(concat('jquery.owl.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.destPath + 'js'));
+});
+
 // Watch our files and fire off a task when something changes
 gulp.task('watch', function() {
 	gulp.watch(paths.sassPath + '**/*.scss', ['styles']).on('change', browserSync.reload);
@@ -242,4 +252,4 @@ gulp.task('watch', function() {
 gulp.task('serve', ['move-img', 'svg-sprite', 'styles', 'js', 'browser-sync', 'foundation-js', 'fancybox-js', 'watch']);
 
 // Our default gulp task, which runs a one-time task
-gulp.task('default', ['move-img', 'motion-ui', 'styles', 'js', 'svg-sprite', 'fancybox-js']);
+gulp.task('default', ['move-img', 'styles', 'owl-js', 'fancybox-js', 'js', 'svg-sprite']);

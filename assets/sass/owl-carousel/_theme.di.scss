@@ -1,0 +1,30 @@
+/*
+ * 	Display Innovations theme - Owl Carousel CSS File
+ */
+
+$color-base: $white !default;
+$color-white: $white !default;
+$color-gray: #D6D6D6 !default;
+
+//nav
+
+$nav-color: $di-dark-blue !default;
+$nav-color-hover: $di-light-blue !default;
+$nav-font-size: 14px !default;
+$nav-rounded: 3px !default;
+$nav-margin: 5px !default;
+$nav-padding: 4px 7px !default;
+$nav-background: $white !default;
+$nav-background-hover: $color-base !default;
+$nav-disabled-opacity: 0.5 !default;
+
+//dots
+
+$dot-width: 10px !default;
+$dot-height: 10px !default;
+$dot-rounded: 30px !default;
+$dot-margin: 5px 7px !default;
+$dot-background: $di-light-blue !default;
+$dot-background-active: $di-dark-blue !default;
+
+@import 'theme';

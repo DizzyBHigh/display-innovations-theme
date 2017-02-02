@@ -33,5 +33,36 @@ jQuery(document).ready(function($) {
                     type: "inside"
                 }
             }
-        });
+        }
+    );
+
+    $(".banner-slider").slick({
+
+        // normal options...
+        infinite: false,
+
+        // the magic
+        responsive: [{
+
+            breakpoint: 980,
+            settings: {
+                slidesToShow: 1,
+                infinite: true
+            }
+
+        }, {
+
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 1,
+                dots: true
+            }
+
+        }, {
+
+            breakpoint: 300,
+            settings: "unslick" // destroys slick
+
+        }]
+    });
 });

@@ -7,19 +7,11 @@
  * @package Heisenberg
  */
 
-get_header(); ?>
+get_header();
 
-	<div class="row bottom-blue">
-		<div class="columns">
-		<div class="flexbox-banner">
-			<?php
-				global $post;
-				$banner = get_post_meta( $post->ID, '_did_banner');
-			?>
-			<img class="flexbox-banner-item" src="<?php echo $banner[0]; ?>" width="978" height="198">
-		</div>
-		</div>
-	</div>
+do_action( 'did_show_banner' ) ?>
+
+
 
 	<div class="row">
 		<div class="hide-for-small-only medium-2 medium-offset-1 ">
