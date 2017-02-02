@@ -38,7 +38,9 @@ do_action( 'did_show_banner' ) ?>
 				<div class="row">
 					<div class="small-12 medium-12">
 						<?php the_content(); ?>
+					</div>
 				</div>
+	<?php do_action( 'did_show_applications', get_the_ID() ); ?>
 			</div>
 
 			<?php endwhile; // End of the loop. ?>

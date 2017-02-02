@@ -48,6 +48,8 @@ add_action( 'did_show_banner', 'did_show_banner', 10, 1 );
 
 add_action( 'did_make_slider', 'did_make_slider', 10, 1 );
 
+add_action( 'did_show_applications', 'did_show_applications', 10, 1 );
+
 /**
  * Function creates post duplicate as a draft and redirects then to the edit post screen
  */
@@ -478,6 +480,25 @@ function did_show_banner() {
 		default:
 			echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
 
+	}
+
+}
+
+function did_show_applications( $id ) {
+	$appData = get_post_meta( $id, 'applications' ); //array of icons
+	$apps    = $appData[0];
+	if ( $apps ) {
+		echo '<div class="row">';
+		echo '<b>Applications</b>';
+		echo '</div>';
+		echo '<div class="row"><div class="small-12 medium-12">';
+		echo '<ul class="flexbox-display-icons">';
+		foreach ( $apps as $app ) {
+			echo '<li class="appItem">' . $app['app'] . '</li>';
+			//var_dump($app['app']);
+		}
+		echo '</ul>';
+		echo '</div></div>';
 	}
 
 }

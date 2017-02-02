@@ -53,7 +53,27 @@
   align-items: center;
 }
 
-.flexbox-banner-item{
+.flexbox-display-apps-center {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction: row;
+  -webkit-flex-wrap: wrap; /* Safari */
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-start; /* Safari */
+  justify-content: flex-start;
+  -webkit-align-content: center; /* Safari */
+  align-content: center;
+  -webkit-align-items: center; /* Safari */
+  align-items: center;
+}
+
+li {
+  margin-left: 30px;
+}
+
+.flexbox-display-icons > li {
+  width: 300px;
 
 }
 
