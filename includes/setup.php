@@ -84,6 +84,11 @@ add_action( 'after_setup_theme', function() {
 		'default-color' => 'ffffff',
 		'default-image' => '',
 	) ) );
+
+	add_editor_style( array(
+		'assets/dist/css/editor.css'
+	) );
+
 } );
 
 /**

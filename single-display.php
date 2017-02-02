@@ -40,7 +40,15 @@ do_action( 'did_show_banner' ) ?>
 						<?php the_content(); ?>
 					</div>
 				</div>
+
 	<?php do_action( 'did_show_applications', get_the_ID() ); ?>
+
+	<div class="row">
+		<div class="small-12 medium-12">
+			tech specs here
+
+		</div>
+	</div>
 			</div>
 
 			<?php endwhile; // End of the loop. ?>
