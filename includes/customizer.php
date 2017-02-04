@@ -27,23 +27,69 @@ add_action( 'customize_preview_init', function() {
 	);
 } );
 
-/**
- * Create Logo Setting and Upload Control
- */
-function di_Default_banner_customizer_settings($wp_customize) {
-// add a setting for the site logo
+
+//add tech specs panel
+function di_defaults_customizer_register( $wp_customize ) {
+
+	$wp_customize->add_panel( 'di_display_defaults',
+		array(
+			'priority'       => 10,
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'title'          => __( 'Display Defaults', 'display-innovations' ),
+			'description'    => __( 'Manage Display Defaults.', 'display-innovations' ),
+		) );
+
+	$wp_customize->add_section( 'di_section_default_banner',
+		array(
+			'priority'       => 10,
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'title'          => __( 'Default Banner', 'display-innovations' ),
+			'description'    => 'The Default Banner ( used by the default banner option in Displays',
+			'panel'          => 'di_display_defaults',
+		) );
+
+	$wp_customize->add_section( 'di_section_tech_specs',
+		array(
+			'priority'       => 10,
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'title'          => __( 'Technical Specs', 'display-innovations' ),
+			'description'    => '',
+			'panel'          => 'di_display_defaults',
+		) );
+	// add a setting for the site logo
 	$wp_customize->add_setting('di_default_banner');
-// Add a control to upload the banner
+	// Add a control to upload the banner
 	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'di_default_banner',
 		array(
 			'label' => 'Upload Default Banner',
-			'section' => 'title_tagline',
+			'section' => 'di_section_default_banner',
 			'settings' => 'di_default_banner',
 		) ) );
-}
-add_action('customize_register', 'di_default_banner_customizer_settings');
 
-function di_show_default_banner($banner_url){
-	$banner_id = attachment_url_to_postid($banner_url);
+	$wp_customize->add_setting( 'di_default_tech_specs',
+		array(
+			'default'    => '',
+			'type'       => 'theme_mod',
+			'capability' => 'edit_theme_options',
+			'transport'  => '',
+			//'sanitize_callback' => 'esc_textarea',
+		) );
+
+	$wp_customize->add_control( 'di_default_tech_specs',
+		array(
+			'type'        => 'textarea',
+			'priority'    => 10,
+			'section'     => 'di_section_tech_specs',
+			'label'       => __( 'Default Technical Specs', 'display-innovations' ),
+			'description' => 'Default Technical Specifications',
+		) );
+
 
 }
+
+add_action( 'customize_register', 'di_defaults_customizer_register' );
+
+

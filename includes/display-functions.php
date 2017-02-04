@@ -50,6 +50,10 @@ add_action( 'did_make_slider', 'did_make_slider', 10, 1 );
 
 add_action( 'did_show_applications', 'did_show_applications', 10, 1 );
 
+add_action( 'did_show_technical', 'did_show_technical', 10, 1 );
+
+add_action( 'did_start_accordian_item', 'did_start_accordian_item', 10, 1 );
+
 /**
  * Function creates post duplicate as a draft and redirects then to the edit post screen
  */
@@ -171,6 +175,18 @@ function did_get_displays() {
 	$args = array(
 		'posts_per_page' => - 1, // -1 is for all
 		'post_type'      => 'display', // or 'post', 'page'
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC', // or 'DESC'
+	);
+
+	$query = new WP_Query( $args ); //
+	return $query->posts;
+}
+
+function did_get_tech_specs() {
+	$args = array(
+		'posts_per_page' => - 1, // -1 is for all
+		'post_type'      => 'technical', // or 'post', 'page'
 		'orderby'        => 'menu_order',
 		'order'          => 'ASC', // or 'DESC'
 	);
@@ -503,3 +519,71 @@ function did_show_applications( $id ) {
 
 }
 
+function did_show_technical( $id ) {
+	$techType = get_post_meta( $id, '_did_techtype', 1 );
+
+	//$techType    = $techData;
+	//var_dump($techType);
+	$openHtml  = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2>';
+	$closeHtml = '</div></div>';
+	$accOpen   = '<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">';
+	$accClose  = '</ul>';
+	switch ( $techType ) {
+		case 'none':
+			//nothing so return nothing!
+			return;
+			break;
+
+		case 'default':
+			//get the default text
+			$defaultText = wp_kses_post( get_theme_mod( 'di_default_tech_specs' ) );
+			echo $openHtml . $defaultText . $closeHtml;
+			break;
+
+		case 'custom':
+			// get the custom text for Tech Specs
+			$customText = get_post_meta( $id, '_did_custom', 1 );
+			echo $openHtml . $customText . $closeHtml;
+			break;
+
+		case 'list':
+			//first get the list of attached specs (each spec is a post id linking to a cpt Technical Specification)
+			$techSpecs = get_post_meta( $id, 'techspecs', true );
+			$first     = true;
+			if ( $techSpecs ) {
+				$openRow        = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2><ul class="accordion" data-accordion data-multi-expand="false" data-allow-all-closed="true">';
+				$closeRow       = '</ul></div></div>';
+				$openAccordian  = '';
+				$closeAccordian = '</ul>';
+				echo $openRow; //create row
+				foreach ( $techSpecs as $techSpec ) {
+					$specTitle = get_the_title( $techSpec );
+					$specMeta  = get_post_meta( $techSpec, 0 );
+					echo '<li class="accordion-item di-accordian-item" data-accordion-item>';
+					echo '<a href="#" class="accordion-title di-accordian-title">' . $specTitle . '</a>';
+					echo '<div class="accordion-content" data-tab-content>';
+					if ( $specMeta['tech'] ) {
+						// start the accordian markup
+						foreach ( $specMeta['tech'] as $specs ) {
+							$specs = unserialize( $specs );
+							foreach ( $specs as $spec ) {
+								var_dump( array( $spec['spec_name'] => $spec['spec_value'] ) );
+							}
+						}
+					}
+					echo '</div>';
+					echo '</li>';
+				}
+				echo $closeRow; //close the html for the row
+			}
+			break;
+	}
+
+
+}
+
+function did_start_accordian_item( $title ) {
+	echo '<li class="accordion-item" data-accordion-item>';
+	echo '<a href="#" class="accordion-title">' . $title . '</a>;';
+	echo '<div class="accordion-content" data-tab-content>';
+}

@@ -41,15 +41,14 @@ do_action( 'did_show_banner' ) ?>
 					</div>
 				</div>
 
-	<?php do_action( 'did_show_applications', get_the_ID() ); ?>
+				<?php do_action( 'did_show_applications', get_the_ID() ); ?>
 
-	<div class="row">
-		<div class="small-12 medium-12">
-			tech specs here
+				<div class="row">
+					<div class="small-12 medium-12">
+						<?php do_action( 'did_show_technical', get_the_ID() ); ?>
 
-		</div>
-	</div>
-			</div>
+					</div>
+				</div>
 
 			<?php endwhile; // End of the loop. ?>
 		</div>
