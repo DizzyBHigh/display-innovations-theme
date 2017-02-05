@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     $(".fancybox")
         .attr('rel', 'casestudy')
         .attr('rel', 'images')
+        .attr('rel', 'video')
         .fancybox({
             openEffect : 'none',
             closeEffect: 'none',
@@ -11,6 +12,9 @@ jQuery(document).ready(function($) {
             prevEffect: 'none',
             openSpeed: 'fast',
             loop: false,
+            autoSize: false,
+            width: 800,
+            height: 600,
             preLoad : 3,
             beforeLoad: function () {
                 var csel, csid = $(this.element).data('cs-title');
@@ -35,6 +39,7 @@ jQuery(document).ready(function($) {
             }
         }
     );
+
     var owl = $(".owl-carousel");
     owl.owlCarousel({
         items: 1,
