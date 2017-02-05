@@ -6,7 +6,7 @@
 // foundation-flex-grid mixin and comment out the foundation-grid mixin.
 //
 @include foundation-flex-grid;
-//@include foundation-flex-classes;
+@include foundation-flex-classes;
 @include foundation-typography;
 @include foundation-forms;
 @include foundation-button;
