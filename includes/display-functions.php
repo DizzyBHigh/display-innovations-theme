@@ -333,13 +333,9 @@ function did_show_images($id) {
 		}
 		echo '<div class="flexbox-display-icons' . $align_class . '">';
 		foreach($icons as $icon) {
-			//var_dump($icon);
-			$count ++;
-			//get icon meta data
-			$icon_meta = did_get_post_meta( $icon['icon_id'] );
-			$stretch = $icon['stretch'];
-			//var_dump($stretch);
-			//check stretch option
+			$count ++; //increment counter
+			$icon_meta = did_get_post_meta( $icon['icon_id'] );//get icon meta data
+			$stretch   = $icon['stretch'];//get then check stretch option
 			switch ( $stretch ) {
 				case 'tall':
 					$class = '-tall';
@@ -349,16 +345,26 @@ function did_show_images($id) {
 					break;
 				default:
 					$class = '';
-
 			}
-			//var_dump($icon['stretch']);
-			$title      = $icon_meta['title'];
-			$image_meta = did_get_post_meta( $icon['image_id'] );
-			if ( $popup[0] == 'on' ) { //Show icons as Fancybox links
-				if ( $icon['icon_id'] ) {
-					echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+			$title = $icon_meta['title']; //get the icons title
+			$video = $icon['video'];
+			//var_dump($video);
+			$image_meta = did_get_post_meta( $icon['image_id'] ); //grt the icons meta data
+			//var_dump($image_meta);
+			//var_dump(did_check_if_video($image_meta['url']));
+			if ( $popup[0] == 'on' ) { // if pop-ups are required
+				if ( $icon['icon_id'] ) { //check to see if there is an icon to display, If there is no icon there still maybe hidden content...
+					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortcode has been entered show video
+						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="#video-' . $count . '">';
+					} else { //show image
+						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+					}
 				} else {
-					echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortCode has been entered show video
+						echo '<a class="fancybox fancybox-hidden" rel="video" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+					} else {
+						echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
+					}
 				}
 				//show title if top or bottom is selected
 				if ( $titlePosition != 'none' ) {
@@ -370,7 +376,7 @@ function did_show_images($id) {
 						echo '<br>' . $title;
 					}
 				} else {
-					//show th slightly larger image as theres no title
+					//show the slightly larger image as theres no title
 					echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
 				}
 				if ( $icon['icon_id'] ) {
@@ -380,13 +386,24 @@ function did_show_images($id) {
 				}
 
 				// add hidden div to store titles html
-				echo '<div class="fancybox-hidden">';
-				echo '<div id="i-title-' . $count . '">';
-				echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
-				echo '</div>';
-				echo '</div>';
+				if ( did_check_if_video( $image_meta['src'] ) ) {
+					echo '<div class="fancybox-hidden">';
+					echo '<div id="video-' . $count . '" class="row">';
+					echo '<div class="small-12 medium-12">';
+					$shortCode = '[KGVID]' . $image_meta['src'] . '[/KGVID]';
+					echo do_shortcode( $shortCode );
+					echo '</div>';
+					echo '</div>';
+					echo '</div>';
+				} else {
+					echo '<div class="fancybox-hidden">';
+					echo '<div id="i-title-' . $count . '">';
+					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
+					echo '</div>';
+					echo '</div>';
+				}
 
-			} else { //Show Icons Only
+			} else { //No pop-ups required
 				echo '<div class="flexbox-display-icon-static' . $class . '">';
 				//Title at Top
 				if ( $titlePosition[0] == 'top' ) {
@@ -595,4 +612,17 @@ function did_start_accordian_item( $title ) {
 	echo '<li class="accordion-item" data-accordion-item>';
 	echo '<a href="#" class="accordion-title">' . $title . '</a>;';
 	echo '<div class="accordion-content" data-tab-content>';
+}
+
+function did_check_if_video( $url ) {
+	//var_dump($url);
+	$vidArray = array( "mpg", "mpeg", "mp4" );
+	$path     = parse_url( $url, PHP_URL_PATH );
+	$ext      = pathinfo( $path, PATHINFO_EXTENSION );
+	//var_dump($ext);
+	if ( in_array( $ext, $vidArray ) ) {
+		return true;
+	}
+
+	return false;
 }
