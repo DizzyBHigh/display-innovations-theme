@@ -551,7 +551,7 @@ function did_show_technical( $id ) {
 			$techSpecs = get_post_meta( $id, 'techspecs', true );
 			$first     = true;
 			if ( $techSpecs ) {
-				$openRow        = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2><ul class="accordion" data-accordion data-multi-expand="false" data-allow-all-closed="true">';
+				$openRow = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2><ul class="accordion" data-accordion data-multi-expand="false" data-slide-speed="500" data-allow-all-closed="true">';
 				$closeRow       = '</ul></div></div>';
 				$openAccordian  = '';
 				$closeAccordian = '</ul>';
@@ -559,15 +559,24 @@ function did_show_technical( $id ) {
 				foreach ( $techSpecs as $techSpec ) {
 					$specTitle = get_the_title( $techSpec );
 					$specMeta  = get_post_meta( $techSpec, 0 );
-					echo '<li class="accordion-item di-accordian-item" data-accordion-item>';
-					echo '<a href="#" class="accordion-title di-accordian-title">' . $specTitle . '</a>';
+					echo '<li class="accordion-item " data-accordion-item>';
+					echo '<a href="#" class="accordion-title ">' . $specTitle . '</a>';
 					echo '<div class="accordion-content" data-tab-content>';
 					if ( $specMeta['tech'] ) {
 						// start the accordian markup
 						foreach ( $specMeta['tech'] as $specs ) {
 							$specs = unserialize( $specs );
-							foreach ( $specs as $spec ) {
-								var_dump( array( $spec['spec_name'] => $spec['spec_value'] ) );
+							if ( $specs ) {
+								//create a table to hold the data
+								echo '<table><tbody>';
+								foreach ( $specs as $spec ) {
+									echo '<tr><td>';
+									echo $spec['spec_name'];
+									echo '</td><td>';
+									echo $spec['spec_value'];
+									echo '</td></tr>';
+								}
+								echo '</tbody></table>';
 							}
 						}
 					}

@@ -351,7 +351,7 @@ li {
   font-size: 14px;
 }
 
-.di-accordian-title {
+.accordian-title {
   background: -moz-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ff3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(6, 98, 149, 1)), color-stop(40%, rgba(104, 159, 190, 1)), color-stop(80%, rgba(104, 159, 190, 1)), color-stop(100%, rgba(6, 98, 149, 1))); /* safari4+,chrome */
   background: -webkit-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* safari5.1+,chrome10+ */
@@ -360,16 +360,10 @@ li {
   background: linear-gradient(57deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1); /* ie6-9 */
   color: $white;
-  padding: 5px;
-  border-radius: 10px;
-  margin-top: 5px;
-  width: 100%;
-  clear: both;
-  float: left;
-  font-size: 14px;
 }
 
-.di-accordian-title:hover, .di-accordian-title:focus {
+.accordian-title:hover, .accordian-title:focus {
+  //background-color: $background-hover;
   background: -moz-linear-gradient(33deg, rgba(65, 165, 227, 1) 0%, rgba(139, 199, 233, 1) 40%, rgba(139, 199, 233, 1) 81%, rgba(65, 165, 227, 1) 100%); /* ff3.6+ */
   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(65, 165, 227, 1)), color-stop(40%, rgba(139, 199, 233, 1)), color-stop(81%, rgba(139, 199, 233, 1)), color-stop(100%, rgba(65, 165, 227, 1))); /* safari4+,chrome */
   background: -webkit-linear-gradient(33deg, rgba(65, 165, 227, 1) 0%, rgba(139, 199, 233, 1) 40%, rgba(139, 199, 233, 1) 81%, rgba(65, 165, 227, 1) 100%); /* safari5.1+,chrome10+ */
@@ -377,18 +371,15 @@ li {
   background: -ms-linear-gradient(33deg, rgba(65, 165, 227, 1) 0%, rgba(139, 199, 233, 1) 40%, rgba(139, 199, 233, 1) 81%, rgba(65, 165, 227, 1) 100%); /* ie10+ */
   background: linear-gradient(57deg, rgba(65, 165, 227, 1) 0%, rgba(139, 199, 233, 1) 40%, rgba(139, 199, 233, 1) 81%, rgba(65, 165, 227, 1) 100%); /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#41A5E3', endColorstr='#41A5E3', GradientType=1); /* ie6-9 */
-  color: $white !important;
-  padding: 5px;
-  border-radius: 10px;
-  margin-top: 5px;
-  width: 100%;
-  clear: both;
-  float: left;
-  font-size: 14px;
+  color: $white;
 }
 
-.accordian-title:first-child > :first-child {
-  border-radius: 10px;
+.accordian-content {
+  border: 0px;
+}
+
+.accordian-holder {
+  border: 1px solid $di-light-blue;
 }
 
 
