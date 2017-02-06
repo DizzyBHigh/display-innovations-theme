@@ -47,7 +47,15 @@ jQuery(document).ready(function($) {
                 // Resize height of fancybox for inline content.
                 if (this.type == "inline") {
                     var vid = $(this.element).data('v-title');
-                    this.height = $('.videoItem' + vid).height() + 40;
+                    this.height = $('.videoItem' + vid).height() + 35;
+
+                    //get the videoID
+                    var vidID = $('.videoItem'+vid).attr('id');
+                    var myPlayer = videojs(vidID);
+                    //console.log(myPlayer);
+                    myPlayer.autoplay(false);
+                    myPlayer.loop(false);
+                    myPlayer.muted(false);
                 }
             },
             helpers: {
