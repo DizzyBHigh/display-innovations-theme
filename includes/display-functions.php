@@ -331,7 +331,7 @@ function did_show_images($id) {
 		if ( $align[0] == 'center' ) {
 			$align_class = '-center';
 		}
-		echo '<div class="flexbox-display-icons' . $align_class . '">';
+		echo '<div class="flexbox-display-icons' . $align_class . '" data-equalizer data-equalize-on="medium">';
 		foreach($icons as $icon) {
 			$count ++; //increment counter
 			$icon_meta = did_get_post_meta( $icon['icon_id'] );//get icon meta data
@@ -347,23 +347,22 @@ function did_show_images($id) {
 					$class = '';
 			}
 			$title = $icon_meta['title']; //get the icons title
-			$video = $icon['video'];
-			//var_dump($video);
 			$image_meta = did_get_post_meta( $icon['image_id'] ); //grt the icons meta data
-			//var_dump($image_meta);
+			//var_dump($image_meta['src']);
 			//var_dump(did_check_if_video($image_meta['url']));
 			if ( $popup[0] == 'on' ) { // if pop-ups are required
 				if ( $icon['icon_id'] ) { //check to see if there is an icon to display, If there is no icon there still maybe hidden content...
-					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortcode has been entered show video
-						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="#video-' . $count . '">';
+					if ( did_check_if_video( $image_meta['src'] ) ) { // if we have a video
+						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-v-title="' . $count . '" href="#video-' . $count . '" data-equalizer-watch>';
 					} else { //show image
-						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '" data-equalizer-watch>';
 					}
 				} else {
 					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortCode has been entered show video
-						echo '<a class="fancybox fancybox-hidden" rel="video" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+						echo '<a class="fancybox fancybox-hidden" rel="video" data-i-video="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
+
 					} else {
-						echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
+						echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
 					}
 				}
 				//show title if top or bottom is selected
@@ -372,11 +371,15 @@ function did_show_images($id) {
 						echo $title . '<br>';
 					}
 					echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
+
 					if ( $titlePosition[0] == 'bottom' ) {
 						echo '<br>' . $title;
 					}
+					if ( did_check_if_video( $image_meta['src'] ) ) {//add video icon if its a video
+						echo '<span class="vid-icon"></span>';
+					}
 				} else {
-					//show the slightly larger image as theres no title
+					//show the slightly larger image as there's no title
 					echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
 				}
 				if ( $icon['icon_id'] ) {
@@ -387,12 +390,17 @@ function did_show_images($id) {
 
 				// add hidden div to store titles html
 				if ( did_check_if_video( $image_meta['src'] ) ) {
-					echo '<div class="fancybox-hidden">';
-					echo '<div id="video-' . $count . '" class="row">';
-					echo '<div class="small-12 medium-12">';
-					$shortCode = '[KGVID]' . $image_meta['src'] . '[/KGVID]';
+					echo '<div id="video-' . $count . '" class="fancybox-hidden">';
+					echo '<div  class="row">';
+					echo '<div class="small-12 medium-12 medium-push-1 medium-pull-1 medium-centered">';
+					$shortCode = '[hvp-video url="' . $image_meta['src'] . '" width="700" poster="' . $icon_meta['src'] . '" class="videoItem' . $count . ' float-center" template="basic-skin" controls="true" autoplay="false" loop="false" muted="false" ytcontrol="false"][/hvp-video]';
 					echo do_shortcode( $shortCode );
 					echo '</div>';
+					echo '</div>';
+					echo '</div>';
+					echo '<div class="fancybox-hidden">';
+					echo '<div id="v-title-' . $count . '">';
+					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
 					echo '</div>';
 					echo '</div>';
 				} else {
@@ -401,8 +409,8 @@ function did_show_images($id) {
 					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
 					echo '</div>';
 					echo '</div>';
-				}
 
+				}
 			} else { //No pop-ups required
 				echo '<div class="flexbox-display-icon-static' . $class . '">';
 				//Title at Top
@@ -622,7 +630,8 @@ function did_check_if_video( $url ) {
 	//var_dump($ext);
 	if ( in_array( $ext, $vidArray ) ) {
 		return true;
+	} else {
+		return false;
 	}
 
-	return false;
 }
