@@ -13,9 +13,11 @@ jQuery(document).ready(function($) {
             openSpeed: 'fast',
             loop: false,
             autoSize: false,
-            width: 800,
-            height: 600,
-            preLoad : 3,
+            width: 728,
+            height: 520,
+            //height: 500,
+            margin: [20, 60, 20, 60], // Increase left/right margi
+            //preLoad : 3,
             beforeLoad: function () {
                 var csel, csid = $(this.element).data('cs-title');
                 if (csid) {
@@ -31,6 +33,22 @@ jQuery(document).ready(function($) {
                         this.title = iel.html()+ '<br><i>Image ' + (this.index + 1) + ' of ' + this.group.length+'</i>';
                     }
                 }
+                var vel, vid = $(this.element).data('v-title');
+                if (vid) {
+                    vel = $('#v-title-' + vid);
+                    if (vel.length) {
+                        this.title = vel.html() + '<br><i>Video ' + (this.index + 1) + ' of ' + this.group.length + '</i>';
+                        $('.fancybox-inner').attr('height', 400);
+                        $.fancybox.update()
+                    }
+                }
+            },
+            afterLoad: function () {
+                // Resize height of fancybox for inline content.
+                if (this.type == "inline") {
+                    var vid = $(this.element).data('v-title');
+                    this.height = $('.videoItem' + vid).height() + 40;
+                }
             },
             helpers: {
                 title: {
@@ -39,6 +57,7 @@ jQuery(document).ready(function($) {
             }
         }
     );
+    $.fancybox.update();
 
     var owl = $(".owl-carousel");
     owl.owlCarousel({
