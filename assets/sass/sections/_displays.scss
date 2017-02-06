@@ -133,6 +133,18 @@ li {
   font-size: 14px;
   width: 220px;
   height: 200px;
+  position: relative;
+}
+
+.flexbox-display-icon-page .vid-icon {
+  background-image: url('../img/play-icon.png');
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  top: 30%;
+  left: 37%;
+  // transform: translate(-50%, -365%);
+  display: block;
 }
 
 .flexbox-display-icon-page-wide {
