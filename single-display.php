@@ -23,11 +23,12 @@ do_action( 'did_show_banner' ) ?>
 				<div class="row">
 					<div class="small-12 medium-12">
 						<h2><?php the_title(); ?></h2>
-						<div class="did-case-study">
-							<?php do_action('did_show_case_studies', get_the_ID() ); ?><br>
-						</div>
+
+						<?php do_action( 'did_show_case_studies', get_the_ID() ); ?>
+
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="small-12 medium-12">
 
@@ -43,12 +44,9 @@ do_action( 'did_show_banner' ) ?>
 
 				<?php do_action( 'did_show_applications', get_the_ID() ); ?>
 
-				<div class="row">
-					<div class="small-12 medium-12">
-						<?php do_action( 'did_show_technical', get_the_ID() ); ?>
 
-					</div>
-				</div>
+				<?php do_action( 'did_show_technical', get_the_ID() ); ?>
+
 
 			<?php endwhile; // End of the loop. ?>
 		</div>
