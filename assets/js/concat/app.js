@@ -52,10 +52,11 @@ jQuery(document).ready(function($) {
                     //get the videoID
                     var vidID = $('.videoItem'+vid).attr('id');
                     var myPlayer = videojs(vidID);
-                    //console.log(myPlayer);
-                    myPlayer.autoplay(false);
+                    console.log(myPlayer);
+                    //myPlayer.autoplay(true);
                     myPlayer.loop(false);
                     myPlayer.muted(false);
+                    myPlayer.play(true);
                 }
             },
             helpers: {
@@ -66,6 +67,18 @@ jQuery(document).ready(function($) {
         }
     );
     $.fancybox.update();
+
+    var otherVids = $('.videoplayer');
+    $.each(otherVids, function(){
+        player = videojs(this.id);
+        console.log(player);
+        player.autoplay(false);
+        player.loop(false);
+        player.muted(false);
+        player.pause(true);
+    });
+
+
 
     var owl = $(".owl-carousel");
     owl.owlCarousel({
