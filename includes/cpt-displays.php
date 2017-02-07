@@ -119,7 +119,7 @@ function cmb2_display_metaboxes() {
 		'priority'     => 'high',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
-		// 'closed'     => true, // Keep the metabox closed by default
+		'closed' => true, // Keep the metabox closed by default
 
 	) );
 	// -- Case Study Button Label
@@ -128,8 +128,15 @@ function cmb2_display_metaboxes() {
 		'desc' => 'Enter the text you want on the case study button',
 		'id'   => $prefix . 'buttonlabel',
 		'type' => 'text',
-		// Optional:
 	) );
+
+	$cmbCaseStudy->add_field( array(
+		'name' => 'URL',
+		'desc' => 'Enter a url you want to link the case study too, This will take precedence over any images added',
+		'id'   => $prefix . 'csurl',
+		'type' => 'text',
+	) );
+
 	// -- Case Study Images - File List
 	$cmbCaseStudy->add_field( array(
 		'name' => 'Case Study Images',
@@ -137,6 +144,8 @@ function cmb2_display_metaboxes() {
 		'id'   => $prefix . 'images',
 		'type' => 'file_list'
 	) );
+
+
 	//Images Box
 	$cmbImages = new_cmb2_box( array(
 		'id'           => 'images',
