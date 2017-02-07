@@ -274,42 +274,53 @@ function did_display_icons(){
 
 function did_show_case_studies($id) {
 	//get list of case study images
-	$data = get_post_meta( $id, '_did_images', 0 ); //array of case study images
-	//var_dump($data);
+	$url = get_post_meta( $id, '_did_csurl', 1 );
 	$buttonData = get_post_meta( $id, '_did_buttonlabel', 0 );
 	$buttonText = $buttonData[0];
-	$image_list = $data[0];
-	//var_dump($image_list);
-	//loop through urls and get the attachment ID
-	$count = 1;
-	if ( $image_list ) {
-		foreach ( $image_list as $image_url ) {
-			$attachment_id = did_get_attachment_id( $image_url );
-			$image_meta    = did_get_post_meta( $attachment_id );
-			//var_dump($image_meta);
-			if ( $count < 2 ) {
-				echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
-					echo '<div class="case-studies-button">'.$buttonText.'</div>';
-				echo '</a>';
+	if ( $url ) {
+		echo '<div class="did-case-study">';
+		echo '<a href="' . $url . '" target="_blank" alt="Case Studies">';
+		echo '<div class="case-studies-button">' . $buttonText . '</div>';
+		echo '</a>';
+		echo '</div>';
 
-				echo '<div class="fancybox-hidden">';// add hidden div to store titles html
-					echo '<div id="cs-title-' . $count . '">';
-					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
-				echo '</div>';
+		return;
+	} else {
+		$data       = get_post_meta( $id, '_did_images', 0 ); //array of case study images
+		$image_list = $data[0];
+		$count      = 1;
+		if ( $image_list ) {
+			echo '<div class="did-case-study">';
+			foreach ( $image_list as $image_url ) {
+				$attachment_id = did_get_attachment_id( $image_url );
+				$image_meta    = did_get_post_meta( $attachment_id );
+				//var_dump($image_meta);
+				if ( $count < 2 ) {
+					echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
+					echo '<div class="case-studies-button">' . $buttonText . '</div>';
+					echo '</a>';
 
-			} else {
-				echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
-					echo '<img src="' . $image_url . '" />';
-				echo '</a>';
-				// add hidden div to store titles html
-				echo '<div class="fancybox-hidden">';// add hidden div to store titles html
+					echo '<div class="fancybox-hidden">';// add hidden div to store titles html
 					echo '<div id="cs-title-' . $count . '">';
 						echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'].'</b>';
 					echo '</div>';
-				echo '</div>';// end hidden div to store titles html
+
+				} else {
+					echo '<a class="fancybox" rel="casestudy" data-cs-title="' . $count . '" href="' . $image_url . '" alt="' . $image_meta['alt'] . '">';
+					echo '<img src="' . $image_url . '" />';
+					echo '</a>';
+					// add hidden div to store titles html
+					echo '<div class="fancybox-hidden">';// add hidden div to store titles html
+					echo '<div id="cs-title-' . $count . '">';
+					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
+					echo '</div>';
+					echo '</div>';// end hidden div to store titles html
+				}
+				$count ++;
 			}
-			$count ++;
-		}echo '</div>';// end hidden div to store titles html
+				echo '</div>';// end hidden div to store titles html
+			echo '</div>';
+		}
 
 	}
 }
@@ -412,17 +423,26 @@ function did_show_images($id) {
 
 				}
 			} else { //No pop-ups required
-				echo '<div class="flexbox-display-icon-static' . $class . '">';
-				//Title at Top
-				if ( $titlePosition[0] == 'top' ) {
-					echo $title . '<br>';
+				if ( $icon['icon_id'] ) {
+					if ( $titlePosition[0] != 'none' ) {
+						echo '<div class="flexbox-display-icon-static' . $class . '">';
+						//Title at Top
+						if ( $titlePosition[0] == 'top' ) {
+							echo $title . '<br>';
+						}
+						echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
+						//Title at Bottom
+						if ( $titlePosition[0] == 'bottom' ) {
+							echo '<br>' . $title;
+						}
+						echo '</div>';
+					} else {
+						//show the slightly larger image as there's no title
+						echo '<div class="flexbox-display-icon-static' . $class . '">';
+						echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
+						echo '</div>';
+					}
 				}
-				echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
-				//Title at Bottom
-				if ( $titlePosition[0] == 'bottom' ) {
-					echo '<br>' . $title;
-				}
-				echo '</div>';
 			}
 		}
 		echo '</div>';
@@ -549,7 +569,7 @@ function did_show_technical( $id ) {
 
 	//$techType    = $techData;
 	//var_dump($techType);
-	$openHtml  = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2>';
+	$openHtml = '<div class="row"><div class="small-12 medium 12"> <b><h6>Technical Specifications</h6></b>';
 	$closeHtml = '</div></div>';
 	$accOpen   = '<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">';
 	$accClose  = '</ul>';
