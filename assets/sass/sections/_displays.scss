@@ -36,6 +36,7 @@
   align-content:         flex-start;
   -webkit-align-items:flex-start; /* Safari */
   align-items:         flex-start;
+  margin-top: 10px;
 }
 
 .flexbox-display-icons-center {
@@ -105,8 +106,6 @@ li {
   padding: 5px;
   text-align: center;
   font-size: 14px;
-  
-  height: 200px;
 }
 
 .flexbox-display-icon-static-tall {
@@ -116,7 +115,7 @@ li {
   padding: 5px;
   text-align: center;
   font-size: 14px;
-  width: 200px;
+
 
 }
 
@@ -318,9 +317,11 @@ li {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#41A5E3', endColorstr='#41A5E3',GradientType=1 ); /* ie6-9 */
 }
 .did-case-study{
+  margin-top:10px;
   clear:both;
 }
 .did-images{
+  margin-top:10px;
   clear:both;
 }
 
