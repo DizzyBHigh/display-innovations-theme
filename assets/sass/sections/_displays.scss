@@ -78,6 +78,14 @@ li {
 
 }
 
+.flexbox-display-item-video{
+  width: 80%;
+  border-radius: 5px;
+  border:1px #146bab solid;
+  padding-right: 10px;
+  text-align: center;
+}
+
 .flexbox-display-icon-home, .flexbox-display-icon-static {
   border-radius: 5px;
   border:1px #146bab solid;
@@ -144,17 +152,6 @@ li {
   left: 37%;
   // transform: translate(-50%, -365%);
   display: block;
-}
-
-.flexbox-display-icon-page-wide {
-  border-radius: 5px;
-  border: 1px #146bab solid;
-  margin: 5px;
-  padding: 5px;
-  text-align: center;
-  font-size: 14px;
-  width: auto;
-  height: 200px;
 }
 
 .flexbox-display-icon-page:hover {
