@@ -28,7 +28,7 @@ $accordion-item-background-hover: $light-gray !default;
 
 /// Default padding of an accordion item.
 /// @type Number | List
-$accordion-item-padding: 1.25rem 1rem !default;
+$accordion-item-padding: .5rem !default;
 
 /// Default background color of tab content.
 /// @type Color
@@ -65,14 +65,15 @@ $accordion-content-padding: 1rem !default;
 }
 
 /// Adds styles for the title of an accordion item. Apply this to the link within an accordion item.
-@mixin accordion-title($padding: $accordion-item-padding,
+@mixin accordion-title(
+$padding: 15px,
 $font-size: $accordion-title-font-size,
 $color: $accordion-item-color,
 $border: $accordion-content-border,
 $background-hover: $accordion-item-background-hover) {
   position: relative;
   display: block;
-  padding: $padding;
+  padding: 10px;
 
   border: $border;
   border-bottom: 0;
