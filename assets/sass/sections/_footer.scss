@@ -1,5 +1,52 @@
 #colophon {
-	background: #eee;
-	padding: 3rem 0;
-	color: transparentize(#000, .7);
+  background: #eee;
+  padding: 1rem 0;
+  color: transparentize(#000, .7);
+}
+//footer menu holder
+.flexbox-displays-menu{
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction: row;
+  -webkit-flex-wrap: wrap; /* Safari */
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-start; /* Safari */
+  justify-content: flex-start;
+  -webkit-align-content: center; /* Safari */
+  align-content: center;
+  -webkit-align-items: center; /* Safari */
+  align-items: center;
+
+}
+.flexbox-displays-menu > li{
+  width:180px;
+  color: $di-dark-blue;
+  //line-height:15px;
+  text-decoration:none;
+  //font-weight:bold;
+  //border-right: thin solid #000;
+  padding: 0 0 0 0;
+  margin-left: 0;
+  list-style-type: none;
+  font-size: 12px;
+}
+//classes  for footer menus
+.footer-page-nav { display: block; width:auto;}
+.footer-page-nav ul { display:block; float:left; clear:left;}
+.footer-page-nav li { list-style-type: none; display: block; font-size: 16px; padding:3px }
+.footer-page-nav li a {
+  color: $di-dark-blue;
+  line-height:15px;
+  text-decoration:none;
+  //font-weight:bold;
+  //border-right: thin solid #000;
+  padding: 0 0 0 0;
+}
+.footer-page-nav li a:hover { color: $di-light-blue; text-decoration:underline;}
+.footer-page-nav li:last-child > a {border-right: none;} /* remove pipe from last item */
+
+.contact-text{
+  font-size: 12px;
+  color: $di-dark-blue;
 }

@@ -50,9 +50,12 @@ add_action( 'after_setup_theme', function() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
-	// This theme uses wp_nav_menu() in one location.
+	// This theme uses wp_nav_menu() in two locations.
 	register_nav_menus( array(
 		'primary' => esc_html__( 'Primary Menu', 'display-innovations' ),
+		'footer-pages'    => esc_html__( 'Footer Pages Menu', 'display-innovations' ),
+		'footer-displays' => esc_html__( 'Footer Displays Menu', 'display-innovations' ),
+		'footer-other'    => esc_html__( 'Footer Other Pages', 'display-innovations' ),
 	) );
 
 	/*

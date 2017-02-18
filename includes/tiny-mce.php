@@ -46,6 +46,11 @@ function did_mce_before_init( $settings ) {
 			'block'   => 'div',
 			'classes' => 'flexbox-display-item-video',
 		),
+		array(
+			'inline'  => 'span',
+			'title'   => 'Client Logo',
+			'classes' => 'client-logo',
+		),
 	);
 
 	$settings['style_formats'] = json_encode( $style_formats );

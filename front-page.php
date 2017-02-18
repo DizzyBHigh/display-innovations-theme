@@ -9,28 +9,42 @@
 
 get_header(); ?>
 
-
-<?php do_action( 'did_show_banner' ); ?>
-
-
-
 	<div class="row">
-
-		<div class="hide-for-small-only medium-2 medium-offset-1 ">
-			<?php do_action('did_displays_menu'); ?>
+		<div class="show-for-small-only">
+			Small
 		</div>
-		<div class="small-12 medium-7 medium-offset-1 medium-pull-1">
-			<div class="flexbox-display-icons">
-				<?php do_action('did_display_icons'); ?>
-			</div>
+		<div class="show-for-medium-only">
+			Medium
+		</div>
+		<div class="show-for-large-only">
+			Large
 		</div>
 	</div>
 
-		<div class="hide-for-medium small-12 ">
-			<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+	<div class="row">
+		<div class="hide-for-small-only medium-2 medium-offset-1 ">
+
+			<?php do_action( 'did_displays_menu' ); ?>
+			<br><br>
+
+			<div class="di-border">
+				<a class="twitter-timeline" data-height="600" data-dnt="true" href="https://twitter.com/Display_Innov">Tweets
+					by Display_Innov</a>
+				<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</div>
+		</div>
+		<div class="small-12 medium-7 medium-offset-1 medium-pull-1">
+			<div class="flexbox-display-icons">
+				<?php do_action( 'did_display_icons' ); ?>
+		</div>
+	</div>
+	</div>
+
+	<div class="hide-for-medium small-12 ">
+		<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
 			<?php do_action('did_displays_menu'); ?>
 		</div>
-			</div>
+	</div>
 
 <?php
 get_footer();

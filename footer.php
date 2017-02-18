@@ -12,18 +12,43 @@
 
 			</div><!-- #content -->
 
-			<footer id="colophon" class="site-footer" role="contentinfo">
+<footer id="colophon" class="top-blue site-footer" role="contentinfo">
 
-				<div class="column row">
+	<div class="row">
+		<div class="columns small-12 medium-2 medium-offset-2">
+			<div class="footer-page-nav">
+				<div class="di-no-underline">&nbsp;</div>
+				<?php wp_nav_menu(
+					array(
+						'theme_location' => 'primary'
+					)
+				); ?>
+			</div>
+		</div>
+		<div class="columns small-12 medium-4 ">
+			<div class="flexbox-displays-menu">
 
-					<p class="text-center">
-						<svg class="icon">
-							<use xlink:href="#icon-coffee-cup"></use>
-						</svg>
-						Thanks for using Heisenberg!
-					</p>
+				<div class="di-underline">Products</div>
+				<?php do_action( 'did_show_displays_footer' ) ?>
+			</div>
+		</div>
+		<div class="columns small-12 medium-2 medium-offset-1 ">
+			<div class="di-underline">Contact</div>
+						<span class="contact-text">DISPLAY INNOVATIONS<br>
+						48 Charlotte Street<br>
+						London<br>
+						W1T 2NS<br>
 
+						T: +44 (0) 203 178 4058
+							</span>
+		</div>
 				</div><!-- .column.row -->
+	<div class="row top-blue">
+		<div class="float-center">
+			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Terms
+				of Use</a>
+		</div>
+	</div>
 
 			</footer><!-- #colophon -->
 

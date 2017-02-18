@@ -1,7 +1,12 @@
-@mixin linear-gradient(){
 
+// Classes to apply solid hr
+.top-blue {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: initial;
+  border-top: $di-dark-blue 3px solid;
 }
-
 .bottom-blue {
   width: 100%;
   margin-left: auto;
@@ -9,6 +14,7 @@
   max-width: initial;
   border-bottom: $di-dark-blue 3px solid;
 }
+
 //css to center the main banner
 .flexbox-banner{
   display: -webkit-flex; /* Safari */
@@ -22,6 +28,7 @@
   -webkit-align-items: center; /* Safari */
   align-items:         center;
 }
+
 //css for display icons area, handles wrapping
 .flexbox-display-icons{
   display: -webkit-flex; /* Safari */
@@ -359,6 +366,20 @@ li {
   margin: 5px;
   text-align: center;
   font-size: 14px;
+}
+
+.di-underline {
+  font-size: 18px;
+  color: $di-dark-blue;
+  border-bottom:  1px #146bab solid;
+  width:100%;
+  font-weight: normal;
+}
+.di-no-underline {
+  font-size: 18px;
+  color: $di-dark-blue;
+  width:100%;
+  font-weight: normal;
 }
 
 .accordian-title {

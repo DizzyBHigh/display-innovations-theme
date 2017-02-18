@@ -286,10 +286,18 @@ function cmb2_display_metaboxes() {
 			'none'    => __( 'None', 'cmb2' ),
 			'default' => __( 'Default', 'cmb2' ),
 			'custom'  => __( 'Custom', 'cmb2' ),
-			'list'    => __( 'List', 'cmb2' ),
 		),
 		'default'     => 'default',
 	) );
+
+// -- Images - Use Popup Checkbox
+	$cmbTech->add_field( array(
+		'name' => 'Show List',
+		'desc' => 'When checked The selected technical specifications will be displayed',
+		'id'   => $prefix . 'showtech',
+		'type' => 'checkbox',
+	) );
+
 	// -- Custom Tech Text
 	$cmbTech->add_field( array(
 		'name'    => 'Custom Text',
@@ -313,7 +321,7 @@ function cmb2_display_metaboxes() {
 					'posts_per_page' => 10,
 					'post_type'      => 'technical',
 				), // override the get_posts args
-		),
+			),
 		) ) );
 
 	// Standard page banner meta

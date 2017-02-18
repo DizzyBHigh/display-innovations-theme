@@ -49,7 +49,7 @@ add_action( 'did_show_technical', 'did_show_technical', 10, 1 );
 
 add_action( 'did_start_accordian_item', 'did_start_accordian_item', 10, 1 );
 
-
+add_action( 'did_show_displays_footer', 'did_show_displays_footer', 10, 1 );
 
 /**
  * Register Thumbnail sizes
@@ -337,7 +337,7 @@ function did_show_images($id) {
 					} else {
 						//show the slightly larger image as there's no title
 						echo '<div class="flexbox-display-icon-static' . $class . '">';
-						echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
+						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon_meta['src'] . '" />';
 						echo '</div>';
 					}
 				}
@@ -410,8 +410,8 @@ function did_show_banner() {
 	$bannerOption = get_post_meta( $post->ID, 'banneroption' );
 	$meta         = get_post_meta( $post->ID );
 	//var_dump($meta);
-	$front_static_wrap = '<div class="row bottom-blue"><div class="columns"><div class="flexbox-banner">';
-	$back_static_wrap  = '</div></div></div>';
+	$front_static_wrap = '<div class="row bottom-blue"><div class="column hide-for-small-only medium-2 medium-centered"></div><div class="small-12 medium-8 ">';
+	$back_static_wrap  = '</div><div class="hide-for-small-only medium-2"></div></div>';
 	switch ( $bannerOption[0] ) {
 		case 'custom':
 			//echo 'custom option';
@@ -437,7 +437,7 @@ function did_show_banner() {
 			return;
 			break;
 		default:
-			echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
+			echo $front_static_wrap . '<img class="" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
 
 	}
 
@@ -459,79 +459,80 @@ function did_show_applications( $id ) {
 		echo '</ul>';
 		echo '</div></div>';
 	}
-
 }
 
 function did_show_technical( $id ) {
 	$techType = get_post_meta( $id, '_did_techtype', 1 );
-
-	//$techType    = $techData;
-	//var_dump($techType);
 	$openHtml = '<div class="row"><div class="small-12 medium 12"> <b><h6>Technical Specifications</h6></b>';
 	$closeHtml = '</div></div>';
-	$accOpen   = '<ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">';
-	$accClose  = '</ul>';
+	$opened = false;
 	switch ( $techType ) {
 		case 'none':
-			//nothing so return nothing!
-			return;
+			// don't display text, there may still be a list to display though!
+			$opened = false;
 			break;
 
 		case 'default':
 			//get the default text
 			$defaultText = wp_kses_post( get_theme_mod( 'di_default_tech_specs' ) );
-			echo $openHtml . $defaultText . $closeHtml;
+			echo $openHtml . $defaultText;
+			$opened = true;
 			break;
 
 		case 'custom':
 			// get the custom text for Tech Specs
 			$customText = get_post_meta( $id, '_did_custom', 1 );
-			echo $openHtml . $customText . $closeHtml;
-			break;
-
-		case 'list':
-			//first get the list of attached specs (each spec is a post id linking to a cpt Technical Specification)
-			$techSpecs = get_post_meta( $id, 'techspecs', true );
-			$first     = true;
-			if ( $techSpecs ) {
-				$openRow = '<div class="row"><div class="small-12 medium 12"> <h2>Technical Specifications</h2><ul class="accordion" data-accordion data-multi-expand="false" data-slide-speed="500" data-allow-all-closed="true">';
-				$closeRow       = '</ul></div></div>';
-				$openAccordian  = '';
-				$closeAccordian = '</ul>';
-				echo $openRow; //create row
-				foreach ( $techSpecs as $techSpec ) {
-					$specTitle = get_the_title( $techSpec );
-					$specMeta  = get_post_meta( $techSpec, 0 );
-					echo '<li class="accordion-item " data-accordion-item>';
-					echo '<a href="#" class="accordion-title ">' . $specTitle . '</a>';
-					echo '<div class="accordion-content" data-tab-content>';
-					if ( $specMeta['tech'] ) {
-						// start the accordian markup
-						foreach ( $specMeta['tech'] as $specs ) {
-							$specs = unserialize( $specs );
-							if ( $specs ) {
-								//create a table to hold the data
-								echo '<table><tbody>';
-								foreach ( $specs as $spec ) {
-									echo '<tr><td>';
-									echo $spec['spec_name'];
-									echo '</td><td>';
-									echo $spec['spec_value'];
-									echo '</td></tr>';
-								}
-								echo '</tbody></table>';
-							}
-						}
-					}
-					echo '</div>';
-					echo '</li>';
-				}
-				echo $closeRow; //close the html for the row
-			}
+			echo $openHtml . $customText;
+			$opened = true;
 			break;
 	}
+	$showtech = get_post_meta( $id, '_did_showtech' );
+	if ( $showtech ) {
+		//first get the list of attached specs (each spec is a post id linking to a cpt Technical Specification)
+		$techSpecs = get_post_meta( $id, 'techspecs', true );
+		$first     = true;
+		if ( $techSpecs ) {
+			if ( ! $opened ) {
+				$opened = true;
+				echo $openHtml;
+			}
+			$openRow  = '<ul class="accordion" data-accordion data-multi-expand="false" data-slide-speed="500" data-allow-all-closed="true">';
+			$closeRow = '</ul>';
+			echo $openRow; //create row
+			foreach ( $techSpecs as $techSpec ) {
+				$specTitle = get_the_title( $techSpec );
+				$specMeta  = get_post_meta( $techSpec, 0 );
+				echo '<li class="accordion-item " data-accordion-item>';
+				echo '<a href="#" class="accordion-title ">' . $specTitle . '</a>';
+				echo '<div class="accordion-content" data-tab-content>';
+				if ( $specMeta['tech'] ) {
+					// start the accordian markup
+					foreach ( $specMeta['tech'] as $specs ) {
+						$specs = unserialize( $specs );
+						if ( $specs ) {
+							//create a table to hold the data
+							echo '<table><tbody>';
+							foreach ( $specs as $spec ) {
+								echo '<tr><td>';
+								echo $spec['spec_name'];
+								echo '</td><td>';
+								echo $spec['spec_value'];
+								echo '</td></tr>';
+							}
+							echo '</tbody></table>';
+						}
+					}
+				}
+				echo '</div>';
+				echo '</li>';
+			}
+			echo $closeRow; //close the html for the row
+		}
+	};
 
-
+	if ( $opened ) {
+		echo $closeHtml;
+	}
 }
 
 function did_start_accordian_item( $title ) {
@@ -553,3 +554,22 @@ function did_check_if_video( $url ) {
 	}
 
 }
+
+function did_show_displays_footer() {
+	$displays = did_get_displays();
+	if ( $displays ) {
+		foreach ( $displays as $display ) {
+			$categories = get_the_category( $display->ID );
+
+			$menuLabel = get_post_meta( $display->ID, '_did_menu_label' );
+
+			echo '<li><a href="' . get_permalink( $display->ID ) . '" class="">' . $menuLabel[0] . '</a></li>';
+
+
+		}
+	} else {
+
+	}
+}
+
+;
