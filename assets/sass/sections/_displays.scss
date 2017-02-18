@@ -1,3 +1,11 @@
+.di-base-border{
+  border-radius: 5px;
+  border:1px #146bab solid;
+  text-align: center;
+  font-size: 14px;
+  margin: 5px;
+  padding: 5px;
+}
 
 // Classes to apply solid hr
 .top-blue {
@@ -14,6 +22,41 @@
   max-width: initial;
   border-bottom: $di-dark-blue 3px solid;
 }
+
+
+
+.container{
+  @include grid-row;
+  .icon-header{
+    @include grid-column;
+    background-color: #EEEEEE;
+    border-color: #146BAB;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+    //clear: both;
+    //float: left;
+    margin: 5px;
+    font-size: 12px;
+  }
+
+  .icon-area{
+
+    @include breakpoint(small) {
+      @include grid-layout(1, '.icon-area-item', 'small');
+    }
+    @include breakpoint(medium) {
+      @include grid-layout(2, '.icon-area-item', 'medium');
+    }
+    @include breakpoint(large) {
+      @include grid-layout(3, '.icon-area-item', 'large');
+    }
+  }
+
+}
+
+
 
 //css to center the main banner
 .flexbox-banner{
