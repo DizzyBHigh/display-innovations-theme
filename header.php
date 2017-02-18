@@ -49,23 +49,46 @@
     <div class="off-canvas-content" data-off-canvas-content>
 	    <div data-sticky-container>
 			<header id="masthead" class="" role="banner" data-sticky data-options="marginTop:0;" style="width:100%">
-				<section class="row bottom-blue">
-					<div class="small-12 medium-5 medium-offset-1">
+				<section class="row bottom-blue align-bottom">
+					<div class="columns small-12 medium-4 medium-offset-2">
 						<a href="<?php esc_attr_e( home_url( '/' ) ); ?>" rel="home">
 							<?php the_custom_logo(); ?>
 						</a>
 					</div>
-					<div class="small-12 medium-6 ">
-						<div id="main-navigation">
-							<?php wp_nav_menu(
-								array( 'theme_location' => 'primary',
-								       'container_class' => 'main-nav',
+					<div class="columns small-12 medium-4">
+						<div class="row align-right">
+							<?php if ( get_theme_mod( 'di_social_twitter' ) ) { ?>
+								<a class="di-social-icon"
+								   href="http://twitter.com/<?php echo get_theme_mod( 'di_social_twitter' ) ?> ">
+									<img src="<?php echo get_template_directory_uri(); ?>/assets/dist/img/twitter.gif"/>
+								</a>
+							<?php }; ?>
+							<?php if ( get_theme_mod( 'di_social_linkedin' ) ) { ?>
+								<a class="di-social-icon"
+								   href="http://uk.linkedin.com/in/<?php echo get_theme_mod( 'di_social_linkedin' ) ?>">
+									<img
+										src="<?php echo get_template_directory_uri(); ?>/assets/dist/img/linkedin.gif"/>
+								</a>
+							<?php }; ?>
+							<?php if ( get_theme_mod( 'di_social_youtube' ) ) { ?>
+								<a class="di-social-icon"
+								   href="http://www.youtube.com/user/<?php echo get_theme_mod( 'di_social_youtube' ) ?>">
+									<img src="<?php echo get_template_directory_uri(); ?>/assets/dist/img/youtube.gif"/>
+								</a>
+							<?php }; ?>
+						</div>
+						<div class="row">
+							<div class="main-navigation">
+								<?php wp_nav_menu(
+									array(
+										'theme_location'  => 'primary',
+										'container_class' => 'main-nav',
 
-								)
-							); ?>
+									)
+								); ?>
+							</div>
 						</div>
 					</div>
-
 				</section>
 				<nav id="site-navigation" class="top-bar show-for-medium" data-topbar role="navigation">
 					<section class="top-bar-section row column">
@@ -75,3 +98,4 @@
 			</header><!-- #masthead -->
 		</div>
 			<div id="content" class="site-content">
+<?php do_action( 'did_show_banner' ); ?>

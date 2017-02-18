@@ -8,11 +8,7 @@
  */
 
 get_header();
-
-do_action( 'did_show_banner' ) ?>
-
-
-
+?>
 	<div class="row">
 		<div class="hide-for-small-only medium-2 medium-offset-1 ">
 			<?php do_action('did_displays_menu'); ?>
