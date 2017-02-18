@@ -143,6 +143,7 @@ function did_display_icons(){
 	$last_cat = '';
 	$cur_cat = '';
 	$posts = $query->posts;
+	$opened = false;
 	if($posts) {
 		foreach ( $posts as $post ) {
 			$categories = get_the_category($post->ID);
@@ -150,17 +151,25 @@ function did_display_icons(){
 				$cur_cat = $categories[0]->name;
 			}
 			if($last_cat != $cur_cat){
-				echo '<div class="row small-12 medium-12 large-12">';
-					echo '<div class="display-button-header-icons">' . $cur_cat . '</div>';
-				echo '</div>';
+				if ( $opened ) {
+					echo '</div>';
+					$opened = false;
+				}
+				echo '<div class="icon-header">' . $cur_cat . '</div>';
 			}
 			$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
 			//get the post id of the icon image
 			$iconID = $post_meta['_did_icon_id'][0];
-			echo '<div class="flexbox-display-icon-home">';
+			if ( ! $opened ) {
+				echo '<div class="icon-area" data-equalizer>';
+				$opened = true;
+			}
+			echo '<div class="icon-area-item" >';
+			echo '<div class="di-base-border" data-equalizer-watch>';
 			echo '<a class="" href="' . get_the_permalink($post->ID) .'">';
 			do_action('did_show_home_icon', $iconID);
 			echo '</a>';
+			echo '</div>';
 			echo '</div>';
 
 			$last_cat = $cur_cat;
