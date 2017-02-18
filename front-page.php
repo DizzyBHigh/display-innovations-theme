@@ -34,9 +34,11 @@ get_header(); ?>
 		</div>
 		</div>
 		<div class="small-12 medium-7 medium-offset-1 medium-pull-1">
-			<div class="flexbox-display-icons">
-				<?php do_action( 'did_display_icons' ); ?>
-		</div>
+			<div class="container">
+
+			<?php do_action( 'did_display_icons' ); ?>
+
+			</div>
 	</div>
 	</div>
 
