@@ -31,6 +31,7 @@ add_action( 'customize_preview_init', function() {
 //add tech specs panel
 function di_defaults_customizer_register( $wp_customize ) {
 
+	// Defaults panel (Display Defaults)
 	$wp_customize->add_panel( 'di_display_defaults',
 		array(
 			'priority'       => 10,
@@ -39,7 +40,7 @@ function di_defaults_customizer_register( $wp_customize ) {
 			'title'          => __( 'Display Defaults', 'display-innovations' ),
 			'description'    => __( 'Manage Display Defaults.', 'display-innovations' ),
 		) );
-
+	// Add Section (Default Banner)
 	$wp_customize->add_section( 'di_section_default_banner',
 		array(
 			'priority'       => 10,
@@ -49,7 +50,56 @@ function di_defaults_customizer_register( $wp_customize ) {
 			'description'    => 'The Default Banner ( used by the default banner option in Displays',
 			'panel'          => 'di_display_defaults',
 		) );
+	// Create a setting for the site logo
+	$wp_customize->add_setting( 'di_default_banner' );
+	// Bind a control to setting for site logo
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'di_default_banner',
+		array(
+			'label'    => 'Upload Default Banner',
+			'section'  => 'di_section_default_banner',
+			'settings' => 'di_default_banner',
+		) ) );
 
+	$wp_customize->add_section( 'di_section_social',
+		array(
+			'priority'       => 10,
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'title'          => __( 'Social Icons', 'display-innovations' ),
+			'description'    => 'Social Icon Options',
+			'panel'          => 'di_display_defaults',
+		) );
+
+	$wp_customize->add_setting( 'di_social_twitter' );
+	$wp_customize->add_control( 'di_social_twitter',
+		array(
+			'type'        => 'text',
+			'priority'    => 10,
+			'section'     => 'di_section_social',
+			'label'       => __( 'Twitter Name', 'display-innovations' ),
+			'description' => 'Enter Your Twitter name',
+		) );
+	$wp_customize->add_setting( 'di_social_linkedin' );
+	$wp_customize->add_control( 'di_social_linkedin',
+		array(
+			'type'        => 'text',
+			'priority'    => 10,
+			'section'     => 'di_section_social',
+			'label'       => __( 'linkedIn Name', 'display-innovations' ),
+			'description' => 'Enter Your linkedIn name',
+		) );
+	$wp_customize->add_setting( 'di_social_youtube' );
+	$wp_customize->add_control( 'di_social_youtube',
+		array(
+			'type'        => 'text',
+			'priority'    => 10,
+			'section'     => 'di_section_social',
+			'label'       => __( 'YouTube Name', 'display-innovations' ),
+			'description' => 'Enter Your YouTube name',
+		) );
+
+
+	// Add Section (default Tech spec text)
 	$wp_customize->add_section( 'di_section_tech_specs',
 		array(
 			'priority'       => 10,
@@ -59,16 +109,7 @@ function di_defaults_customizer_register( $wp_customize ) {
 			'description'    => '',
 			'panel'          => 'di_display_defaults',
 		) );
-	// add a setting for the site logo
-	$wp_customize->add_setting('di_default_banner');
-	// Add a control to upload the banner
-	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'di_default_banner',
-		array(
-			'label' => 'Upload Default Banner',
-			'section' => 'di_section_default_banner',
-			'settings' => 'di_default_banner',
-		) ) );
-
+	// Create a setting for the default Tech spec text
 	$wp_customize->add_setting( 'di_default_tech_specs',
 		array(
 			'default'    => '',
@@ -77,7 +118,7 @@ function di_defaults_customizer_register( $wp_customize ) {
 			'transport'  => '',
 			//'sanitize_callback' => 'esc_textarea',
 		) );
-
+	// Bind a control to setting for default Tech spec text
 	$wp_customize->add_control( 'di_default_tech_specs',
 		array(
 			'type'        => 'textarea',
