@@ -98,5 +98,6 @@
 				<div class="bottom-blue"></div>
 			</header><!-- #masthead -->
 		</div>
-			<div id="content" class="site-content">
-<?php //do_action( 'did_show_banner' ); ?>
+
+		  <div id="content" class="site-content">
+<?php do_action( 'did_show_banner' ); ?>
