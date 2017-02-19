@@ -432,13 +432,14 @@ function did_show_banner() {
 		case 'slider':
 			// add the slider call here
 			//echo 'slider option';
-			echo '<div class="row bottom-blue">';
-			echo '<div class="column hide-for-small-only medium-2 medium-centered"><div class="di-slider-nav di-prev-slide"><h2> < </h2></div></div>';
-			echo '<div class="small-12 medium-8 ">';
+			echo '<div class="row">';
+			echo '<div class="small-1 medium-1 large-1"><div class="di-slider-nav di-prev-slide hide-for-small-only"><h2> < </h2></div></div>';
+			echo '<div class="small-10 medium-10 ">';
 			did_make_slider();
 			echo '</div>';
-			echo '<div class="hide-for-small-only medium-2"><div class="di-slider-nav di-next-slide"><h2> > </h2></div> </div>';
+			echo '<div class=" medium-1"><div class="di-slider-nav di-next-slide hide-for-small-only"><h2> > </h2></div> </div>';
 			echo '</div>';
+			echo '<div class="bottom-blue"></div>';
 			break;
 		case 'none':
 			//echo 'none option';
