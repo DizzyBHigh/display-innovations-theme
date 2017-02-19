@@ -25,17 +25,19 @@
 
 <div class="off-canvas-wrapper">
   <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-    <div class="title-bar show-for-small-only">
-      <div class="title-bar-left">
-        <button class="menu-icon" type="button" data-toggle="offCanvasLeft"></button>
-        <span class="title-bar-title"><?php bloginfo( 'name' ); ?></span>
-      </div>
-    </div><!-- .title-bar -->
-    <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
-			<button class="close-button" aria-label="Close menu" type="button" data-close>
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<?php
+	  <!-- Title Bar -->
+	  <div class="title-bar show-for-small-only">
+		  <div class="title-bar-left">
+			  <button class="menu-icon" type="button" data-toggle="offCanvasLeft"></button>
+			  <span class="title-bar-title"><?php bloginfo( 'name' ); ?></span>
+		  </div>
+	  </div>
+	  <!-- .title-bar -->
+	  <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas>
+		  <button class="close-button" aria-label="Close menu" type="button" data-close>
+			  <span aria-hidden="true">&times;</span>
+		  </button>
+		  <?php
 			 $args = array (
 				 'theme_location' 	=> 'primary',
 				 'container' 		=> 'nav',
@@ -43,19 +45,21 @@
 				 'menu_class' 			=> 'mobile-menu',
 			 );
 				wp_nav_menu( $args );
-			?>
-	    <?php do_action('did_displays_menu'); ?>
-    </div><!-- #offCanvasLeft -->
-    <div class="off-canvas-content" data-off-canvas-content>
+		  ?>
+		  <?php do_action( 'did_displays_menu' ); ?>
+	  </div>
+	  <!-- #offCanvasLeft -->
+
+	  <div class="off-canvas-content" data-off-canvas-content>
 	    <div data-sticky-container>
 			<header id="masthead" class="" role="banner" data-sticky data-options="marginTop:0;" style="width:100%">
-				<section class="row bottom-blue align-bottom">
-					<div class="columns small-12 medium-4 medium-offset-2">
+				<div class="row">
+					<div class="small-10 small-offset-1 medium-3 medium-offset-1 large-3 large-offset-1">
 						<a href="<?php esc_attr_e( home_url( '/' ) ); ?>" rel="home">
 							<?php the_custom_logo(); ?>
 						</a>
 					</div>
-					<div class="columns small-12 medium-4">
+					<div class="small-10 small-offset-1 medium-6 medium-offset-1 large-6 large-offset-1">
 						<div class="row align-right">
 							<?php if ( get_theme_mod( 'di_social_twitter' ) ) { ?>
 								<a class="di-social-icon"
@@ -77,7 +81,7 @@
 								</a>
 							<?php }; ?>
 						</div>
-						<div class="row">
+						<div class="row align-right ">
 							<div class="main-navigation">
 								<?php wp_nav_menu(
 									array(
@@ -89,13 +93,10 @@
 							</div>
 						</div>
 					</div>
-				</section>
-				<nav id="site-navigation" class="top-bar show-for-medium" data-topbar role="navigation">
-					<section class="top-bar-section row column">
-
-					</section>
-				</nav><!-- #site-navigation -->
+					<div class="small-1 medium-1 large-1"></div>
+				</div>
+				<div class="bottom-blue"></div>
 			</header><!-- #masthead -->
 		</div>
 			<div id="content" class="site-content">
-<?php do_action( 'did_show_banner' ); ?>
+<?php //do_action( 'did_show_banner' ); ?>
