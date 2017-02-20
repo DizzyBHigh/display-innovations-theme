@@ -35,21 +35,60 @@ function did_mce_before_init( $settings ) {
 			'title'   => 'Flexbox',
 			'block'   => 'div',
 			'classes' => 'flexbox-display-icons',
+			'wrapper' => true,
 		),
 		array(
-			'title'   => 'Flexbox - Centered',
+			'title'   => 'Image container Justify - Left',
+			'block'   => 'div',
+			'classes' => 'flexbox-display-icons-Left',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => 'Image container Justify - Center',
 			'block'   => 'div',
 			'classes' => 'flexbox-display-icons-center',
+			'wrapper' => true,
 		),
 		array(
-			'title'   => 'Flexbox Item',
+			'title'   => 'Image container Justify - Stretch',
 			'block'   => 'div',
+			'classes' => 'flexbox-display-icons-stretch',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => 'Image Standard',
+			'block'   => 'div',
+			'classes' => 'flexbox-display-icon-page',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => 'Image Wide',
+			'inline'  => 'div',
+			'classes' => 'flexbox-display-icon-page-wide',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => 'Image TAll',
+			'inline'  => 'div',
+			'classes' => 'flexbox-display-icon-page-tall',
+			'wrapper' => true,
+		),
+		array(
+			'title'  => 'Flexbox Video',
+			'inline' => 'div',
 			'classes' => 'flexbox-display-item-video',
 		),
 		array(
-			'inline'  => 'span',
+			'title'   => 'Client Logos Container',
+			'block'   => 'div',
+			'classes' => 'client-logo-container',
+			'wrapper' => true,
+		),
+		array(
 			'title'   => 'Client Logo',
+			'inline'  => 'span',
 			'classes' => 'client-logo',
+			'wrapper' => true,
 		),
 	);
 
