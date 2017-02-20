@@ -1,14 +1,14 @@
 /* =Menu
 ----------------------------------------------- */
 .main-navigation {
-  /*z-index: 100;
-  margin-top: 101px;*/
+  z-index: 100;
+  //margin-top: 101px;
 }
 
 // container class first unordered list
 .main-navigation .main-nav ul {
   font-weight: bolder;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 // Nav Items list
@@ -67,4 +67,28 @@
 
 .main-navigation .main-nav li a:hover {
   color: $white !important;
+}
+
+.menu-align-bottom{
+  margin-top: 47px;
+}
+
+.mobile-menu{
+  margin-left: -30px;
+  .menu-item{
+    @extend .di-gradient;
+    border-radius: 10px;
+    margin-top: 5px;
+    width:90%;
+
+
+  }
+  .current-menu-item{
+    @extend .di-gradient-hover;
+  }
+  a {
+    color: $white;
+    font-size: 14px;
+  }
+
 }
