@@ -60,7 +60,7 @@
 						</a>
 					</div>
 					<div class="small-10 small-offset-1 medium-6 medium-offset-1 large-6 large-offset-1">
-						<div class="row align-right">
+						<div class="row align-right menu-align-bottom">
 							<?php if ( get_theme_mod( 'di_social_twitter' ) ) { ?>
 								<a class="di-social-icon"
 								   href="http://twitter.com/<?php echo get_theme_mod( 'di_social_twitter' ) ?> ">
@@ -81,7 +81,7 @@
 								</a>
 							<?php }; ?>
 						</div>
-						<div class="row align-right ">
+						<div class="row align-right hide-for-small-only">
 							<div class="main-navigation">
 								<?php wp_nav_menu(
 									array(
