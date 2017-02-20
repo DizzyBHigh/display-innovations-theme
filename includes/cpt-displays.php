@@ -175,10 +175,11 @@ function cmb2_display_metaboxes() {
 		'name'        => 'Icon Alignment',
 		'id'          => $prefix . 'align',
 		'type'        => 'radio_inline',
-		'description' => 'Justify Left - Icons Left justified.<br>Centered - Icons centered.',
+		'description' => 'Justify Left - Icons Left justified.<br>Centered - Icons centered.<br>Edges - left and right icons sit at page edges',
 		'options'     => array(
 			'left'   => __( 'Justify Left', 'cmb2' ),
 			'center' => __( 'Justify center', 'cmb2' ),
+			'stretch' => __( 'Justify Edges', 'cmb2' ),
 		),
 		'default'     => 'left',
 	) );
@@ -214,6 +215,10 @@ function cmb2_display_metaboxes() {
 				'none' => __( 'None', 'cmb2' ),
 				'wide' => __( 'Wide', 'cmb2' ),
 				'tall' => __( 'Tall', 'cmb2' ),
+				'quarter'   => __( '1 Quarter Width', 'cmb2' ),
+				'half'      => __( '1 Half Width', 'cmb2' ),
+				'third'     => __( '1 Third Width', 'cmb2' ),
+				'two-third' => __( '2 Third Width', 'cmb2' ),
 			),
 			'default'     => 'none',
 		) );
