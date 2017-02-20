@@ -92,6 +92,8 @@ add_action( 'after_setup_theme', function() {
 		'assets/dist/css/editor.css'
 	) );
 
+	//remove_filter( 'the_content', 'wpautop' );
+	//remove_filter( 'the_excerpt', 'wpautop' );
 } );
 
 /**
