@@ -43,10 +43,10 @@
 							</span>
 		</div>
 				</div><!-- .column.row -->
-	<div class="row top-blue">
+	<div class="row top-blue-thin">
 		<div class="float-center">
-			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Terms
-				of Use</a>
+			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Termsof
+				Use</a>
 		</div>
 	</div>
 
