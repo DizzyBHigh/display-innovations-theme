@@ -1,6 +1,6 @@
 #colophon {
   background: #eee;
-  padding: 1rem 0;
+  //padding: 1rem 0;
   color: transparentize(#000, .7);
 }
 //footer menu holder
@@ -11,26 +11,29 @@
   flex-direction: row;
   -webkit-flex-wrap: wrap; /* Safari */
   flex-wrap: wrap;
-  -webkit-justify-content: flex-start; /* Safari */
-  justify-content: flex-start;
-  -webkit-align-content: center; /* Safari */
-  align-content: center;
+  -webkit-justify-content: space-between; /* Safari */
+  justify-content: space-between;
+  -webkit-align-content: flex-start; /* Safari */
+  align-content: flex-start;
   -webkit-align-items: center; /* Safari */
   align-items: center;
+    li{
+      width:50%;
+      color: $di-dark-blue;
 
+      text-decoration:none;
+      font-weight: normal;
+
+      padding: 0 0 0 0;
+      margin-left: 0;
+      list-style-type: none;
+      font-size: 12px;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
 }
-.flexbox-displays-menu > li{
-  width:180px;
-  color: $di-dark-blue;
-  //line-height:15px;
-  text-decoration:none;
-  //font-weight:bold;
-  //border-right: thin solid #000;
-  padding: 0 0 0 0;
-  margin-left: 0;
-  list-style-type: none;
-  font-size: 12px;
-}
+
 //classes  for footer menus
 .footer-page-nav { display: block; width:auto;}
 .footer-page-nav ul { display:block; float:left; clear:left;}
