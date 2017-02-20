@@ -246,10 +246,10 @@ function did_show_images($id) {
 	if($icons){
 		//we have Icons so check alignment
 		$align_class = '';
-		if ( $align[0] == 'center' ) {
-			$align_class = '-center';
+		if ( $align[0] ) {
+			$align_class = '-' . $align[0];
 		}
-		echo '<div class="flexbox-display-icons' . $align_class . '" data-equalizer data-equalize-on="medium">';
+		echo '<div class="flexbox-display-icons' . $align_class . '" data-equalizer>';
 		foreach($icons as $icon) {
 			$count ++; //increment counter
 			$icon_meta = did_get_post_meta( $icon['icon_id'] );//get icon meta data
@@ -261,21 +261,31 @@ function did_show_images($id) {
 				case 'wide':
 					$class = '-wide';
 					break;
+				case 'quarter':
+					$class = '-quarter';
+					break;
+				case 'half':
+					$class = '-half';
+					break;
+				case 'third':
+					$class = '-third';
+					break;
+				case 'two-third':
+					$class = '-two-third';
+					break;
 				default:
 					$class = '';
 			}
 			$title = $icon_meta['title']; //get the icons title
 			$image_meta = did_get_post_meta( $icon['image_id'] ); //grt the icons meta data
-			//var_dump($image_meta['src']);
-			//var_dump(did_check_if_video($image_meta['url']));
 			if ( $popup[0] == 'on' ) { // if pop-ups are required
 				if ( $icon['icon_id'] ) { //check to see if there is an icon to display, If there is no icon there still maybe hidden content...
 					if ( did_check_if_video( $image_meta['src'] ) ) { // if we have a video
-						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-v-title="' . $count . '" href="#video-' . $count . '" data-equalizer-watch>';
+						echo '<a class="fancybox di-base-border' . $class . '" rel="images" data-v-title="' . $count . '" href="#video-' . $count . '" data-equalizer-watch>';
 					} else { //show image
-						echo '<a class="fancybox flexbox-display-icon-page' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '" data-equalizer-watch>';
+						echo '<a class="fancybox di-base-border' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '" data-equalizer-watch>';
 					}
-				} else {
+				} else { //show the hidden content
 					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortCode has been entered show video
 						echo '<a class="fancybox fancybox-hidden" rel="video" data-i-video="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
 
@@ -286,12 +296,12 @@ function did_show_images($id) {
 				//show title if top or bottom is selected
 				if ( $titlePosition != 'none' ) {
 					if ( $titlePosition[0] == 'top' ) {
-						echo $title . '<br>';
+						echo '' . $title . '<br>';
 					}
 					echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
 
 					if ( $titlePosition[0] == 'bottom' ) {
-						echo '<br>' . $title;
+						echo '<br>' . $title . '';
 					}
 					if ( did_check_if_video( $image_meta['src'] ) ) {//add video icon if its a video
 						echo '<span class="vid-icon"></span>';
@@ -311,7 +321,7 @@ function did_show_images($id) {
 					echo '<div id="video-' . $count . '" class="fancybox-hidden">';
 					echo '<div  class="row">';
 					echo '<div class="small-12 medium-12 medium-push-1 medium-pull-1 medium-centered">';
-					$shortCode = '[hvp-video url="' . $image_meta['src'] . '" width="700" poster="' . $icon_meta['src'] . '" class="videoItem' . $count . ' float-center" template="basic-skin" controls="true" autoplay="false" loop="false" muted="false" ytcontrol="false"][/hvp-video]';
+					$shortCode = '[hvp-video url="' . $image_meta['src'] . '" height="400" poster="' . $icon_meta['src'] . '" class="videoItem' . $count . ' float-center" template="basic-skin" controls="true" autoplay="false" loop="false" muted="false" ytcontrol="false"][/hvp-video]';
 					echo do_shortcode( $shortCode );
 					echo '</div>';
 					echo '</div>';
@@ -332,20 +342,20 @@ function did_show_images($id) {
 			} else { //No pop-ups required
 				if ( $icon['icon_id'] ) {
 					if ( $titlePosition[0] != 'none' ) {
-						echo '<div class="flexbox-display-icon-static' . $class . '">';
+						echo '<div class="flexbox-display-icon-static' . $class . '" data-equalizer-watch>';
 						//Title at Top
 						if ( $titlePosition[0] == 'top' ) {
-							echo $title . '<br>';
+							echo '<b>' . $title . '</b><br>';
 						}
 						echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
 						//Title at Bottom
 						if ( $titlePosition[0] == 'bottom' ) {
-							echo '<br>' . $title;
+							echo '<br><b>' . $title . '</b>';
 						}
 						echo '</div>';
 					} else {
 						//show the slightly larger image as there's no title
-						echo '<div class="flexbox-display-icon-static' . $class . '">';
+						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch">';
 						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon_meta['src'] . '" />';
 						echo '</div>';
 					}
@@ -419,37 +429,44 @@ function did_show_banner() {
 	$bannerOption = get_post_meta( $post->ID, 'banneroption' );
 	$meta         = get_post_meta( $post->ID );
 	//var_dump($meta);
-	$front_static_wrap = '<div class="row bottom-blue"><div class="column hide-for-small-only medium-2 medium-centered"></div><div class="small-12 medium-8 ">';
-	$back_static_wrap  = '</div><div class="hide-for-small-only medium-2"></div></div>';
-	switch ( $bannerOption[0] ) {
-		case 'custom':
-			//echo 'custom option';
-			// get the custom banner
-			$banner = get_post_meta( $post->ID, '_did_banner' );
-			echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
-			break;
+	$front_static_wrap = '<div class="row"><div class="small-1 medium-1 large-1 "></div><div class="small-10 medium-10 large-10 ">';
+	$back_static_wrap  = '</div><div class="small-1 medium-1 large-1 "></div></div><div class="bottom-blue"></div>';
+	if ( $bannerOption ) {
+		switch ( $bannerOption[0] ) {
+			case 'custom':
+				//echo 'custom option';
+				// get the custom banner
+				$banner = get_post_meta( $post->ID, '_did_banner' );
+				echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
+				break;
 
-		case 'slider':
-			// add the slider call here
-			//echo 'slider option';
-			echo '<div class="row">';
-			echo '<div class="small-1 medium-1 large-1"><div class="di-slider-nav di-prev-slide hide-for-small-only"><h2> < </h2></div></div>';
-			echo '<div class="small-10 medium-10 ">';
-			did_make_slider();
-			echo '</div>';
-			echo '<div class=" medium-1"><div class="di-slider-nav di-next-slide hide-for-small-only"><h2> > </h2></div> </div>';
-			echo '</div>';
-			echo '<div class="bottom-blue"></div>';
-			break;
-		case 'none':
-			//echo 'none option';
-			// dont show no banner!
-			return;
-			break;
-		default:
-			echo $front_static_wrap . '<img class="" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
-
+			case 'slider':
+				// add the slider call here
+				//echo 'slider option';
+				echo '<div class="row">';
+				echo '<div class="small-1 medium-1 large-1"><div class="di-slider-nav di-prev-slide hide-for-small-only"><h2> < </h2></div></div>';
+				echo '<div class="small-10 medium-10 ">';
+				did_make_slider();
+				echo '</div>';
+				echo '<div class=" medium-1"><div class="di-slider-nav di-next-slide hide-for-small-only"><h2> > </h2></div> </div>';
+				echo '</div>';
+				echo '<div class="bottom-blue"></div>';
+				break;
+			case 'none':
+				//echo 'none option';
+				// dont show no banner!
+				return;
+				break;
+			default:
+				echo $front_static_wrap . '<img class="" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
+		}
+	} else {
+		//echo 'custom option';
+		// get the custom banner
+		$banner = get_post_meta( $post->ID, '_did_banner' );
+		echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
 	}
+
 
 }
 
@@ -473,8 +490,8 @@ function did_show_applications( $id ) {
 
 function did_show_technical( $id ) {
 	$techType = get_post_meta( $id, '_did_techtype', 1 );
-	$openHtml = '<div class="row"><div class="small-12 medium 12"> <b><h6>Technical Specifications</h6></b>';
-	$closeHtml = '</div></div>';
+	$openHtml = '<br><div class="row"><div class="small-12 medium 12"> <h6><b>Technical Specifications</b></h6>';
+	$closeHtml = '</div></div><br>';
 	$opened = false;
 	switch ( $techType ) {
 		case 'none':
