@@ -145,6 +145,7 @@ function did_display_icons(){
 	$posts = $query->posts;
 	$opened = false;
 	if($posts) {
+		echo '<div class="icon-area" data-equalizer>';
 		foreach ( $posts as $post ) {
 			$categories = get_the_category($post->ID);
 			if ( ! empty( $categories ) ) {
@@ -152,7 +153,7 @@ function did_display_icons(){
 			}
 			if($last_cat != $cur_cat){
 				if ( $opened ) {
-					echo '</div>';
+					//echo '</div>';
 					$opened = false;
 				}
 				echo '<div class="icon-header">' . $cur_cat . '</div>';
@@ -161,7 +162,7 @@ function did_display_icons(){
 			//get the post id of the icon image
 			$iconID = $post_meta['_did_icon_id'][0];
 			if ( ! $opened ) {
-				echo '<div class="icon-area" data-equalizer>';
+
 				$opened = true;
 			}
 			echo '<div class="icon-area-item" >';
@@ -273,6 +274,9 @@ function did_show_images($id) {
 				case 'two-third':
 					$class = '-two-third';
 					break;
+				case 'placeholder':
+					$class = '-placeholder';
+					break;
 				default:
 					$class = '';
 			}
@@ -343,15 +347,18 @@ function did_show_images($id) {
 				if ( $icon['icon_id'] ) {
 					if ( $titlePosition[0] != 'none' ) {
 						echo '<div class="flexbox-display-icon-static' . $class . '" data-equalizer-watch>';
-						//Title at Top
-						if ( $titlePosition[0] == 'top' ) {
-							echo '<b>' . $title . '</b><br>';
+						if ( $class != '-placeholder' ) {
+							//Title at Top
+							if ( $titlePosition[0] == 'top' ) {
+								echo '<b>' . $title . '</b><br>';
+							}
+							echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
+							//Title at Bottom
+							if ( $titlePosition[0] == 'bottom' ) {
+								echo '<br><b>' . $title . '</b>';
+							}
 						}
-						echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
-						//Title at Bottom
-						if ( $titlePosition[0] == 'bottom' ) {
-							echo '<br><b>' . $title . '</b>';
-						}
+
 						echo '</div>';
 					} else {
 						//show the slightly larger image as there's no title
@@ -599,4 +606,12 @@ function did_show_displays_footer() {
 	}
 }
 
-;
+function img_unautop( $pee ) {
+	$pee = preg_replace( '/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s',
+		'<div class="figure">$1</div>',
+		$pee );
+
+	return $pee;
+}
+
+add_filter( 'the_content', 'img_unautop', 30 );
