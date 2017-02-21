@@ -219,6 +219,7 @@ function cmb2_display_metaboxes() {
 				'half'      => __( '1 Half Width', 'cmb2' ),
 				'third'     => __( '1 Third Width', 'cmb2' ),
 				'two-third' => __( '2 Third Width', 'cmb2' ),
+				'placeholder' => __( 'placeholder', 'cmb2' ),
 			),
 			'default'     => 'none',
 		) );
