@@ -16,6 +16,8 @@
     @include breakpoint(medium large) {
       opacity: 1;
       filter: alpha(opacity=100); /* For IE8 and earlier */
+      transform:scale(1.01,1.01);
+      transform-origin:0 0;
     }
   }
   img{
@@ -87,7 +89,7 @@
 
 
 .container{
-  @include grid-row;
+
   .icon-header{
     @include grid-column;
     background-color: #EEEEEE;
@@ -98,22 +100,33 @@
     border-radius: 5px;
     margin-top: 14px;
     font-size: 14px;
-    width: 99%;
+    width: 100%;
     margin-left: 5px;
+    color: $di-dark-blue;
+    font-weight: bold;
   }
 
   .icon-area{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-flex-direction: row; /* Safari */
+    flex-direction: row;
+    -webkit-flex-wrap: wrap; /* Safari */
+    flex-wrap: wrap;
+    -webkit-justify-content: space-between; /* Safari */
+    justify-content: space-between;
+    -webkit-align-content: space-between; /* Safari */
+    align-content: space-between;
+    -webkit-align-items: flex-start; /* Safari */
+    align-items: flex-start;
+    margin-top: 0px;
+    margin-bottom: 10px;
 
-    @include breakpoint(small) {
-      @include grid-layout(1, '.icon-area-item', 'small');
-    }
-    @include breakpoint(medium) {
-      @include grid-layout(2, '.icon-area-item', 'medium');
-    }
-    @include breakpoint(large) {
-      @include grid-layout(3, '.icon-area-item', 'large');
-    }
   }
+  .icon-area-item{
+    width:33%;
+  }
+
 
 }
 
@@ -233,7 +246,11 @@ li {
   padding-right: 10px;
   text-align: center;
 }
-
+.video-box{
+  border-radius: 5px;
+  border:1px #146bab solid;
+  text-align: center;
+}
 .flexbox-display-icon-home, .flexbox-display-icon-static {
   border-radius: 5px;
   border:1px #146bab solid;
@@ -310,6 +327,15 @@ li {
   text-align: center;
   font-size: 14px;
   width: 48%;
+}
+.flexbox-display-icon-static-placeholder {
+  border-radius: 5px;
+  border: 1px $white solid;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-size: 14px;
+  width: 220px;
 }
 
 
@@ -432,7 +458,7 @@ li {
   font-size:14px;
 }
 .display-holder{
-  margin-top: 8px;
+  margin-top: 12px;
 }
 .display-button-header{
   width:100%;
@@ -572,7 +598,7 @@ li {
   border: 1px solid $di-light-blue;
 }
 
-.client-logo-container {
+.client-logo-container p{
 
   @include breakpoint(small) {
     @include grid-layout(3, '.client-logo', $grid-column-gutter);
@@ -583,7 +609,8 @@ li {
   @include breakpoint(large) {
     @include grid-layout(5, '.client-logo', $grid-column-gutter);
   }
-  .client-logo{
+
+   .client-logo{
      padding:10px;
    }
 }
