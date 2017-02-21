@@ -74,9 +74,10 @@ function did_mce_before_init( $settings ) {
 			'wrapper' => true,
 		),
 		array(
-			'title'  => 'Flexbox Video',
-			'inline' => 'div',
-			'classes' => 'flexbox-display-item-video',
+			'title'   => 'video Box',
+			'block'   => 'div',
+			'classes' => 'video-box',
+			'wrapper' => true,
 		),
 		array(
 			'title'   => 'Client Logos Container',
