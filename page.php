@@ -20,7 +20,7 @@ get_header();
 			<?php do_action( 'did_displays_menu' ); ?>
 		</div>
 		<div class="small-10 small-offset-1 small-push-1 medium-7 medium-offset-1 medium-push-1">
-			<div class="display-holder">
+			<div class="page-holder">
 				<?php while ( have_posts() ) : the_post(); ?>
 
 					<div class="row">

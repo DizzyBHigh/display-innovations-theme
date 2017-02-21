@@ -28,12 +28,12 @@
 		<div class="columns small-12 medium-4 ">
 			<div class="flexbox-displays-menu">
 
-				<div class="di-underline">Products</div>
+				<div class="di-underline">PRODUCTS</div>
 				<?php do_action( 'did_show_displays_footer' ) ?>
 			</div>
 		</div>
 		<div class="columns small-12 medium-2 medium-offset-1 ">
-			<div class="di-underline">Contact</div>
+			<div class="di-underline">CONTACT</div>
 						<span class="contact-text">DISPLAY INNOVATIONS<br>
 						48 Charlotte Street<br>
 						London<br>
@@ -45,7 +45,8 @@
 				</div><!-- .column.row -->
 	<div class="row top-blue-thin">
 		<div class="float-center">
-			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Termsof
+			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Terms
+				of
 				Use</a>
 		</div>
 	</div>

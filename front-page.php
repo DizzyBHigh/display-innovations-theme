@@ -18,13 +18,15 @@ get_header(); ?>
 				by Display_Innov</a>
 			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 		</div>
+		<div class="small-10 small-offset-1 small-push-1 medium-7 medium-offset-1 medium-push-1 container">
 
-		<div class="small-10 small-offset-1 small-push-1 medium-7 medium-offset-1 medium-push-1">
-			<div class="container">
+			<div class="row">
 				<?php do_action( 'did_display_icons' ); ?>
+
 			</div>
+
+
 		</div>
-		<div class="small-1 medium-1 large-1"></div>
 	</div>
 
 <?php
