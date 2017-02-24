@@ -336,6 +336,9 @@ li {
   text-align: center;
   font-size: 14px;
   width: 220px;
+  img{
+    display:none;
+  }
 }
 
 
@@ -357,7 +360,20 @@ li {
   height: 200px;
   position: relative;
 }
-
+.flexbox-display-icon-page-placeholder {
+  border-radius: 5px;
+  border: 1px $white solid;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-size: 14px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  img{
+    display:none;
+  }
+}
 .flexbox-display-icon-page .vid-icon {
   background-image: url('../img/play-icon.png');
   position: absolute;
@@ -544,13 +560,15 @@ li {
 }
 
 
-.di-borderme {
+.di-borderme{
   padding: 5px;
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
   text-align: center;
   font-size: 14px;
+  width:auto;
+  height:auto;
 }
 
 .di-underline {
@@ -613,6 +631,10 @@ li {
    .client-logo{
      padding:10px;
    }
+}
+
+.figure img{
+  @extend .di-borderme;
 }
 
 

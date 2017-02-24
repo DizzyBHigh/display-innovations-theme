@@ -32,25 +32,25 @@ function did_mce_before_init( $settings ) {
 
 	$style_formats = array(
 		array(
-			'title'   => 'Flexbox',
+			'title'   => 'Blue Border',
 			'block'   => 'div',
-			'classes' => 'flexbox-display-icons',
+			'classes' => 'di-borderme',
 			'wrapper' => true,
 		),
 		array(
-			'title'   => 'Image container Justify - Left',
+			'title' => 'Images container Justify - Left',
 			'block'   => 'div',
 			'classes' => 'flexbox-display-icons-Left',
 			'wrapper' => true,
 		),
 		array(
-			'title'   => 'Image container Justify - Center',
+			'title' => 'Images container Justify - Center',
 			'block'   => 'div',
 			'classes' => 'flexbox-display-icons-center',
 			'wrapper' => true,
 		),
 		array(
-			'title'   => 'Image container Justify - Stretch',
+			'title' => 'Images container Justify - Stretch',
 			'block'   => 'div',
 			'classes' => 'flexbox-display-icons-stretch',
 			'wrapper' => true,
@@ -71,6 +71,12 @@ function did_mce_before_init( $settings ) {
 			'title'   => 'Image TAll',
 			'inline'  => 'div',
 			'classes' => 'flexbox-display-icon-page-tall',
+			'wrapper' => true,
+		),
+		array(
+			'title'   => 'Image Placeholder',
+			'inline'  => 'div',
+			'classes' => 'flexbox-display-icon-page-placeholder',
 			'wrapper' => true,
 		),
 		array(
