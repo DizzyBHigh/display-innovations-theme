@@ -2,71 +2,116 @@
 ----------------------------------------------- */
 .main-navigation {
   z-index: 100;
-  //margin-top: 101px;
-}
+  .main-nav {
+    ul {
+      font-weight: bolder;
+      li {
+        background-color: $white;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 10px 10px 0px 0px;
+        border-radius: 10px 10px 0px 0px;
+        border-width: 1px;
+        border-color: $di-dark-blue;
+        border-style: solid;
+        border-bottom: 0px;
+        height: 22px;
+        text-align: center;
+        &:hover {
+          -webkit-border-radius: 10px 10px 0px 0px;
+          border-radius: 10px 10px 0px 0px;
+          border-width: 1px;
+          border-color: $di-dark-blue;
+          border-style: solid;
+          border-bottom: 0px;
+          height: 22px;
+          text-align: center;
+          @extend .di-gradient;
+          ul {
+            display: block;
+            color: $white !important;
+          }
+        }
+        &:hover > a{
+          color: $white !important;
+        }
+        a {
+          color: $di-dark-blue !important;
+          &:hover {
+            color: $white !important;
+          }
+          ul li:hover > a{
+            color: $white !important;
+          }
+        }
+        .current-menu-item {
+          color: $white !important;
+          @extend .di-gradient;
+          a {
+            color: $white !important;
+          }
+        }
+        ul li:hover > a {
+          color: $white !important;
+        }
+      }
 
-// container class first unordered list
-.main-navigation .main-nav ul {
-  font-weight: bolder;
-  //margin-right: 20px;
-}
+      //sub menu
+      ul {
+        display: none;
+        position: absolute;
+        text-decoration: none;
+        //width: 147px;
+        z-index: 9999;
+        list-style: none;
 
-// Nav Items list
-.main-navigation .main-nav li {
-  background-color: $white;
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 10px 10px 0px 0px;
-  border-radius: 10px 10px 0px 0px;
-  border-width: 1px;
-  border-color: $di-dark-blue;
-  border-style: solid;
-  border-bottom: 0px;
-  width: 147px;
-  height: 22px;
-  text-align: center;
-}
+        li {
+          -moz-border-radius: 0px;
+          -webkit-border-radius: 0px;
+          border-radius: 0px;
+          // width: 147px;
+          height: 35px;
+          //margin-left: -10px;
+          //height: 35px;
+          margin-left: -22px;
+          text-align: left;
+          &:hover {
+            height: 35px;
+            text-align: left;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px 0px 0px 0px;
+            border-radius: 0px 0px 0px 0px;
+            border-bottom: $di-dark-blue solid 1px;
+          }
+          &:last-child {
+            height: 35px;
+            text-align: left;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px 0px 10px 10px;
+            border-radius: 0px 0px 10px 10px;
+            border-bottom: $di-dark-blue solid 1px;
+          }
+          a {
+            color: #aaa;
+            display: block;
+            line-height: 35px;
+            padding: 0 10px;
+            font-weight: bold;
+            &:hover {
+              @extend .di-gradient;
+              &:last-child {
+                -moz-border-radius: 0px;
+                -webkit-border-radius: 0px 0px 10px 10px;
+                border-radius: 0px 0px 10px 10px;
+                border-bottom: $di-dark-blue solid 1px;
+              }
+            }
 
-.main-navigation .main-nav li:hover {
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 10px 10px 0px 0px;
-  border-radius: 10px 10px 0px 0px;
-  border-width: 1px;
-  border-color: $di-dark-blue;
-  border-style: solid;
-  border-bottom: 0px;
-  width: 147px;
-  height: 22px;
-  text-align: center;
-  background: -moz-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(6, 98, 149, 1)), color-stop(40%, rgba(104, 159, 190, 1)), color-stop(80%, rgba(104, 159, 190, 1)), color-stop(100%, rgba(6, 98, 149, 1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ie10+ */
-  background: linear-gradient(57deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1); /* ie6-9 */
-}
+          }
 
-.main-navigation .main-nav .current-menu-item {
-  color: $white !important;
-  background: -moz-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(6, 98, 149, 1)), color-stop(40%, rgba(104, 159, 190, 1)), color-stop(80%, rgba(104, 159, 190, 1)), color-stop(100%, rgba(6, 98, 149, 1))); /* safari4+,chrome */
-  background: -webkit-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(33deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* ie10+ */
-  background: linear-gradient(57deg, rgba(6, 98, 149, 1) 0%, rgba(104, 159, 190, 1) 40%, rgba(104, 159, 190, 1) 80%, rgba(6, 98, 149, 1) 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066295', endColorstr='#066295', GradientType=1); /* ie6-9 */
-}
-
-.main-navigation .main-nav .current-menu-item a {
-  color: $white !important;
-}
-
-#main-navigation .main-nav li a {
-  color: $di-dark-blue !important;
-}
-
-.main-navigation .main-nav li a:hover {
-  color: $white !important;
+        }
+      }
+    }
+  }
 }
 
 .menu-align-bottom{
@@ -74,14 +119,26 @@
 }
 
 .mobile-menu{
-  margin-left: -30px;
+  //margin-left: -30px;
+  ul {
+    list-style: none;
+
+  }
+  .sub-menu{
+    .menu-item{
+      margin-left: 0px;
+      width: 95%;
+    }
+
+
+
+
+  }
   .menu-item{
     @extend .di-gradient;
     border-radius: 10px;
     margin-top: 5px;
     width:90%;
-
-
   }
   .current-menu-item{
     @extend .di-gradient-hover;
@@ -90,5 +147,4 @@
     color: $white;
     font-size: 14px;
   }
-
 }
