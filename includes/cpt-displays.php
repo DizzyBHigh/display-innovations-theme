@@ -69,10 +69,26 @@ function cmb2_display_metaboxes() {
 		'title'        => 'Display Icon and Banner',
 		'object_types' => array( 'display' ), // Post type
 		'context'      => 'normal',
-		'priority'     => 'high',
+		'priority' => 'default',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		// 'closed'     => true, // Keep the metabox closed by default
+	) );
+	// Sub Display Checkbox
+	$cmb->add_field( array(
+		'name' => 'Sub Display',
+		'desc' => 'Do not include this display on the menu.',
+		'id'   => $prefix . 'sub_display',
+		'type' => 'checkbox',
+	) );
+	$cmb->add_field( array(
+		'name'             => 'Parent Menu',
+		'desc'             => 'Select Which menu option you want to highlight when this page is viewed',
+		'id'               => $prefix . 'parent_menu',
+		'type'             => 'select',
+		'show_option_none' => true,
+		'default'          => 'custom',
+		'options'          => get_display_menu_options(),
 	) );
 	// Menu Label
 	$cmb->add_field( array(
@@ -116,7 +132,7 @@ function cmb2_display_metaboxes() {
 		'title'        => 'Case Study',
 		'object_types' => array( 'display' ), // Post type
 		'context'      => 'normal',
-		'priority'     => 'high',
+		'priority' => 'default',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		'closed' => true, // Keep the metabox closed by default
@@ -145,14 +161,55 @@ function cmb2_display_metaboxes() {
 		'type' => 'file_list'
 	) );
 
+	$related = new_cmb2_box( array(
+		'id'           => 'related',
+		'title'        => 'Related Displays',
+		'object_types' => array( 'display' ), // Post type
+		'context'      => 'normal',
+		'priority'     => 'default',
+		'show_names'   => true, // Show field names on the left
+		'cmb_styles'   => true, // false to disable the CMB stylesheet
+		'closed'       => true, // Keep the metabox closed by default
 
+	) );
+	// Related Displays - bottom
+	$related->add_field( array(
+		'name'    => __( 'Related Displays Top', 'cmb2' ),
+		'desc'    => __( 'Drag Displays from the left column to the right column to attach them to this page.<br />You may rearrange the order of the displays in the right column by dragging and dropping.',
+			'cmb2' ),
+		'id'      => 'related_top',
+		'type'    => 'custom_attached_posts',
+		'options' => array(
+			'show_thumbnails' => true, // Show thumbnails on the left
+			'filter_boxes'    => true, // Show a text box for filtering the results
+			'query_args'      => array(
+				'posts_per_page' => 10,
+				'post_type'      => 'display',
+			), // override the get_posts args
+		),
+	) );
+
+	// Related Displays - bottom
+	$related->add_field( array(
+		'name'       => __( 'Related Displays - Bottom ', 'cmb2' ),
+		'desc'       => __( 'Drag Displays from the left column to the right column to attach them to this page.<br />You may rearrange the order of the displays in the right column by dragging and dropping.',
+			'cmb2' ),
+		'id'         => 'related_bottom',
+		'type'       => 'post_search_ajax',
+		'sortable'   => true,
+		'limit'      => '50',
+		'query_args' => array(
+			'posts_per_page' => - 1,
+			'post_type'      => 'display',
+		), // over
+	) );
 	//Images Box
 	$cmbImages = new_cmb2_box( array(
 		'id'           => 'images',
 		'title'        => 'Page Images',
 		'object_types' => array( 'display' ), // Post type
 		'context'      => 'normal',
-		'priority'     => 'high',
+		'priority' => 'default',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		'closed'       => true, // Keep the metabox closed by default
@@ -201,7 +258,7 @@ function cmb2_display_metaboxes() {
 			'add_button'    => __( 'Add Image', 'cmb2' ),
 			'remove_button' => __( 'Remove Image', 'cmb2' ),
 			'sortable'      => true, // beta
-			'closed'        => false, // true to have the groups closed by default
+			'closed' => true, // true to have the groups closed by default
 		),
 	) );
 	// -- Images Group - Stretch Options
@@ -243,7 +300,7 @@ function cmb2_display_metaboxes() {
 		'title'        => 'Applications',
 		'object_types' => array( 'display' ), // Post type
 		'context'      => 'normal',
-		'priority'     => 'high',
+		'priority' => 'default',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		'closed'       => true, // Keep the metabox closed by default
@@ -276,7 +333,7 @@ function cmb2_display_metaboxes() {
 		'title'        => 'Technical Specifications',
 		'object_types' => array( 'display' ), // Post type
 		'context'      => 'normal',
-		'priority'     => 'high',
+		'priority' => 'default',
 		'show_names'   => true, // Show field names on the left
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		'closed'       => false, // Keep the metabox closed by default
@@ -330,8 +387,34 @@ function cmb2_display_metaboxes() {
 			),
 		) ) );
 
-	// Standard page banner meta
+}
 
+function get_display_menu_options() {
+	$args = array(
+		'posts_per_page' => - 1, // -1 is for all
+		'post_type'      => 'display', // or 'post', 'page'
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC', // or 'DESC'
+	);
+
+	$query   = new WP_Query( $args ); //
+	$posts   = $query->posts;
+	$options = array();
+	if ( $posts ) {
+		foreach ( $posts as $post ) {
+			$meta = get_post_meta( $post->ID );
+			//var_dump($meta);
+			$title = $meta['_did_menu_label'];
+			$url   = get_the_permalink( $post->ID );
+			if ( ! $meta['_did_sub_display'] ) {
+				//var_dump($url);
+				//var_dump($title[0]);
+				$options[ $url ] = $title[0];
+			}
+		}
+	}
+
+	return $options;
 }
 
 //Register Display Post Type

@@ -15,7 +15,7 @@
 <footer id="colophon" class="top-blue site-footer" role="contentinfo">
 
 	<div class="row">
-		<div class="columns small-12 medium-2 medium-offset-2">
+		<div class="columns small-12 medium-3 medium-offset-1">
 			<div class="footer-page-nav">
 				<div class="di-no-underline">&nbsp;</div>
 				<?php wp_nav_menu(
@@ -45,7 +45,8 @@
 				</div><!-- .column.row -->
 	<div class="row top-blue-thin">
 		<div class="float-center">
-			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/sitemap">Site Map</a> | <a href="/terms">Terms
+			© 2012 All rights reserved. | Site updated: 09/02/2017 | <a href="/site-map">Site Map</a> | <a
+				href="/terms">Terms
 				of
 				Use</a>
 		</div>
@@ -58,5 +59,6 @@
 </div><!-- .off-canvas-wrapper -->
 
 <?php wp_footer(); ?>
+
 </body>
 </html>

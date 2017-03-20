@@ -55,7 +55,6 @@ add_action( 'after_setup_theme', function() {
 		'primary' => esc_html__( 'Primary Menu', 'display-innovations' ),
 		'footer-pages'    => esc_html__( 'Footer Pages Menu', 'display-innovations' ),
 		'footer-displays' => esc_html__( 'Footer Displays Menu', 'display-innovations' ),
-		'footer-other'    => esc_html__( 'Footer Other Pages', 'display-innovations' ),
 	) );
 
 	/*

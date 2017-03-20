@@ -1,7 +1,14 @@
 #masthead {
-  margin-bottom: 1.25rem;
+  //margin-bottom: 1.25rem;
   background-color: #ededed;
   width:100%;
+  z-index: 99;
+  @include breakpoint(medium large) {
+    position: fixed;
+  }
+  @include breakpoint(small) {
+    position: relative;
+  }
 }
 
 .site-title {

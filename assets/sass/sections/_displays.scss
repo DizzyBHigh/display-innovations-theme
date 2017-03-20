@@ -1,3 +1,13 @@
+.blue-border{
+  border:1px #146bab solid;
+  border-radius: 5px;
+  padding:5px;
+}
+
+.border-left{
+  border-left:1px #146bab solid;
+  padding-left: 20px;
+}
 .di-base-border{
   border-radius: 5px;
   border:1px #146bab solid;
@@ -89,7 +99,6 @@
 
 
 .container{
-
   .icon-header{
     @include grid-column;
     background-color: #EEEEEE;
@@ -105,7 +114,6 @@
     color: $di-dark-blue;
     font-weight: bold;
   }
-
   .icon-area{
     display: -webkit-flex; /* Safari */
     display: flex;
@@ -121,13 +129,26 @@
     align-items: flex-start;
     margin-top: 0px;
     margin-bottom: 10px;
-
   }
+  .icon-area-left{
+       display: -webkit-flex; /* Safari */
+       display: flex;
+       -webkit-flex-direction: row; /* Safari */
+       flex-direction:         row;
+       -webkit-flex-wrap: wrap;  /* Safari */
+       flex-wrap: wrap;
+       -webkit-justify-content: center; /* Safari */
+       justify-content: flex-start;
+       -webkit-align-content: flex-start; /* Safari */
+       align-content:         flex-start;
+       -webkit-align-items:flex-start; /* Safari */
+       align-items:         flex-start;
+     margin-top: 0px;
+     margin-bottom: 10px;
+   }
   .icon-area-item{
     width:33%;
   }
-
-
 }
 
 //css to center the main banner
@@ -142,6 +163,14 @@
   align-content:         center;
   -webkit-align-items: center; /* Safari */
   align-items:         center;
+}
+.flexbox-banner-item{
+  @include breakpoint(medium large) {
+    margin-top: 143px;
+  }
+  @include breakpoint(small) {
+    margin-top: 0px;
+  }
 }
 
 //css for display icons area, handles wrapping
@@ -162,7 +191,7 @@
   margin-bottom: 10px;
 }
 
-.flexbox-display-icons-center {
+.flexbox-display-icons-center, .image-box-center {
   display: -webkit-flex; /* Safari */
   display: flex;
   -webkit-flex-direction: row; /* Safari */
@@ -179,7 +208,7 @@
   margin-bottom: 10px;
 }
 
-.flexbox-display-icons-left {
+.flexbox-display-icons-left , .image-box-left{
   display: -webkit-flex; /* Safari */
   display: flex;
   -webkit-flex-direction: row; /* Safari */
@@ -196,7 +225,7 @@
   margin-bottom: 10px;
 }
 
-.flexbox-display-icons-stretch {
+.flexbox-display-icons-stretch, .image-box {
   display: -webkit-flex; /* Safari */
   display: flex;
   -webkit-flex-direction: row; /* Safari */
@@ -230,10 +259,6 @@
   margin-bottom: 10px;
 }
 
-li {
-  margin-left: 30px;
-}
-
 .flexbox-display-icons > li {
   width: 300px;
 
@@ -246,11 +271,18 @@ li {
   padding-right: 10px;
   text-align: center;
 }
+
 .video-box{
   border-radius: 5px;
   border:1px #146bab solid;
-  text-align: center;
+  width: auto;
+  height: auto;
+  padding:10px;
 }
+.kgvid_videodiv{
+
+}
+
 .flexbox-display-icon-home, .flexbox-display-icon-static {
   border-radius: 5px;
   border:1px #146bab solid;
@@ -261,7 +293,6 @@ li {
   width: 220px;
 
 }
-
 .flexbox-display-icon-home:hover {
   width: 200px;
   height: 200px;
@@ -272,7 +303,7 @@ li {
   text-align: center;
 }
 
-.flexbox-display-icon-static-wide {
+.flexbox-display-icon-static-wide, .image-wide {
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -281,8 +312,7 @@ li {
   font-size: 14px;
   width: auto;
 }
-
-.flexbox-display-icon-static-tall {
+.flexbox-display-icon-static-tall, .image-tall {
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -292,7 +322,7 @@ li {
   height:auto;
 
 }
-.flexbox-display-icon-static-quarter {
+.flexbox-display-icon-static-quarter, .image-quarter {
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -301,7 +331,7 @@ li {
   font-size: 14px;
   width: 23%;
 }
-.flexbox-display-icon-static-third {
+.flexbox-display-icon-static-third, .image-third {
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -310,7 +340,7 @@ li {
   font-size: 14px;
   width: 30%;
 }
-.flexbox-display-icon-static-two-third {
+.flexbox-display-icon-static-two-third, .image-2-third{
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -319,7 +349,7 @@ li {
   font-size: 14px;
   width: 60%;
 }
-.flexbox-display-icon-static-half {
+.flexbox-display-icon-static-half, .image-half{
   border-radius: 5px;
   border: 1px #146bab solid;
   margin: 5px;
@@ -328,7 +358,7 @@ li {
   font-size: 14px;
   width: 48%;
 }
-.flexbox-display-icon-static-placeholder {
+.flexbox-display-icon-static-placeholder, .image-placeholder{
   border-radius: 5px;
   border: 1px $white solid;
   margin: 5px;
@@ -341,13 +371,9 @@ li {
   }
 }
 
-
 .flexbox-display-icon-home-hidden, .flexbox-display-icon-page-hidden {
   display: none;
 }
-
-
-
 
 .flexbox-display-icon-page {
   border-radius: 5px;
@@ -559,7 +585,6 @@ li {
   height: auto;
 }
 
-
 .di-borderme{
   padding: 5px;
   border-radius: 5px;
@@ -637,8 +662,76 @@ li {
   @extend .di-borderme;
 }
 
+.twitter-timeline{
+  //border-radius: 10px;
+  margin-top: 50px;
+  //border: solid $di-dark-blue;
+}
+#twitter {
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #A8A8A8;
+  background: #fff;
+  padding: 10px;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  height: auto!important;
+  box-shadow: 0 2px 2px rgba(120,120,120,0.6);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #ccc;
+  background: #777;
+  background-image: url('img/bg.png');
+}
 
+.tech-header{
+  color: #000000;
+  font-weight: bold;
+}
 
+//footer menu holder
+.flexbox-displays-sitemap{
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  -webkit-flex-direction: row; /* Safari */
+  flex-direction: row;
+  -webkit-flex-wrap: wrap; /* Safari */
+  flex-wrap: wrap;
+  -webkit-justify-content: space-between; /* Safari */
+  justify-content: space-between;
+  -webkit-align-content: flex-start; /* Safari */
+  align-content: flex-start;
+  -webkit-align-items: center; /* Safari */
+  align-items: center;
+  li{
+    width:50%;
+    color: $di-dark-blue;
 
+    text-decoration:none;
+    font-weight: normal;
+
+    padding: 0 0 0 0;
+    margin-left: 0;
+    list-style-type: none;
+    font-size: 14px;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+//classes  for footer menus
+.sitemap-page-nav { display: block; width:auto;}
+.sitemap-page-nav ul { display:block; float:left; clear:left;}
+.sitemap-page-nav li { list-style-type: none; display: block; font-size: 16px; padding:3px }
+.sitemap-page-nav li a {
+  color: $di-dark-blue;
+  line-height:15px;
+  text-decoration:none;
+  //font-weight:bold;
+  //border-right: thin solid #000;
+  padding: 0 0 0 0;
+}
+.sitemap-page-nav li a:hover { color: $di-light-blue; text-decoration:underline;}
+.sitemap-page-nav li:last-child > a {border-right: none;} /* remove pipe from last item */
 
 

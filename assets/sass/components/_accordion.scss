@@ -16,7 +16,7 @@ $accordion-plusminus: true !default;
 
 /// Font size of accordion titles.
 /// @type Number
-$accordion-title-font-size: rem-calc(12) !default;
+$accordion-title-font-size: 14px !default;
 
 /// Default text color for items in a Menu.
 /// @type Color
@@ -67,7 +67,7 @@ $accordion-content-padding: 1rem !default;
 /// Adds styles for the title of an accordion item. Apply this to the link within an accordion item.
 @mixin accordion-title(
 $padding: 15px,
-$font-size: $accordion-title-font-size,
+$font-size: 14px,
 $color: $accordion-item-color,
 $border: $accordion-content-border,
 $background-hover: $accordion-item-background-hover) {

@@ -29,6 +29,7 @@
           ul {
             display: block;
             color: $white !important;
+            z-index: 100;
           }
         }
         &:hover > a{

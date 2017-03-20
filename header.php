@@ -51,15 +51,15 @@
 	  <!-- #offCanvasLeft -->
 
 	  <div class="off-canvas-content" data-off-canvas-content>
-	    <div data-sticky-container>
-			<header id="masthead" class="" role="banner" data-sticky data-options="marginTop:0;" style="width:100%">
+
+		  <header id="masthead" class="" role="banner" style="width:100%">
 				<div class="row">
-					<div class="small-10 small-offset-1 medium-3 medium-offset-1 large-3 large-offset-1">
+					<div class="small-12 medium-3 medium-offset-1 large-3 large-offset-1">
 						<a href="<?php esc_attr_e( home_url( '/' ) ); ?>" rel="home">
 							<?php the_custom_logo(); ?>
 						</a>
 					</div>
-					<div class="small-10 small-offset-1 medium-6 medium-offset-1 large-6 large-offset-1">
+					<div class="small-12 medium-6 medium-offset-1 large-6 large-offset-1">
 						<div class="row align-right menu-align-bottom">
 							<?php if ( get_theme_mod( 'di_social_twitter' ) ) { ?>
 								<a class="di-social-icon"
@@ -93,11 +93,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="small-1 medium-1 large-1"></div>
+					<div class="hide-for-small-only medium-1 large-1"></div>
 				</div>
 				<div class="bottom-blue"></div>
 			</header><!-- #masthead -->
-		</div>
+
 
 		  <div id="content" class="site-content">
 <?php do_action( 'did_show_banner' ); ?>

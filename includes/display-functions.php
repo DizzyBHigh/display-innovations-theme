@@ -33,6 +33,8 @@ add_action( 'did_displays_menu','did_displays_menu' , 10, 1  );
 
 add_action( 'did_display_icons','did_display_icons' , 10, 1  );
 
+add_action( 'did_related_displays', 'did_related_displays', 10, 2 );
+
 add_action( 'did_show_case_studies','did_show_case_studies' , 10, 1  );
 
 add_action( 'did_show_images','did_show_images' , 10, 1  );
@@ -51,6 +53,8 @@ add_action( 'did_start_accordian_item', 'did_start_accordian_item', 10, 1 );
 
 add_action( 'did_show_displays_footer', 'did_show_displays_footer', 10, 1 );
 
+add_action( 'did_show_displays_sitemap', 'did_show_displays_sitemap', 10, 1 );
+
 /**
  * Register Thumbnail sizes
  */
@@ -63,9 +67,10 @@ function did_set_image_sizes(){
 }
 
 function did_show_home_icon( $attachment_id) {
+	$alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
 	$attachment = get_post( $attachment_id );
 	$meta = did_get_post_meta($attachment_id);
-	echo wp_get_attachment_image( $attachment_id , 'di_display_icon' ) .'<br>';
+	echo wp_get_attachment_image( $attachment_id, 'di_display_icon', false, array( "alt" => $alt ) ) . '<br>';
 	echo $meta['title'];
 }
 
@@ -93,7 +98,7 @@ function did_get_tech_specs() {
 	return $query->posts;
 }
 
-function did_displays_menu(){
+function did_displays_menu( $parentMenu = null ) {
 	$args = array(
 		'posts_per_page'	=> -1, // -1 is for all
 		'post_type'		=> 'display', // or 'post', 'page'
@@ -109,22 +114,26 @@ function did_displays_menu(){
 	$posts = $query->posts;
 	if($posts) {
 		foreach ( $posts as $post ) {
-			$categories = get_the_category($post->ID);
-			if ( ! empty( $categories ) ) {
-				$last_cat = $categories[0]->name;
-			}
-			if($last_cat != $cur_cat){
-				echo '<div class="display-button-header">' . $last_cat . '</div>';
-			}
-			if(get_permalink($post->ID) == $current_page_url){
-				$active_class = '-active';
-			}
+			$meta = get_post_meta( $post->ID );
+			if ( ! $meta['_did_sub_display'] ) {
+				$categories = get_the_category( $post->ID );
+				if ( ! empty( $categories ) ) {
+					$last_cat = $categories[0]->name;
+				}
+				if ( $last_cat != $cur_cat ) {
+					echo '<div class="display-button-header">' . $last_cat . '</div>';
+				}
+				if ( get_permalink( $post->ID ) == $current_page_url || get_permalink( $post->ID ) == $parentMenu ) {
+					$active_class = '-active';
+				}
 
-			$menuLabel = get_post_meta($post->ID, '_did_menu_label');
-			echo '<a href="' . get_permalink($post->ID) . '" class="display-menu-button'.$active_class.'">'.$menuLabel[0].'</a>';
 
-			$cur_cat = $last_cat;
-			$active_class = '';
+				$menuLabel = get_post_meta( $post->ID, '_did_menu_label' );
+				echo '<a href="' . get_permalink( $post->ID ) . '" class="display-menu-button' . $active_class . '">' . $menuLabel[0] . '</a>';
+
+				$cur_cat      = $last_cat;
+				$active_class = '';
+			}
 		}
 	}else{
 		echo 'No Displays Installed';
@@ -138,7 +147,6 @@ function did_display_icons(){
 		'orderby'       => 'menu_order',
 		'order' 		=> 'ASC', // or 'DESC'
 	);
-
 	$query = new WP_Query($args); //
 	$last_cat = '';
 	$cur_cat = '';
@@ -147,36 +155,82 @@ function did_display_icons(){
 	if($posts) {
 		echo '<div class="icon-area" data-equalizer>';
 		foreach ( $posts as $post ) {
-			$categories = get_the_category($post->ID);
-			if ( ! empty( $categories ) ) {
-				$cur_cat = $categories[0]->name;
-			}
-			if($last_cat != $cur_cat){
-				if ( $opened ) {
-					//echo '</div>';
-					$opened = false;
+			$meta = get_post_meta( $post->ID );
+			//var_dump($meta);
+			if ( ! $meta['_did_sub_display'] ) {
+				$categories = get_the_category( $post->ID );
+				if ( ! empty( $categories ) ) {
+					$cur_cat = $categories[0]->name;
 				}
-				echo '<div class="icon-header">' . $cur_cat . '</div>';
+				if ( $last_cat != $cur_cat ) {
+					if ( $opened ) {
+						echo '</div>';
+						$opened = false;
+					}
+					echo '<div class="icon-header">' . $cur_cat . '</div>';
+				}
+				$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
+				//get the post id of the icon image
+				$iconID = $post_meta['_did_icon_id'][0];
+				if ( ! $opened ) {
+					echo '<div class="icon-area" data-equalizer>';
+					$opened = true;
+				}
+				echo '<div class="icon-area-item" >';
+				echo '<div class="di-base-border" data-equalizer-watch>';
+				echo '<a class="" href="' . get_the_permalink( $post->ID ) . '">';
+				do_action( 'did_show_home_icon', $iconID );
+				echo '</div>';
+				echo '</a>';
+				echo '</div>';
 			}
-			$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
-			//get the post id of the icon image
-			$iconID = $post_meta['_did_icon_id'][0];
-			if ( ! $opened ) {
 
-				$opened = true;
-			}
-			echo '<div class="icon-area-item" >';
-			echo '<div class="di-base-border" data-equalizer-watch>';
-			echo '<a class="" href="' . get_the_permalink($post->ID) .'">';
-			do_action('did_show_home_icon', $iconID);
-			echo '</a>';
-			echo '</div>';
-			echo '</div>';
 
 			$last_cat = $cur_cat;
 		}
+		if ( $opened ) {
+			echo '</div>';
+		}
 	}else{
 		echo 'No Displays Installed';
+	}
+}
+
+function did_related_displays( $id, $type = 'top' ) {
+	$related = get_post_meta( $id );
+
+	$posts = get_post_meta( $id, 'related_' . $type );
+	//var_dump($posts);
+	$opened = false;
+	if ( $posts ) {
+		if ( $type == 'bottom' ) {
+			echo '<b>Related Products:</b>';
+			echo '<div class="icon-area-left" data-equalizer>';
+		} else {
+			echo '<div class="icon-area" data-equalizer>';
+		}
+
+		foreach ( $posts as $post ) {
+			foreach ( $post as $displayNum ) {
+				//var_dump( $displayNum );
+				//$display = get_post( $displayNum );
+
+				$display = get_post_meta( $displayNum );
+				//var_dump($display);
+				$iconID = $display['_did_icon_id'][0];
+				echo '<div class="icon-area-item" >';
+				echo '<div class="di-base-border" data-equalizer-watch>';
+				echo '<a class="" href="' . get_the_permalink( $displayNum ) . '">';
+				do_action( 'did_show_home_icon', $iconID );
+				echo '</a>';
+				echo '</div>';
+				echo '</div>';
+
+			}
+		}
+		echo '</div>';
+	} else {
+		//echo 'No Displays Installed';
 	}
 }
 
@@ -289,35 +343,43 @@ function did_show_images($id) {
 					} else { //show image
 						echo '<a class="fancybox di-base-border' . $class . '" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '" data-equalizer-watch>';
 					}
-				} else { //show the hidden content
-					if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortCode has been entered show video
-						echo '<a class="fancybox fancybox-hidden" rel="video" data-i-video="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
+				} else {
+					if ( $class != '-placeholder' ) {// not a placeholder show the hidden content
+						if ( did_check_if_video( $image_meta['src'] ) ) { // if a video shortCode has been entered show video
+							echo '<a class="fancybox fancybox-hidden" rel="video" data-i-video="' . $count . '" href="#video-' . $count . '" alt="' . $image_meta['alt'] . '">';
+						} else {
+							echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+						}
+					} else { //add a placeholder
+						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch"></div>';
+						//echo '<img class="di-image-icon-no-title' . $class . '" src="" />';
 
+					}
+
+				}
+				if ( $class != '-placeholder' ) {
+					//show title if top or bottom is selected
+					if ( $titlePosition != 'none' ) {
+						if ( $titlePosition[0] == 'top' ) {
+							echo '' . $title . '<br>';
+						}
+						echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $image_meta['alt'] . '"/>';
+
+						if ( $titlePosition[0] == 'bottom' ) {
+							echo '<br>' . $title . '';
+						}
+						if ( did_check_if_video( $image_meta['src'] ) ) {//add video icon if its a video
+							echo '<span class="vid-icon"></span>';
+						}
 					} else {
-						echo '<a class="fancybox fancybox-hidden" rel="images" data-i-title="' . $count . '" href="' . $image_meta['src'] . '" alt="' . $image_meta['alt'] . '">';
+						//show the slightly larger image as there's no title
+						echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $image_meta['alt'] . '"/>';
 					}
-				}
-				//show title if top or bottom is selected
-				if ( $titlePosition != 'none' ) {
-					if ( $titlePosition[0] == 'top' ) {
-						echo '' . $title . '<br>';
+					if ( $icon['icon_id'] ) {
+						echo '</a>';
+					} else {
+						echo '</a>';
 					}
-					echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
-
-					if ( $titlePosition[0] == 'bottom' ) {
-						echo '<br>' . $title . '';
-					}
-					if ( did_check_if_video( $image_meta['src'] ) ) {//add video icon if its a video
-						echo '<span class="vid-icon"></span>';
-					}
-				} else {
-					//show the slightly larger image as there's no title
-					echo '<img class="di-image-icon_no_title' . $class . '" src="' . $icon_meta['src'] . '" />';
-				}
-				if ( $icon['icon_id'] ) {
-					echo '</a>';
-				} else {
-					echo '</a>';
 				}
 
 				// add hidden div to store titles html
@@ -325,8 +387,11 @@ function did_show_images($id) {
 					echo '<div id="video-' . $count . '" class="fancybox-hidden">';
 					echo '<div  class="row">';
 					echo '<div class="small-12 medium-12 medium-push-1 medium-pull-1 medium-centered">';
-					$shortCode = '[hvp-video url="' . $image_meta['src'] . '" height="400" poster="' . $icon_meta['src'] . '" class="videoItem' . $count . ' float-center" template="basic-skin" controls="true" autoplay="false" loop="false" muted="false" ytcontrol="false"][/hvp-video]';
+					echo '<div class="flexbox-display-icons-center">';
+					//$shortCode = '[hvp-video url="' . $image_meta['src'] . '" height="400" poster="' . $icon_meta['src'] . '" class="videoItem' . $count . ' float-center" template="basic-skin" controls="true" autoplay="false" loop="false" muted="false" ytcontrol="false"][/hvp-video]';
+					$shortCode = '[video mp4="' . $image_meta['src'] . '" ][/video]';
 					echo do_shortcode( $shortCode );
+					echo '</div>';
 					echo '</div>';
 					echo '</div>';
 					echo '</div>';
@@ -336,12 +401,13 @@ function did_show_images($id) {
 					echo '</div>';
 					echo '</div>';
 				} else {
-					echo '<div class="fancybox-hidden">';
-					echo '<div id="i-title-' . $count . '">';
-					echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
-					echo '</div>';
-					echo '</div>';
-
+					if ( $class != '-placeholder' ) {
+						echo '<div class="fancybox-hidden">';
+						echo '<div id="i-title-' . $count . '">';
+						echo '<b>' . $image_meta['title'] . '<br>' . $image_meta['description'] . '</b>';
+						echo '</div>';
+						echo '</div>';
+					}
 				}
 			} else { //No pop-ups required
 				if ( $icon['icon_id'] ) {
@@ -352,7 +418,7 @@ function did_show_images($id) {
 							if ( $titlePosition[0] == 'top' ) {
 								echo '<b>' . $title . '</b><br>';
 							}
-							echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" />';
+							echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $icon_meta['alt'] . '"/>';
 							//Title at Bottom
 							if ( $titlePosition[0] == 'bottom' ) {
 								echo '<br><b>' . $title . '</b>';
@@ -363,8 +429,12 @@ function did_show_images($id) {
 					} else {
 						//show the slightly larger image as there's no title
 						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch">';
-						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon_meta['src'] . '" />';
+						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $icon_meta['alt'] . '"/>';
 						echo '</div>';
+					}
+				} else {
+					if ( $class == '-placeholder' ) {
+						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch"></div>';
 					}
 				}
 			}
@@ -420,7 +490,7 @@ function did_make_slider() {
 			$banner = get_post_meta( $display->ID, '_did_banner' );
 			echo '<div class="">';
 			echo '<a href="' . get_permalink( $display->ID ) . '">';
-			echo '<img src="' . $banner[0] . '" width="978" height="198">';
+			echo '<img src="' . $banner[0] . '" width="978" height="198" >';
 			echo '</a>';
 			echo '</div>';
 		}
@@ -465,7 +535,7 @@ function did_show_banner() {
 				return;
 				break;
 			default:
-				echo $front_static_wrap . '<img class="" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
+				echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . get_theme_mod( 'di_default_banner' ) . '" width="978" height="198">' . $back_static_wrap;
 		}
 	} else {
 		//echo 'custom option';
@@ -497,7 +567,7 @@ function did_show_applications( $id ) {
 
 function did_show_technical( $id ) {
 	$techType = get_post_meta( $id, '_did_techtype', 1 );
-	$openHtml = '<br><div class="row"><div class="small-12 medium 12"> <h6><b>Technical Specifications</b></h6>';
+	$openHtml = '<br><br><div class="row"><div class="small-12 medium 12"> <span class="tech-header">Technical Specifications</span><br>';
 	$closeHtml = '</div></div><br>';
 	$opened = false;
 	switch ( $techType ) {
@@ -589,22 +659,59 @@ function did_check_if_video( $url ) {
 
 }
 
-function did_show_displays_footer() {
+function did_show_displays_footer( $class = "" ) {
 	$displays = did_get_displays();
 	if ( $displays ) {
 		foreach ( $displays as $display ) {
-			$categories = get_the_category( $display->ID );
+			$meta = get_post_meta( $display->ID );
+			if ( ! $meta['_did_sub_display'] ) {
+				$categories = get_the_category( $display->ID );
 
-			$menuLabel = get_post_meta( $display->ID, '_did_menu_label' );
+				$menuLabel = get_post_meta( $display->ID, '_did_menu_label' );
 
-			echo '<li><a href="' . get_permalink( $display->ID ) . '" class="">' . $menuLabel[0] . '</a></li>';
-
+				echo '<li><a href="' . get_permalink( $display->ID ) . '" class="' . $class . '">' . $menuLabel[0] . '</a></li>';
+			}
 
 		}
 	} else {
 
 	}
 }
+
+function did_show_displays_sitemap() {
+	$displays = did_get_displays();
+	if ( $displays ) {
+		$count        = 0;
+		$displayCount = 0;
+		foreach ( $displays as $display ) {
+			$meta = get_post_meta( $display->ID );
+			if ( ! $meta['_did_sub_display'] ) {
+				$displayCount ++;
+			}
+		}
+		$half = $displayCount / 2;
+		//$half = $count / 2;
+		//var_dump($half);
+		echo '<div class="medium-4 border-left">';
+
+		foreach ( $displays as $display ) {
+			$meta = get_post_meta( $display->ID );
+			if ( ! $meta['_did_sub_display'] ) {
+				$categories = get_the_category( $display->ID );
+				$menuLabel  = get_post_meta( $display->ID, '_did_menu_label' );
+				echo '<div><a href="' . get_permalink( $display->ID ) . '" class="' . $class . '">' . $menuLabel[0] . '</a></div>';
+				$count ++;
+				if ( $count == $half ) {
+					echo '</div><div class="medium-4 border-left"> ';
+				}
+			}
+		}
+		echo '</div>';
+	} else {
+
+	}
+}
+
 
 function img_unautop( $pee ) {
 	$pee = preg_replace( '/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s',

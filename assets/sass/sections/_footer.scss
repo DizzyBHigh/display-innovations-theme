@@ -48,7 +48,10 @@
 }
 .footer-page-nav li a:hover { color: $di-light-blue; text-decoration:underline;}
 .footer-page-nav li:last-child > a {border-right: none;} /* remove pipe from last item */
+.footer-page-nav ul ul li{
+  font-size: 12px;padding: 1px;
 
+}
 .contact-text{
   font-size: 12px;
   color: $di-dark-blue;

@@ -8,17 +8,38 @@
 
 .di-prev-slide {
   position: relative;
-  top: 45%;
-  left: 85%;
+  @include breakpoint(medium large) {
+    top: 65%;
+    left: 85%;
+  }
+  @include breakpoint(small) {
+    top: 45%;
+    left: 85%;
+  }
 }
 
 .di-next-slide {
   position: relative;
-  top: 45%;
-  left: 0%;
+  @include breakpoint(medium large) {
+    top: 65%;
+    left: 0%;
+  }
+  @include breakpoint(small) {
+    top: 45%;
+    left: 0%;
+  }
+
 }
 
 .di-slider-nav :hover {
   color: $di-light-blue;
   cursor: pointer;
+}
+.owl-carousel {
+    @include breakpoint(medium large) {
+      margin-top: 143px;
+    }
+  @include breakpoint(small) {
+    margin-top: 0px;
+  }
 }
