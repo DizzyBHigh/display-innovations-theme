@@ -6631,6 +6631,10 @@ a.ofc-home {
     border-right: none
 }
 
+.space-below {
+    margin-bottom: 10px
+}
+
 #content {
     background-color: #fefefe
 }

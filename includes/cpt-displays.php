@@ -178,15 +178,13 @@ function cmb2_display_metaboxes() {
 		'desc'    => __( 'Drag Displays from the left column to the right column to attach them to this page.<br />You may rearrange the order of the displays in the right column by dragging and dropping.',
 			'cmb2' ),
 		'id'      => 'related_top',
-		'type'    => 'custom_attached_posts',
-		'options' => array(
-			'show_thumbnails' => true, // Show thumbnails on the left
-			'filter_boxes'    => true, // Show a text box for filtering the results
-			'query_args'      => array(
-				'posts_per_page' => 10,
-				'post_type'      => 'display',
-			), // override the get_posts args
-		),
+		'type'       => 'post_search_ajax',
+		'sortable'   => true,
+		'limit'      => '50',
+		'query_args' => array(
+			'posts_per_page' => - 1,
+			'post_type'      => 'display',
+		), // over
 	) );
 
 	// Related Displays - bottom
@@ -214,6 +212,12 @@ function cmb2_display_metaboxes() {
 		'cmb_styles'   => true, // false to disable the CMB stylesheet
 		'closed'       => true, // Keep the metabox closed by default
 
+	) );
+	$cmbImages->add_field( array(
+		'name' => 'Show Images',
+		'desc' => 'When checked The Images Will Be Shown, Do not check this box if you have no images as it will add an extra blank line to the page',
+		'id'   => $prefix . 'show_page_images',
+		'type' => 'checkbox',
 	) );
 	// -- Images - Icon Title Position - Radio
 	$cmbImages->add_field( array(
@@ -339,53 +343,58 @@ function cmb2_display_metaboxes() {
 		'closed'       => false, // Keep the metabox closed by default
 
 	) );
-	// -- Type Select Radio
-	$cmbTech->add_field( array(
-		'name'        => 'Tech Specs',
-		'id'          => $prefix . 'techtype',
-		'type'        => 'radio_inline',
-		'description' => 'None - Technical specifications will not be shown.<br>Default - The Default Specifications will be used. (You can set the default specs in the settings page)<br>Custom - The text entered into the Custom Specs box will be used.<br>List - The specifications added to the List will be displayed in an accordian.',
-		'options'     => array(
-			'none'    => __( 'None', 'cmb2' ),
-			'default' => __( 'Default', 'cmb2' ),
-			'custom'  => __( 'Custom', 'cmb2' ),
-		),
-		'default'     => 'default',
-	) );
-
-// -- Images - Use Popup Checkbox
+	// --Use Tech Spec Checkbox
 	$cmbTech->add_field( array(
 		'name' => 'Show List',
-		'desc' => 'When checked The selected technical specifications will be displayed',
+		'desc' => 'When checked The technical specification button will be displayed',
 		'id'   => $prefix . 'showtech',
 		'type' => 'checkbox',
 	) );
-
-	// -- Custom Tech Text
+	// -- Button Text
 	$cmbTech->add_field( array(
-		'name'    => 'Custom Text',
-		'desc'    => 'Enter the custom text you would like for Technical Specifications',
-		'id'      => $prefix . 'custom',
-		'type'    => 'wysiwyg',
-		'options' => array(
-			'media_buttons' => false,
-		),
-	),
-		$cmbTech->add_field( array(
-			'name'    => __( 'Technical Specifications', 'cmb2' ),
-			'desc'    => __( 'Drag specs from the left column to the right column to attach them to this page.<br />You may rearrange the order of the specs in the right column by dragging and dropping.',
-				'cmb2' ),
-			'id'      => 'techspecs',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'show_thumbnails' => true, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
-				'query_args'      => array(
-					'posts_per_page' => 10,
-					'post_type'      => 'technical',
-				), // override the get_posts args
-			),
-		) ) );
+		'name'        => 'Tech Specs Button Text',
+		'id'          => $prefix . 'tech_btn_text',
+		'type'        => 'text',
+		'description' => 'Enter the text you want to show on the Technical Specifications button',
+	) );
+	$cmbTech->add_field( array(
+		'name'       => __( 'Related Displays Top', 'cmb2' ),
+		'desc'       => __( 'Select the Display page you would like the button to go to when clicked.', 'cmb2' ),
+		'id'         => $prefix . 'tech_url',
+		'type'       => 'post_search_ajax',
+		'sortable'   => true,
+		'limit'      => '1',
+		'query_args' => array(
+			'posts_per_page' => - 1,
+			'post_type'      => 'display',
+		), // over
+	) );
+
+	//Additional Text Areas
+	$cmbAdditionalText = new_cmb2_box( array(
+		'id'           => 'additional-text',
+		'title'        => 'Additional Text Areas',
+		'object_types' => array( 'display' ), // Post type
+		'context'      => 'normal',
+		'priority'     => 'default',
+		'show_names'   => true, // Show field names on the left
+		'cmb_styles'   => true, // false to disable the CMB stylesheet
+		'closed'       => true, // Keep the metabox closed by default
+	) );
+	$cmbAdditionalText->add_field( array(
+		'name'    => 'Text Below Case studies',
+		'desc'    => 'This text will appear below the Case Studies Button and Above the Top Related displays.',
+		'default' => '',
+		'id'      => $prefix . 'additional_text_one',
+		'type'    => 'textarea'
+	) );
+	$cmbAdditionalText->add_field( array(
+		'name'    => 'Text Below Case studies',
+		'desc'    => 'This text will appear below the Top Related displays and Above Page Images.',
+		'default' => '',
+		'id'      => $prefix . 'additional_text_two',
+		'type'    => 'textarea'
+	) );
 
 }
 

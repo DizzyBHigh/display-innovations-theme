@@ -55,6 +55,12 @@ add_action( 'did_show_displays_footer', 'did_show_displays_footer', 10, 1 );
 
 add_action( 'did_show_displays_sitemap', 'did_show_displays_sitemap', 10, 1 );
 
+add_action( 'did_start_row', 'did_start_row', 10, 1 );
+
+add_action( 'did_end_row', 'did_end_row', 10, 1 );
+
+add_action( 'did_show_additional_text', 'did_show_additional_text', 10, 2 );
+
 /**
  * Register Thumbnail sizes
  */
@@ -66,11 +72,43 @@ function did_set_image_sizes(){
 	add_image_size( 'di_main_image', '730', '522', false );
 }
 
+function did_start_row( $withSpace = 'space-below' ) {
+	echo ' <div class="row ' . $withSpace . '">';
+	echo ' <div class="small-12 medium-12 container">';
+}
+
+function did_end_row() {
+	echo ' </div>';
+	echo ' </div>';
+}
+
+function did_show_additional_text( $id, $area ) {
+	$textField = '_did_additional_text_' . $area;
+	//var_dump($textField);
+	$postData = get_post_meta( $id );
+	$data     = $postData[0];
+	$text     = $postData[ $textField ];
+	//var_dump($text);
+	if ( $text[0] ) {
+		did_start_row();
+		echo $text[0];
+		did_end_row();
+	}
+}
+
 function did_show_home_icon( $attachment_id) {
 	$alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
 	$attachment = get_post( $attachment_id );
 	$meta = did_get_post_meta($attachment_id);
-	echo wp_get_attachment_image( $attachment_id, 'di_display_icon', false, array( "alt" => $alt ) ) . '<br>';
+	//var_dump($meta);
+	$url = $meta['src'];
+	//var_dump($url);
+	if ( did_check_if_gif( $url ) ) {
+		echo wp_get_attachment_image( $attachment_id, 'full', false, array( "alt" => $alt ) ) . '<br>';
+	} else {
+		echo wp_get_attachment_image( $attachment_id, 'di_display_icon', false, array( "alt" => $alt ) ) . '<br>';
+	}
+
 	echo $meta['title'];
 }
 
@@ -203,9 +241,10 @@ function did_related_displays( $id, $type = 'top' ) {
 	//var_dump($posts);
 	$opened = false;
 	if ( $posts ) {
+		do_action( 'did_start_row' );
 		if ( $type == 'bottom' ) {
 			echo '<b>Related Products:</b>';
-			echo '<div class="icon-area-left" data-equalizer>';
+			echo '<div class="icon-area" data-equalizer>';
 		} else {
 			echo '<div class="icon-area" data-equalizer>';
 		}
@@ -213,22 +252,24 @@ function did_related_displays( $id, $type = 'top' ) {
 		foreach ( $posts as $post ) {
 			foreach ( $post as $displayNum ) {
 				//var_dump( $displayNum );
-				//$display = get_post( $displayNum );
-
+				$thisPost = get_post( $displayNum );
 				$display = get_post_meta( $displayNum );
-				//var_dump($display);
-				$iconID = $display['_did_icon_id'][0];
-				echo '<div class="icon-area-item" >';
-				echo '<div class="di-base-border" data-equalizer-watch>';
-				echo '<a class="" href="' . get_the_permalink( $displayNum ) . '">';
-				do_action( 'did_show_home_icon', $iconID );
-				echo '</a>';
-				echo '</div>';
-				echo '</div>';
-
+				if ( $thisPost->post_title != 'blank spacer' ) {
+					$iconID = $display['_did_icon_id'][0];
+					echo '<div class="icon-area-item" >';
+					echo '<div class="di-base-border" data-equalizer-watch>';
+					echo '<a class="" href="' . get_the_permalink( $displayNum ) . '">';
+					do_action( 'did_show_home_icon', $iconID );
+					echo '</a>';
+					echo '</div>';
+					echo '</div>';
+				} else {
+					echo '<div class="flexbox-display-icon-static-placeholder" data-equalizer-watch"></div>';
+				};
 			}
 		}
 		echo '</div>';
+		do_action( 'did_end_row' );
 	} else {
 		//echo 'No Displays Installed';
 	}
@@ -292,13 +333,16 @@ function did_show_images($id) {
 	$titlePosition = get_post_meta( $id, '_did_show_title'); //Title Position
 	$popup = get_post_meta($id, '_did_popup'); //show popup check
 	$align = get_post_meta( $id, '_did_align' ); //show popup check
+	$showImages = get_post_meta( $id, '_did_show_page_images' );
+	//var_dump($showImages);
 	$iconData = get_post_meta( $id, 'icons'); //array of icons
 	$icons = $iconData[0];
 	$title = false;
 	$count=1;
 	$posData = get_post_meta( $id );
-	//var_dump($iconData);
-	if($icons){
+	//var_dump($posData);
+	if ( $showImages ) {
+		do_action( 'did_start_row' );
 		//we have Icons so check alignment
 		$align_class = '';
 		if ( $align[0] ) {
@@ -440,6 +484,7 @@ function did_show_images($id) {
 			}
 		}
 		echo '</div>';
+		do_action( 'did_end_row' );
 	}
 }
 
@@ -482,17 +527,22 @@ function did_make_slider() {
 	//first get a list of the displays in order
 	$displays = did_get_displays();
 	//var_dump($displays);
-	$isActive = 'is-active';
+	//$isActive = 'is-active';
 	if ( $displays ) {
 		echo '<div class="owl-carousel owl-theme">';
 
 		foreach ( $displays as $display ) {
 			$banner = get_post_meta( $display->ID, '_did_banner' );
-			echo '<div class="">';
-			echo '<a href="' . get_permalink( $display->ID ) . '">';
-			echo '<img src="' . $banner[0] . '" width="978" height="198" >';
-			echo '</a>';
-			echo '</div>';
+			$meta = get_post_meta( $display->ID );
+
+			if ( ! $meta['_did_sub_display'] ) {
+				//var_dump($display->ID);
+				echo '<div class="">';
+				echo '<a href="' . get_permalink( $display->ID ) . '">';
+				echo '<img src="' . $banner[0] . '" width="978" height="198" >';
+				echo '</a>';
+				echo '</div>';
+			}
 		}
 
 		echo '</div>';
@@ -551,7 +601,7 @@ function did_show_applications( $id ) {
 	$appData = get_post_meta( $id, 'applications' ); //array of icons
 	$apps    = $appData[0];
 	if ( $apps ) {
-		echo '<div class="row">';
+		echo '<div class="row space-below">';
 		echo '<b>Applications</b>';
 		echo '</div>';
 		echo '<div class="row"><div class="small-12 medium-12">';
@@ -567,75 +617,25 @@ function did_show_applications( $id ) {
 
 function did_show_technical( $id ) {
 	$techType = get_post_meta( $id, '_did_techtype', 1 );
-	$openHtml = '<br><br><div class="row"><div class="small-12 medium 12"> <span class="tech-header">Technical Specifications</span><br>';
+	$openHtml = '<br><br><div class="row space-below"><div class="small-12 medium 12"> <span class="tech-header">Technical Specifications</span><br>';
 	$closeHtml = '</div></div><br>';
 	$opened = false;
-	switch ( $techType ) {
-		case 'none':
-			// don't display text, there may still be a list to display though!
-			$opened = false;
-			break;
-
-		case 'default':
-			//get the default text
-			$defaultText = wp_kses_post( get_theme_mod( 'di_default_tech_specs' ) );
-			echo $openHtml . $defaultText;
-			$opened = true;
-			break;
-
-		case 'custom':
-			// get the custom text for Tech Specs
-			$customText = get_post_meta( $id, '_did_custom', 1 );
-			echo $openHtml . $customText;
-			$opened = true;
-			break;
-	}
 	$showtech = get_post_meta( $id, '_did_showtech' );
 	if ( $showtech ) {
 		//first get the list of attached specs (each spec is a post id linking to a cpt Technical Specification)
-		$techSpecs = get_post_meta( $id, 'techspecs', true );
-		$first     = true;
-		if ( $techSpecs ) {
-			if ( ! $opened ) {
-				$opened = true;
-				echo $openHtml;
-			}
-			$openRow  = '<ul class="accordion" data-accordion data-multi-expand="false" data-slide-speed="500" data-allow-all-closed="true">';
-			$closeRow = '</ul>';
-			echo $openRow; //create row
-			foreach ( $techSpecs as $techSpec ) {
-				$specTitle = get_the_title( $techSpec );
-				$specMeta  = get_post_meta( $techSpec, 0 );
-				echo '<li class="accordion-item " data-accordion-item>';
-				echo '<a href="#" class="accordion-title ">' . $specTitle . '</a>';
-				echo '<div class="accordion-content" data-tab-content>';
-				if ( $specMeta['tech'] ) {
-					// start the accordian markup
-					foreach ( $specMeta['tech'] as $specs ) {
-						$specs = unserialize( $specs );
-						if ( $specs ) {
-							//create a table to hold the data
-							echo '<table><tbody>';
-							foreach ( $specs as $spec ) {
-								echo '<tr><td>';
-								echo $spec['spec_name'];
-								echo '</td><td>';
-								echo $spec['spec_value'];
-								echo '</td></tr>';
-							}
-							echo '</tbody></table>';
-						}
-					}
-				}
-				echo '</div>';
-				echo '</li>';
-			}
-			echo $closeRow; //close the html for the row
-		}
-	};
+		$techSpecBtnText = get_post_meta( $id, '_did_tech_btn_text', 0 );
+		//var_dump($techSpecBtnText);
+		$techSpecID   = get_post_meta( $id, '_did_tech_url', 0 );
+		$techSpecData = did_get_post_meta( $techSpecID[0] );
+		$techSpecURL  = $techSpecData['href'];
 
-	if ( $opened ) {
-		echo $closeHtml;
+		do_action( 'did_start_row' );
+		echo '<div class="did-case-study">';
+		echo '<a href="' . $techSpecURL . '" alt="' . $techSpecBtnText[0] . '">';
+		echo '<div class="case-studies-button">' . $techSpecBtnText[0] . '</div>';
+		echo '</a>';
+		echo '</div>';
+		do_action( 'did_end_row' );
 	}
 }
 
@@ -652,6 +652,19 @@ function did_check_if_video( $url ) {
 	$ext      = pathinfo( $path, PATHINFO_EXTENSION );
 	//var_dump($ext);
 	if ( in_array( $ext, $vidArray ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function did_check_if_gif( $url ) {
+	//var_dump($url);
+	$gifArray = array( "gif" );
+	$path     = parse_url( $url, PHP_URL_PATH );
+	$ext      = pathinfo( $path, PATHINFO_EXTENSION );
+	//var_dump($ext);
+	if ( in_array( $ext, $gifArray ) ) {
 		return true;
 	} else {
 		return false;
@@ -690,8 +703,6 @@ function did_show_displays_sitemap() {
 			}
 		}
 		$half = $displayCount / 2;
-		//$half = $count / 2;
-		//var_dump($half);
 		echo '<div class="medium-4 border-left">';
 
 		foreach ( $displays as $display ) {
@@ -711,7 +722,6 @@ function did_show_displays_sitemap() {
 
 	}
 }
-
 
 function img_unautop( $pee ) {
 	$pee = preg_replace( '/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s',
