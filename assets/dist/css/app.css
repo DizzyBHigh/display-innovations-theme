@@ -5829,6 +5829,19 @@ a.ofc-home {
     display: block
 }
 
+.di-base-border-placeholder {
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    margin: 5px;
+    padding: 5px
+}
+
+.di-base-border-placeholder img {
+    display: none;
+    margin: 5px
+}
+
 .top-blue {
     width: 100%;
     margin-left: auto;
@@ -5947,6 +5960,10 @@ a.ofc-home {
 }
 
 .container .icon-area-item {
+    width: 33%
+}
+
+.container .icon-area-item-placeholder {
     width: 33%
 }
 
@@ -6374,6 +6391,12 @@ a.ofc-home {
 .di-image-icon-no-title {
     width: 210px;
     height: 200px
+}
+
+.di-image-icon-no-title-placeholder {
+    width: 210px;
+    height: 200px;
+    display: none
 }
 
 .di-image-icon-no-title-wide {
