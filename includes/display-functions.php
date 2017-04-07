@@ -91,7 +91,7 @@ function did_show_additional_text( $id, $area ) {
 	//var_dump($text);
 	if ( $text[0] ) {
 		did_start_row();
-		echo $text[0];
+		echo wpautop( get_post_meta( get_the_ID(), $textField, true ) );
 		did_end_row();
 	}
 }
@@ -104,7 +104,8 @@ function did_show_home_icon( $attachment_id) {
 	$url = $meta['src'];
 	//var_dump($url);
 	if ( did_check_if_gif( $url ) ) {
-		echo wp_get_attachment_image( $attachment_id, 'full', false, array( "alt" => $alt ) ) . '<br>';
+		echo '<img src="' . $url . '"  width="100%" height="100%"/><br>';
+		//echo wp_get_attachment_image( $attachment_id, 'full', false, array( "alt" => $alt ) ) . '<br>';
 	} else {
 		echo wp_get_attachment_image( $attachment_id, 'di_display_icon', false, array( "alt" => $alt ) ) . '<br>';
 	}
@@ -190,6 +191,7 @@ function did_display_icons(){
 	$cur_cat = '';
 	$posts = $query->posts;
 	$opened = false;
+	$iconCount = 0;
 	if($posts) {
 		echo '<div class="icon-area" data-equalizer>';
 		foreach ( $posts as $post ) {
@@ -201,12 +203,15 @@ function did_display_icons(){
 					$cur_cat = $categories[0]->name;
 				}
 				if ( $last_cat != $cur_cat ) {
+					getSpacer( $iconCount );
+					$iconCount = 0;
 					if ( $opened ) {
 						echo '</div>';
 						$opened = false;
 					}
 					echo '<div class="icon-header">' . $cur_cat . '</div>';
 				}
+
 				$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
 				//get the post id of the icon image
 				$iconID = $post_meta['_did_icon_id'][0];
@@ -221,12 +226,12 @@ function did_display_icons(){
 				echo '</div>';
 				echo '</a>';
 				echo '</div>';
+				$iconCount ++;
 			}
-
-
 			$last_cat = $cur_cat;
 		}
 		if ( $opened ) {
+			getSpacer( $iconCount );
 			echo '</div>';
 		}
 	}else{
@@ -264,7 +269,7 @@ function did_related_displays( $id, $type = 'top' ) {
 					echo '</div>';
 					echo '</div>';
 				} else {
-					echo '<div class="flexbox-display-icon-static-placeholder" data-equalizer-watch"></div>';
+					echo '<div class="icon-area-item-placeholder" data-equalizer-watch"></div>';
 				};
 			}
 		}
@@ -350,6 +355,7 @@ function did_show_images($id) {
 		}
 		echo '<div class="flexbox-display-icons' . $align_class . '" data-equalizer>';
 		foreach($icons as $icon) {
+			//var_dump($icon);
 			$count ++; //increment counter
 			$icon_meta = did_get_post_meta( $icon['icon_id'] );//get icon meta data
 			$stretch   = $icon['stretch'];//get then check stretch option
@@ -380,6 +386,7 @@ function did_show_images($id) {
 			}
 			$title = $icon_meta['title']; //get the icons title
 			$image_meta = did_get_post_meta( $icon['image_id'] ); //grt the icons meta data
+			//var_dump($image_meta);
 			if ( $popup[0] == 'on' ) { // if pop-ups are required
 				if ( $icon['icon_id'] ) { //check to see if there is an icon to display, If there is no icon there still maybe hidden content...
 					if ( did_check_if_video( $image_meta['src'] ) ) { // if we have a video
@@ -462,7 +469,7 @@ function did_show_images($id) {
 							if ( $titlePosition[0] == 'top' ) {
 								echo '<b>' . $title . '</b><br>';
 							}
-							echo '<img class="di-image-icon' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $icon_meta['alt'] . '"/>';
+							echo '<img class="di-image-icon' . $class . '" src="' . $icon['icon'] . '" alt="' . $icon_meta['alt'] . '"/>';
 							//Title at Bottom
 							if ( $titlePosition[0] == 'bottom' ) {
 								echo '<br><b>' . $title . '</b>';
@@ -473,12 +480,14 @@ function did_show_images($id) {
 					} else {
 						//show the slightly larger image as there's no title
 						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch">';
-						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon_meta['src'] . '" alt="' . $icon_meta['alt'] . '"/>';
+						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon['icon'] . '" alt="' . $icon_meta['alt'] . '"/>';
 						echo '</div>';
 					}
 				} else {
 					if ( $class == '-placeholder' ) {
-						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch"></div>';
+						echo '<div class="flexbox-display-icon-static' . $class . ' data-equalizer-watch">';
+						echo '<img class="di-image-icon-no-title' . $class . '" src="' . $icon['icon'] . '" alt="' . $icon_meta['alt'] . '"/>';
+						echo '</div>';
 					}
 				}
 			}
@@ -723,6 +732,17 @@ function did_show_displays_sitemap() {
 	}
 }
 
+function getSpacer( $iconCount ) {
+	$count  = 0;
+	$result = $iconCount % 3;
+	if ( $result == 2 ) {
+		echo '<div class="icon-area-item-placeholder" >';
+		echo '<div class="di-base-border-placeholder" data-equalizer-watch>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+}
 function img_unautop( $pee ) {
 	$pee = preg_replace( '/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s',
 		'<div class="figure">$1</div>',
