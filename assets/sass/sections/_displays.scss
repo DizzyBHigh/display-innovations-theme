@@ -45,6 +45,21 @@
   }
 }
 
+.di-base-border-placeholder{
+  border-radius: 5px;
+  //border:1px #146bab solid;
+  text-align: center;
+  font-size: 14px;
+  margin: 5px;
+
+  padding: 5px;
+  img{
+    display:none;
+    margin:5px;
+  }
+}
+
+
 // Classes to apply solid hr
 .top-blue {
   width: 100%;
@@ -147,6 +162,9 @@
      margin-bottom: 10px;
    }
   .icon-area-item{
+    width:33%;
+  }
+  .icon-area-item-placeholder{
     width:33%;
   }
 }
@@ -573,6 +591,12 @@
 .di-image-icon-no-title {
   width: 210px;
   height: 200px;
+}
+
+.di-image-icon-no-title-placeholder {
+  width: 210px;
+  height: 200px;
+  display: none;
 }
 
 .di-image-icon-no-title-wide {
