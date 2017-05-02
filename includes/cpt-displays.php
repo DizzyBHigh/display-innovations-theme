@@ -58,7 +58,7 @@ function cpt_display() {
 function cmb2_display_metaboxes() {
 
 	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_did_';
+	$prefix = '_did_cmb2_';
 
 	/**
 	 * Initiate Metaboxes
@@ -112,6 +112,32 @@ function cmb2_display_metaboxes() {
 			'add_upload_file_text' => 'Upload Display Icon' // Change upload button text. Default: "Add or Upload File"
 		),
 	) );
+
+	// -- Page Banner - Banner Type
+	$cmb->add_field( array(
+		'name'        => 'Select Banner Option',
+		'id'          => 'banneroption',
+		'type'        => 'radio_inline',
+		'description' => 'Default - The default banner will be shown.<br>Custom - Select a specific banner to display.<br>Slider - Enter the shortcode for the sliderr<br>None - Banner section will not be shown.',
+		'options'     => array(
+			'default'      => __( 'default', 'cmb2' ),
+			'custom'       => __( 'Custom', 'cmb2' ),
+			'slider'       => __( 'Slider', 'cmb2' ),
+			'customslider' => __( 'Custom Slider', 'cmb2' ),
+			'none'         => __( 'None', 'cmb2' ),
+		),
+		'default'     => 'slider',
+	) );
+	$cmb->add_field( array(
+		'name'             => 'Sliding Banner',
+		'desc'             => 'Select Which sliding banner to use',
+		'id'               => $prefix . 'bannerslider',
+		'type'             => 'select',
+		'show_option_none' => true,
+		'default'          => 'custom',
+		'options'          => get_sliding_banners(),
+	) );
+
 	// -- Page Banner - File Upload
 	$cmb->add_field( array(
 		'name'    => 'Display Banner',
@@ -138,6 +164,7 @@ function cmb2_display_metaboxes() {
 		'closed' => true, // Keep the metabox closed by default
 
 	) );
+
 	// -- Case Study Button Label
 	$cmbCaseStudy->add_field( array(
 		'name' => 'Button Label',
@@ -443,9 +470,9 @@ function get_display_menu_options() {
 		foreach ( $posts as $post ) {
 			$meta = get_post_meta( $post->ID );
 			//var_dump($meta);
-			$title = $meta['_did_menu_label'];
+			$title = $meta['_did_cmb2_menu_label'];
 			$url   = get_the_permalink( $post->ID );
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				//var_dump($url);
 				//var_dump($title[0]);
 				$options[ $url ] = $title[0];
@@ -455,6 +482,7 @@ function get_display_menu_options() {
 
 	return $options;
 }
+
 
 //Register Display Post Type
 add_action( 'init', 'cpt_display' );

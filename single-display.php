@@ -11,7 +11,7 @@ get_header();
 ?>
 	<div class="row">
 		<div class="hide-for-small-only medium-2 medium-offset-1 ">
-			<?php do_action( 'did_displays_menu', get_post_meta( get_the_ID(), '_did_parent_menu', 1 ) ); ?>
+			<?php do_action( 'did_displays_menu', get_post_meta( get_the_ID(), '_did_cmb2_parent_menu', 1 ) ); ?>
 		</div>
 		<div class="small-10 small-offset-1 small-push-1 medium-7 medium-offset-1 medium-push-1">
 			<div class="display-holder">

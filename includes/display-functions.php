@@ -83,7 +83,7 @@ function did_end_row() {
 }
 
 function did_show_additional_text( $id, $area ) {
-	$textField = '_did_additional_text_' . $area;
+	$textField = '_did_cmb2_additional_text_' . $area;
 	//var_dump($textField);
 	$postData = get_post_meta( $id );
 	$data     = $postData[0];
@@ -154,7 +154,7 @@ function did_displays_menu( $parentMenu = null ) {
 	if($posts) {
 		foreach ( $posts as $post ) {
 			$meta = get_post_meta( $post->ID );
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				$categories = get_the_category( $post->ID );
 				if ( ! empty( $categories ) ) {
 					$last_cat = $categories[0]->name;
@@ -167,7 +167,7 @@ function did_displays_menu( $parentMenu = null ) {
 				}
 
 
-				$menuLabel = get_post_meta( $post->ID, '_did_menu_label' );
+				$menuLabel = get_post_meta( $post->ID, '_did_cmb2_menu_label' );
 				echo '<a href="' . get_permalink( $post->ID ) . '" class="display-menu-button' . $active_class . '">' . $menuLabel[0] . '</a>';
 
 				$cur_cat      = $last_cat;
@@ -197,7 +197,7 @@ function did_display_icons(){
 		foreach ( $posts as $post ) {
 			$meta = get_post_meta( $post->ID );
 			//var_dump($meta);
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				$categories = get_the_category( $post->ID );
 				if ( ! empty( $categories ) ) {
 					$cur_cat = $categories[0]->name;
@@ -214,7 +214,7 @@ function did_display_icons(){
 
 				$post_meta = get_post_meta( $post->ID, '', 0 ); //array of all data
 				//get the post id of the icon image
-				$iconID = $post_meta['_did_icon_id'][0];
+				$iconID = $post_meta['_did_cmb2_icon_id'][0];
 				if ( ! $opened ) {
 					echo '<div class="icon-area" data-equalizer>';
 					$opened = true;
@@ -260,7 +260,7 @@ function did_related_displays( $id, $type = 'top' ) {
 				$thisPost = get_post( $displayNum );
 				$display = get_post_meta( $displayNum );
 				if ( $thisPost->post_title != 'blank spacer' ) {
-					$iconID = $display['_did_icon_id'][0];
+					$iconID = $display['_did_cmb2_icon_id'][0];
 					echo '<div class="icon-area-item" >';
 					echo '<div class="di-base-border" data-equalizer-watch>';
 					echo '<a class="" href="' . get_the_permalink( $displayNum ) . '">';
@@ -282,8 +282,8 @@ function did_related_displays( $id, $type = 'top' ) {
 
 function did_show_case_studies($id) {
 	//get list of case study images
-	$url = get_post_meta( $id, '_did_csurl', 1 );
-	$buttonData = get_post_meta( $id, '_did_buttonlabel', 0 );
+	$url        = get_post_meta( $id, '_did_cmb2_csurl', 1 );
+	$buttonData = get_post_meta( $id, '_did_cmb2_buttonlabel', 0 );
 	$buttonText = $buttonData[0];
 	if ( $url ) {
 		echo '<div class="did-case-study">';
@@ -294,7 +294,7 @@ function did_show_case_studies($id) {
 
 		return;
 	} else {
-		$data       = get_post_meta( $id, '_did_images', 0 ); //array of case study images
+		$data = get_post_meta( $id, '_did_cmb2_images', 0 ); //array of case study images
 		$image_list = $data[0];
 		$count      = 1;
 		if ( $image_list ) {
@@ -335,10 +335,10 @@ function did_show_case_studies($id) {
 
 function did_show_images($id) {
 	//get list of images
-	$titlePosition = get_post_meta( $id, '_did_show_title'); //Title Position
-	$popup = get_post_meta($id, '_did_popup'); //show popup check
-	$align = get_post_meta( $id, '_did_align' ); //show popup check
-	$showImages = get_post_meta( $id, '_did_show_page_images' );
+	$titlePosition = get_post_meta( $id, '_did_cmb2_show_title' ); //Title Position
+	$popup         = get_post_meta( $id, '_did_cmb2_popup' ); //show popup check
+	$align         = get_post_meta( $id, '_did_cmb2_align' ); //show popup check
+	$showImages    = get_post_meta( $id, '_did_cmb2_show_page_images' );
 	//var_dump($showImages);
 	$iconData = get_post_meta( $id, 'icons'); //array of icons
 	$icons = $iconData[0];
@@ -541,10 +541,10 @@ function did_make_slider() {
 		echo '<div class="owl-carousel owl-theme">';
 
 		foreach ( $displays as $display ) {
-			$banner = get_post_meta( $display->ID, '_did_banner' );
+			$banner = get_post_meta( $display->ID, '_did_cmb2_banner' );
 			$meta = get_post_meta( $display->ID );
 
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				//var_dump($display->ID);
 				echo '<div class="">';
 				echo '<a href="' . get_permalink( $display->ID ) . '">';
@@ -560,6 +560,39 @@ function did_make_slider() {
 	}
 }
 
+function did_make_custom_slider( $id ) {
+	//first get a list of the displays in order
+	//$meta = get_post_meta($id);
+	$sliderID = get_post_meta( $id, '_did_cmb2_bannerslider', true );
+	$slider   = get_post_meta( $sliderID );
+	$slides   = get_post_meta( $sliderID, 'bannerSlides' );
+	//var_dump($slides);
+	if ( $slides ) {
+		echo '<div class="owl-carousel owl-theme">';
+		foreach ( $slides as $item ) {
+			//var_dump($slide);
+			//$banner =$slide[1];
+			//var_dump($slide);
+			foreach ( $item as $slide ) {
+				//var_dump($slide);
+				echo '<div class="">';
+				if ( $slide['_did_cmb2_bannerlink'] != 'none' ) {
+					echo '<a href="' . $slide['_did_cmb2_bannerlink'] . '">';
+				}
+				echo '<img src="' . $slide['_did_cmb2_bannerimage'] . '" width="978" height="198" >';
+				if ( $slide['_did_cmb2_bannerlink'] != 'none' ) {
+					echo '</a>';
+				}
+				echo '</div>';
+			}
+		}
+
+		echo '</div>';
+	} else {
+		echo 'Could not find Slideshow';
+	}
+}
+
 function did_show_banner() {
 	global $post;
 	$bannerOption = get_post_meta( $post->ID, 'banneroption' );
@@ -572,7 +605,7 @@ function did_show_banner() {
 			case 'custom':
 				//echo 'custom option';
 				// get the custom banner
-				$banner = get_post_meta( $post->ID, '_did_banner' );
+				$banner = get_post_meta( $post->ID, '_did_cmb2_banner' );
 				echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
 				break;
 
@@ -583,6 +616,19 @@ function did_show_banner() {
 				echo '<div class="small-1 medium-1 large-1"><div class="di-slider-nav di-prev-slide hide-for-small-only"><h2> < </h2></div></div>';
 				echo '<div class="small-10 medium-10 ">';
 				did_make_slider();
+				echo '</div>';
+				echo '<div class=" medium-1"><div class="di-slider-nav di-next-slide hide-for-small-only"><h2> > </h2></div> </div>';
+				echo '</div>';
+				echo '<div class="bottom-blue"></div>';
+				break;
+			case 'customslider':
+				// add the slider call here
+				//echo 'slider option';
+				echo '<div class="row">';
+				echo '<div class="small-1 medium-1 large-1"><div class="di-slider-nav di-prev-slide hide-for-small-only"><h2> < </h2></div></div>';
+				echo '<div class="small-10 medium-10 ">';
+				did_make_custom_slider( $post->ID );
+				//echo 'Custom SLider Here';
 				echo '</div>';
 				echo '<div class=" medium-1"><div class="di-slider-nav di-next-slide hide-for-small-only"><h2> > </h2></div> </div>';
 				echo '</div>';
@@ -599,7 +645,7 @@ function did_show_banner() {
 	} else {
 		//echo 'custom option';
 		// get the custom banner
-		$banner = get_post_meta( $post->ID, '_did_banner' );
+		$banner = get_post_meta( $post->ID, '_did_cmb2_banner' );
 		echo $front_static_wrap . '<img class="flexbox-banner-item" src="' . $banner[0] . '" width="978" height="198">' . $back_static_wrap;
 	}
 
@@ -613,28 +659,28 @@ function did_show_applications( $id ) {
 		echo '<div class="row space-below">';
 		echo '<b>Applications</b>';
 		echo '</div>';
-		echo '<div class="row"><div class="small-12 medium-12">';
+		echo '<div class="row space below"><div class="small-12 medium-12">';
 		echo '<ul class="flexbox-display-icons">';
 		foreach ( $apps as $app ) {
 			echo '<li class="appItem">' . $app['app'] . '</li>';
 			//var_dump($app['app']);
 		}
 		echo '</ul>';
-		echo '</div></div>';
+		echo '</div></div><br>';
 	}
 }
 
 function did_show_technical( $id ) {
-	$techType = get_post_meta( $id, '_did_techtype', 1 );
+	$techType = get_post_meta( $id, '_did_cmb2_techtype', 1 );
 	$openHtml = '<br><br><div class="row space-below"><div class="small-12 medium 12"> <span class="tech-header">Technical Specifications</span><br>';
 	$closeHtml = '</div></div><br>';
 	$opened = false;
-	$showtech = get_post_meta( $id, '_did_showtech' );
+	$showtech = get_post_meta( $id, '_did_cmb2_showtech' );
 	if ( $showtech ) {
 		//first get the list of attached specs (each spec is a post id linking to a cpt Technical Specification)
-		$techSpecBtnText = get_post_meta( $id, '_did_tech_btn_text', 0 );
+		$techSpecBtnText = get_post_meta( $id, '_did_cmb2_tech_btn_text', 0 );
 		//var_dump($techSpecBtnText);
-		$techSpecID   = get_post_meta( $id, '_did_tech_url', 0 );
+		$techSpecID = get_post_meta( $id, '_did_cmb2_tech_url', 0 );
 		$techSpecData = did_get_post_meta( $techSpecID[0] );
 		$techSpecURL  = $techSpecData['href'];
 
@@ -645,6 +691,7 @@ function did_show_technical( $id ) {
 		echo '</a>';
 		echo '</div>';
 		do_action( 'did_end_row' );
+		echo '<br>';
 	}
 }
 
@@ -686,10 +733,10 @@ function did_show_displays_footer( $class = "" ) {
 	if ( $displays ) {
 		foreach ( $displays as $display ) {
 			$meta = get_post_meta( $display->ID );
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				$categories = get_the_category( $display->ID );
 
-				$menuLabel = get_post_meta( $display->ID, '_did_menu_label' );
+				$menuLabel = get_post_meta( $display->ID, '_did_cmb2_menu_label' );
 
 				echo '<li><a href="' . get_permalink( $display->ID ) . '" class="' . $class . '">' . $menuLabel[0] . '</a></li>';
 			}
@@ -707,7 +754,7 @@ function did_show_displays_sitemap() {
 		$displayCount = 0;
 		foreach ( $displays as $display ) {
 			$meta = get_post_meta( $display->ID );
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				$displayCount ++;
 			}
 		}
@@ -716,9 +763,9 @@ function did_show_displays_sitemap() {
 
 		foreach ( $displays as $display ) {
 			$meta = get_post_meta( $display->ID );
-			if ( ! $meta['_did_sub_display'] ) {
+			if ( ! $meta['_did_cmb2_sub_display'] ) {
 				$categories = get_the_category( $display->ID );
-				$menuLabel  = get_post_meta( $display->ID, '_did_menu_label' );
+				$menuLabel = get_post_meta( $display->ID, '_did_cmb2_menu_label' );
 				echo '<div><a href="' . get_permalink( $display->ID ) . '" class="' . $class . '">' . $menuLabel[0] . '</a></div>';
 				$count ++;
 				if ( $count == $half ) {
